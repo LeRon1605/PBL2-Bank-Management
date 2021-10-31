@@ -1,5 +1,5 @@
-#ifndef DATETIME.H
-#define DATETIME.H
+#ifndef DATETIME_H
+#define DATETIME_H
 #include <iostream>
 using namespace std;
 class Date{
