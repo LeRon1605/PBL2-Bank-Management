@@ -32,6 +32,8 @@ class Client{
         void setCreatedAt(const Date&);
         void setUpdatedAt(const Date&);
 
+        bool isValidID();
+        bool isValidName();
         void show();
         void update(const string&, const int&, const string&, const Date&); // Name, gender, CCCD, birth
 
