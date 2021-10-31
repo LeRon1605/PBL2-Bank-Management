@@ -155,6 +155,7 @@ ostream& operator<<(ostream &out, const Date &D){
 
 istream& operator>>(istream &in, Date &D){
     char str[20];
+    fflush(stdin);
     gets(str);
     D.toDate(str);
     while (D.isValidDate() == false){
