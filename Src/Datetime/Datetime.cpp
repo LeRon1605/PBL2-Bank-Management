@@ -178,21 +178,17 @@ const Date& Date::operator=(const Date &other){
 }
 
 bool operator>(const Date &A, const Date &B){
-    return ((A.year*365 + A.month*30 + A.day) > (B.year*365 + B.month*30 + B.day));
-    return ((A.hour*3600 + A.minute*60 + A.second) > (B.hour*3600 + B.minute*60 + B.second));
+    return ((A.year*365 + A.month*30 + A.day + A.hour*3600 + A.minute*60 + A.second) > (B.year*365 + B.month*30 + B.day + B.hour*3600 + B.minute*60 + B.second));
 }
 
 bool operator<(const Date &A, const Date &B){
-    return ((A.year*365 + A.month*30 + A.day) < (B.year*365 + B.month*30 + B.day));
-    return ((A.hour*3600 + A.minute*60 + A.second) < (B.hour*3600 + B.minute*60 + B.second));
+    return ((A.year*365 + A.month*30 + A.day + A.hour*3600 + A.minute*60 + A.second) > (B.year*365 + B.month*30 + B.day + B.hour*3600 + B.minute*60 + B.second));
 }
 
 bool operator>=(const Date &A, const Date &B){
-    return ((A.year*365 + A.month*30 + A.day) >= (B.year*365 + B.month*30 + B.day));
-    return ((A.hour*3600 + A.minute*60 + A.second) >= (B.hour*3600 + B.minute*60 + B.second));
+    return ((A.year*365 + A.month*30 + A.day + A.hour*3600 + A.minute*60 + A.second) > (B.year*365 + B.month*30 + B.day + B.hour*3600 + B.minute*60 + B.second));
 }
 
 bool operator<=(const Date &A, const Date &B){
-    return ((A.year*365 + A.month*30 + A.day) <= (B.year*365 + B.month*30 + B.day));
-    return ((A.hour*3600 + A.minute*60 + A.second) <= (B.hour*3600 + B.minute*60 + B.second));
+    return ((A.year*365 + A.month*30 + A.day + A.hour*3600 + A.minute*60 + A.second) > (B.year*365 + B.month*30 + B.day + B.hour*3600 + B.minute*60 + B.second));
 }
