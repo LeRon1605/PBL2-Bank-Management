@@ -33,9 +33,10 @@ class Card{
         bool isValidIdHolder();
         bool isValidPin();
         void show();
+        void showBalance();
         void update( const string&,const int& ); // update pin , balance
 
-        const Date& operator=(const Date&);
+        const Card& operator=(const Card&);
         friend ostream& operator<<(ostream&, const Card&);
         friend istream& operator>>(istream&, Card&);
 
