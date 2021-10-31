@@ -72,6 +72,23 @@ void Client::setUpdatedAt(const Date &updatedAt){
     this -> updatedAt = updatedAt;
 }
 
+bool Client::isValidID(){
+    if (this -> ID.size() < 8) return false; // ID có độ dài là 8 số
+    for (int i = 0; i < this -> ID.size();i++){
+        if (this -> ID[i] < '0' || this -> ID[i] > '9') return false;
+    }
+    return true;
+}
+
+bool Client::isValidName(){
+    if (this -> name.size() < 3) return false; // Tên có ít nhất 3 kí tự
+    for (int i = 0;i < this -> name.size();i++){
+        if (this -> name[i] == ' ') continue;
+        if ((this -> name[i] < 'a' || this -> name[i] > 'z') && (this -> name[i] < 'A' || this -> name[i] > 'Z')) return false;
+    }
+    return true;
+}
+
 void Client::show(){
     cout << "ID: " << this -> ID << endl;
     cout << "Name: " << this -> name << endl;
@@ -98,6 +115,33 @@ const Client& Client::operator=(const Client &C){
     return (*this);
 }
 
+istream& operator>>(istream &in, Client &D){
+    cout << "Type Clients's ID: ";
+    in >> D.ID;
+    while (!D.isValidID()){
+        cout << "Invalid ID, type again: ";
+        in >> D.ID;
+    }
+    cout << "Type Clients's name: ";
+    fflush(stdin);
+    getline(in, D.name);
+    while (!D.isValidName()){
+        cout << "Invalid Name, type again: ";
+        fflush(stdin);
+        getline(in, D.name);
+    }
+    cout << "Type Client's gender(number): ";
+    in >> D.gender;
+    cout << "Type Client's CCCD: ";
+    in >> D.CCCD;
+    cout << "Type Client's birth(dd-mm-yyyy): ";
+    fflush(stdin);
+    cin >> D.birth;
+    D.createdAt = Date::getCurrentDate();
+    D.updatedAt = Date();
+    return in;
+}
+
 ostream& operator<<(ostream &out, const Client &C){
     out << "ID: " << C.ID << endl;
     out << "Name: " << C.name << endl;
@@ -105,6 +149,7 @@ ostream& operator<<(ostream &out, const Client &C){
     out << "Birth: " << C.birth;
     out << "CCCD: " << C.CCCD << endl;
     out << "Created At: " << C.createdAt;
-    out << "Updated At: " << C.updatedAt;
+    if (Client(C).updatedAt.isValidDate())
+        out << "Updated At: " << C.updatedAt;
     return out;
 }
