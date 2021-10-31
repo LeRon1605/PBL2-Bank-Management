@@ -135,7 +135,6 @@ istream& operator>>(istream &in, Client &D){
     cout << "Type Client's CCCD: ";
     in >> D.CCCD;
     cout << "Type Client's birth(dd-mm-yyyy): ";
-    fflush(stdin);
     cin >> D.birth;
     D.createdAt = Date::getCurrentDate();
     D.updatedAt = Date();
