@@ -1,5 +1,5 @@
 #include "../Datetime/Datetime.h"
-class CLient{
+class Client{
     private:
         string ID;
         string name;
@@ -10,7 +10,7 @@ class CLient{
         Date updatedAt;
     public:
         Client();
-        Client(const string&, const string&, const int&, const string&, const char*);
+        Client(const string&, const string&, const int&, const string&, const Date&);
         
         // Getter
         string getID();
@@ -31,7 +31,7 @@ class CLient{
         void setUpdatedAt(const Date&);
 
         void show();
-        void update(const string&, const int&, const string&, const char*); // Name, gender, CCCD, birth
+        void update(const string&, const int&, const string&, const Date&); // Name, gender, CCCD, birth
 
         const Client& operator=(const Client&);
         friend ostream& operator<<(ostream&, const Client&);
