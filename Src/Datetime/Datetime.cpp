@@ -26,7 +26,9 @@ Date::Date(const char *time){
     this -> day = this -> month = this -> year = -1;
     this -> hour = this -> minute = this -> second = -1;
 
-    this -> toDate(time);
+    char temp[20];
+    strcpy(temp, time);
+    this -> toDate(temp);
 }
 
 void Date::toDate(const char *time){
