@@ -23,6 +23,8 @@ class Date{
 		void toDate(const char*); // Convert string sang Date
 
 		const Date& operator=(const Date&);
+		friend bool operator==(const Date&, const Date&);
+		friend bool operator!=(const Date&, const Date&);
 		friend bool operator>(const Date&, const Date&);
 		friend bool operator<(const Date&, const Date&);
 		friend bool operator>=(const Date&, const Date&);
