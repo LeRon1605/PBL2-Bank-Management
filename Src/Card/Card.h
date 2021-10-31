@@ -3,6 +3,12 @@
 #include "../Datetime/Datetime.h"
 class Card{
     private:
+        string idAccount;
+        string idHolder;
+        Date createdAt;
+        Date updatedAt;
+        string pin;
+        int balance;
     public:
 };
 #endif
