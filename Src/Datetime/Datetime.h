@@ -1,3 +1,5 @@
+#ifndef DATETIME.H
+#define DATETIME.H
 #include <iostream>
 using namespace std;
 class Date{
@@ -28,3 +30,4 @@ class Date{
 		friend istream& operator>>(istream&, Date&);
 		friend ostream& operator<<(ostream&, const Date&);
 };
+#endif
