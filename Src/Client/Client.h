@@ -1,3 +1,5 @@
+#ifndef CLIENT_H
+#define CLIENT_H
 #include "../Datetime/Datetime.h"
 class Client{
     private:
@@ -38,3 +40,4 @@ class Client{
         friend istream& operator>>(istream&, Client&);
 
 };
+#endif
