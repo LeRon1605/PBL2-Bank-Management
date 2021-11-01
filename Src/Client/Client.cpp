@@ -4,6 +4,16 @@ Client::Client(){
 
 }
 
+Client::Client(const Client &D){
+    this -> ID = D.ID;
+    this -> name = D.name;
+    this -> gender = D.gender;
+    this -> CCCD = D.CCCD;
+    this -> birth = D.birth;
+    this -> createdAt = Date::getCurrentDate();
+    this -> updatedAt = Date();
+}
+
 Client::Client(const string &ID, const string &name, const string &gender, const string &CCCD, const Date &birth){
     this -> ID = (Client::isValidID(ID)) ? ID : "";
     this -> name = (Client::isValidName(name)) ? name : "";
@@ -43,15 +53,15 @@ Date Client::getUpdatedAt(){
 }
 
 void Client::setID(const string &ID){
-    this -> ID = ID;
+    this -> ID = (Client::isValidID(ID)) ? ID : "";
 }
 
 void Client::setName(const string &name){
-    this -> name = name;
+    this -> name = (Client::isValidName(name)) ? name : "";
 }
 
-void Client::setGender(const int &gender){
-    this -> gender = gender;
+void Client::setGender(const string &gender){
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
 }
 
 void Client::setCCCD(const string &CCCD){
@@ -59,7 +69,7 @@ void Client::setCCCD(const string &CCCD){
 }
 
 void Client::setBirth(const Date &birth){
-    this -> birth = birth;
+    this -> birth = (Date(birth).isValidDate()) ? birth : Date();;
 }
 
 void Client::setCreatedAt(const Date &createdAt){
@@ -106,15 +116,19 @@ bool Client::isValidName(string str){
 void Client::show(){
     cout << "ID: " << this -> ID << endl;
     cout << "Name: " << this -> name << endl;
-    cout << "Birth: " << this -> birth << endl;
-    cout << "Created At: " << this -> createdAt << endl;
+    cout << "Gender: " << this -> gender << endl;
+    cout << "Birth: " << this -> birth;
+    cout << "CCCD: " << this -> CCCD << endl;
+    cout << "Created At: " << this -> createdAt;
+    if (this -> updatedAt.isValidDate())
+        cout << "Updated At: " << this -> updatedAt;
 }
 
-void Client::update(const string &name, const int &gender, const string &CCCD, const Date &birth){
-    this -> name = name;
-    this -> gender = gender;
+void Client::update(const string &name, const string &gender, const string &CCCD, const Date &birth){
+    this -> name = (Client::isValidName(name)) ? name : "";
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
     this -> CCCD = CCCD;
-    this -> birth = birth;
+    this -> birth = (Date(birth).isValidDate()) ? birth : Date();
     this -> updatedAt = Date::getCurrentDate();
 }
 
@@ -122,8 +136,8 @@ const Client& Client::operator=(const Client &C){
     this -> ID = C.ID;
     this -> name = C.name;
     this -> gender = C.gender;
-    this -> CCCD = CCCD;
-    this -> birth = birth;
+    this -> CCCD = C.CCCD;
+    this -> birth = C.birth;
     this -> createdAt = C.createdAt;
     this -> updatedAt = C.updatedAt;
     return (*this);
@@ -159,7 +173,7 @@ istream& operator>>(istream &in, Client &D){
 ostream& operator<<(ostream &out, const Client &C){
     out << "ID: " << C.ID << endl;
     out << "Name: " << C.name << endl;
-    out << "Gender: " << Client(C).getGender() << endl;
+    out << "Gender: " << C.gender << endl;
     out << "Birth: " << C.birth;
     out << "CCCD: " << C.CCCD << endl;
     out << "Created At: " << C.createdAt;

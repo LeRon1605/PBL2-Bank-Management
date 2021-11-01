@@ -12,6 +12,7 @@ class Client{
         Date updatedAt;
     public:
         Client();
+        Client(const Client&);
         Client(const string&, const string&, const string &gender, const string&, const Date&);
         
         // Getter
@@ -26,7 +27,7 @@ class Client{
         // Setter
         void setID(const string&);
         void setName(const string&);
-        void setGender(const int&);
+        void setGender(const string&);
         void setCCCD(const string&);
         void setBirth(const Date&);
         void setCreatedAt(const Date&);
@@ -37,7 +38,7 @@ class Client{
         static bool isValidID(string);
         static bool isValidName(string);
         void show();
-        void update(const string&, const int&, const string&, const Date&); // Name, gender, CCCD, birth
+        void update(const string&, const string&, const string&, const Date&); // Name, gender, CCCD, birth
 
         const Client& operator=(const Client&);
         friend ostream& operator<<(ostream&, const Client&);
