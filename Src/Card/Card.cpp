@@ -1,9 +1,14 @@
 #include "Card.h"
+#include<iostream>
+using namespace std;
+#include <string>
 //Constructor
-Card::Card(){
+Card::Card()
+{
 
 }
-Card::Card(const Card &card){
+Card::Card(const Card &card)
+{
     this->ID = card.ID;
     this->IdHolder = card.IdHolder;
     this->pin = card.pin;
@@ -47,13 +52,13 @@ Date Card::getUpdatedAt()
 }
 //Setter
 void Card::setID(const string &ID){
-    this->ID = ID;
+    this->ID = (Card::isValidID(ID)) ? ID : ""; 
 }
 void Card::setIdHolder(const string &IdHolder){
-    this->IdHolder = IdHolder;
+    this->IdHolder = (Card::isValidIdHolder(IdHolder)) ? IdHolder : "";
 }
 void Card::setPin(const string &pin){
-    this->pin = pin;
+    this->pin =(Card::isValidPin(pin)) ? pin : "";
 }
 void Card::setBalance(const long &balance){
     this->balance = balance;
@@ -111,8 +116,9 @@ ostream& operator<<(ostream &out, const Card &card){
         out << "Updated At: " << card.updatedAt;
     return out;
 }
+//check
 bool Card::isValidID(const string &str){
-    if (str.size() != 12) return false; // ID có độ dài là 8 số
+    if (str.size() != 12) return false; // ID có độ dài là 12 số
     for (int i = 0; i < str.size();i++){
         if (str[i] < '0' || str[i] > '9') return false;
     }
@@ -126,7 +132,7 @@ bool Card::isValidIdHolder(const string &str){
     return true;
 }
 bool Card::isValidPin(const string &str){
-    if (str.size() != 6) return false; // ID có độ dài là 8 số
+    if (str.size() != 6) return false; // ID có độ dài là 6 số
     for (int i = 0; i < str.size();i++){
         if (str[i] < '0' || str[i] > '9') return false;
     }
@@ -145,3 +151,14 @@ void Card::show(){
 void Card::showBalance(){
     cout << "Balance: " << this->balance << endl;
 }
+bool Card::checkPin(const string &str){
+    if (this->pin == str) 
+        return true;
+    else 
+        return false;
+}
+void Card::updatePin(const string &str){
+    if (isValidPin(str)) 
+        this->pin = str;
+}
+

@@ -10,9 +10,10 @@ class Card{
         Date createdAt;
         Date updatedAt;
     public:
+        //  Constructor
         Card();
+        Card(const Card&);
         Card(const string&, const string&, const string&, const long&);
-        
         // Getter
         string getID();
         string getIdHolder();
@@ -20,7 +21,6 @@ class Card{
         long getBalance();
         Date getCreatedAt();
         Date getUpdatedAt();
-        
         // Setter
         void setID(const string&);
         void setIdHolder(const string&);
@@ -39,5 +39,8 @@ class Card{
         const Card& operator=(const Card&);
         friend ostream& operator<<(ostream&, const Card&);
         friend istream& operator>>(istream&, Card&);
+
+        bool checkPin(const string&);
+        void updatePin(const string&);
 };
 #endif
