@@ -10,6 +10,7 @@ Client::Client(const Client &D){
     this -> gender = D.gender;
     this -> CCCD = D.CCCD;
     this -> birth = D.birth;
+    this -> age = D.age;
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
 }
@@ -20,6 +21,7 @@ Client::Client(const string &ID, const string &name, const string &gender, const
     this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
     this -> CCCD = CCCD;
     this -> birth = (Date(birth).isValidDate()) ? birth : Date();
+    this -> age = this -> getAge();
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
 }
@@ -38,6 +40,13 @@ string Client::getGender(){
 
 string Client::getCCCD(){
     return this -> CCCD;
+}
+
+int Client::getAge(){
+    Date temp = Date(this -> birth.getDay(), this -> birth.getMonth(), Date::getCurrentDate().getYear());
+    cout << temp;
+    if (temp < Date::getCurrentDate()) return Date::getCurrentDate().getYear() - this -> birth.getYear();
+    return Date::getCurrentDate().getYear() - this -> birth.getYear() - 1;
 }
 
 Date Client::getBirth(){
@@ -117,6 +126,7 @@ void Client::show(){
     cout << "ID: " << this -> ID << endl;
     cout << "Name: " << this -> name << endl;
     cout << "Gender: " << this -> gender << endl;
+    cout << "Age: " << this -> age << endl;
     cout << "Birth: " << this -> birth;
     cout << "CCCD: " << this -> CCCD << endl;
     cout << "Created At: " << this -> createdAt;
@@ -129,6 +139,7 @@ void Client::update(const string &name, const string &gender, const string &CCCD
     this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
     this -> CCCD = CCCD;
     this -> birth = (Date(birth).isValidDate()) ? birth : Date();
+    this -> age = this -> getAge();
     this -> updatedAt = Date::getCurrentDate();
 }
 
@@ -138,6 +149,7 @@ const Client& Client::operator=(const Client &C){
     this -> gender = C.gender;
     this -> CCCD = C.CCCD;
     this -> birth = C.birth;
+    this -> age = C.age;
     this -> createdAt = C.createdAt;
     this -> updatedAt = C.updatedAt;
     return (*this);
@@ -165,6 +177,7 @@ istream& operator>>(istream &in, Client &D){
     in >> D.CCCD;
     cout << "Type Client's birth(dd-mm-yyyy): ";
     cin >> D.birth;
+    D.age = D.getAge();
     D.createdAt = Date::getCurrentDate();
     D.updatedAt = Date();
     return in;
@@ -174,6 +187,7 @@ ostream& operator<<(ostream &out, const Client &C){
     out << "ID: " << C.ID << endl;
     out << "Name: " << C.name << endl;
     out << "Gender: " << C.gender << endl;
+    cout << "Age: " << C.age << endl;
     out << "Birth: " << C.birth;
     out << "CCCD: " << C.CCCD << endl;
     out << "Created At: " << C.createdAt;

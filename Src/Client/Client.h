@@ -1,12 +1,13 @@
 #ifndef CLIENT_H
 #define CLIENT_H
-#include "../Datetime/Datetime.h"
+#include "Datetime.h"
 class Client{
     private:
         string ID;
         string name;
         string gender;
         string CCCD;
+        int age;
         Date birth;
         Date createdAt;
         Date updatedAt;
@@ -20,6 +21,7 @@ class Client{
         string getName();
         string getGender();
         string getCCCD();
+        int getAge();
         Date getBirth();
         Date getCreatedAt();
         Date getUpdatedAt();
