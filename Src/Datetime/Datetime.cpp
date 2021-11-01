@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string.h>
 #include <iomanip>
+#include <math.h>
 #include "Datetime.h"
 
 Date::Date(const int &day, const int &month, const int &year, const int &hour, const int &minute, const int &second){
@@ -132,6 +133,43 @@ bool Date::isValidDate(){
 bool Date::isValidHour(){
     if (this -> hour > 23 || this -> hour < 0 || this -> minute < 0 || this -> minute > 59 || this -> second > 59 || this -> second < 0) return false;
     return true;
+}
+
+int Date::dayOfMonth(const int &month, const int &year){
+    switch (month)
+    {
+        case 2:
+            return (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) ? 29 : 28;
+        case 4: case 6: case 9: case 11:
+            return 30;
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            return 31;
+        default:
+            return 0;
+    }
+    return -1;
+}
+
+int Date::DATEDIFF(const Date &A, const Date &B){
+    int dayA = A.day, dayB = B.day, result = 0;
+    int hour = 0;
+    for (int i = 0; i < A.month;i++) dayA += Date::dayOfMonth(i, A.year);
+    for (int i = 0; i < B.month;i++) dayB += Date::dayOfMonth(i, B.year);
+    if (A.year == B.year) {
+        if (dayA > dayB) hour = ((A.hour*3600 + A.minute*60 + A.second) > (B.hour*3600 + B.minute*60 + B.second)) ? 1 : 0;
+        else hour = ((A.hour*3600 + A.minute*60 + A.second) >= (B.hour*3600 + B.minute*60 + B.second)) ? 0 : -1;
+        return fabs(dayA - dayB) + hour;
+    }
+    if (A.year < B.year){
+        dayA = 365 + Date::dayOfMonth(2, A.year) - 28 - dayA;
+        hour = ((A.hour*3600 + A.minute*60 + A.second) <= (B.hour*3600 + B.minute*60 + B.second)) ? 0 : -1;
+        for (int i = A.year + 1;i < B.year;i++) result += 365 + Date::dayOfMonth(2, i) - 28;
+    }else{
+        dayB = 365 + Date::dayOfMonth(2, B.year) - dayB;
+        hour = ((A.hour*3600 + A.minute*60 + A.second) >= (B.hour*3600 + B.minute*60 + B.second)) ? 0 : -1;
+        for (int i = B.year + 1;i < A.year;i++) result += 365 + Date::dayOfMonth(2, i) - 28;
+    }
+    return result + dayA + dayB + hour;
 }
 
 Date Date::getCurrentDate(){
