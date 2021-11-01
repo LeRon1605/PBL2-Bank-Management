@@ -5,14 +5,14 @@ class Client{
     private:
         string ID;
         string name;
-        int gender;
+        string gender;
         string CCCD;
         Date birth;
         Date createdAt;
         Date updatedAt;
     public:
         Client();
-        Client(const string&, const string&, const int&, const string&, const Date&);
+        Client(const string&, const string&, const string &gender, const string&, const Date&);
         
         // Getter
         string getID();
@@ -32,8 +32,10 @@ class Client{
         void setCreatedAt(const Date&);
         void setUpdatedAt(const Date&);
 
-        bool isValidID();
-        bool isValidName();
+        static string formatGender(string);
+        static bool isValidGender(string);
+        static bool isValidID(string);
+        static bool isValidName(string);
         void show();
         void update(const string&, const int&, const string&, const Date&); // Name, gender, CCCD, birth
 
