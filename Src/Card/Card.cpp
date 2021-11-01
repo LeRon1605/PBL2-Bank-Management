@@ -3,15 +3,16 @@
 Card::Card(){
 
 }
-Card::Card(const string &ID, const string &IdHolder, const string &pin, const long &balance)
-{
-    this->ID = ID;
-    this->IdHolder = IdHolder;
-    this->pin = pin;
-    this->balance = balance;
+Card::Card(const Card &card){
+    this->ID = card.ID;
+    this->IdHolder = card.IdHolder;
+    this->pin = card.pin;
+    this->balance = card.balance;
     this->createdAt = Date::getCurrentDate();
     this->updatedAt = Date();
-
+}
+Card::Card(const string &ID, const string &IdHolder, const string &pin, const long &balance)
+{
     this->ID = (Card::isValidID(ID)) ? ID : "";
     this->IdHolder = (Card::isValidIdHolder(IdHolder)) ? IdHolder : "";
     this->pin =(Card::isValidPin(pin)) ? pin : "";
