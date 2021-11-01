@@ -1,15 +1,27 @@
 #include "Client.h"
-
+#include <algorithm>
 Client::Client(){
 
 }
 
-Client::Client(const string &ID, const string &name, const int &gender, const string &CCCD, const Date &birth){
-    this -> ID = ID;
-    this -> name = name;
-    this -> gender = gender;
+Client::Client(const Client &D){
+    this -> ID = D.ID;
+    this -> name = D.name;
+    this -> gender = D.gender;
+    this -> CCCD = D.CCCD;
+    this -> birth = D.birth;
+    this -> age = D.age;
+    this -> createdAt = Date::getCurrentDate();
+    this -> updatedAt = Date();
+}
+
+Client::Client(const string &ID, const string &name, const string &gender, const string &CCCD, const Date &birth){
+    this -> ID = (Client::isValidID(ID)) ? ID : "";
+    this -> name = (Client::isValidName(name)) ? name : "";
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
     this -> CCCD = CCCD;
-    this -> birth = birth;
+    this -> birth = (Date(birth).isValidDate()) ? birth : Date();
+    this -> age = this -> getAge();
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
 }
@@ -23,13 +35,18 @@ string Client::getName(){
 }
 
 string Client::getGender(){
-    if (this -> gender == 0) return "Nam";
-    else if (this -> gender == 1) return "Nu";
-    return "Khac";
+    return this -> gender;
 }
 
 string Client::getCCCD(){
     return this -> CCCD;
+}
+
+int Client::getAge(){
+    Date temp = Date(this -> birth.getDay(), this -> birth.getMonth(), Date::getCurrentDate().getYear());
+    cout << temp;
+    if (temp < Date::getCurrentDate()) return Date::getCurrentDate().getYear() - this -> birth.getYear();
+    return Date::getCurrentDate().getYear() - this -> birth.getYear() - 1;
 }
 
 Date Client::getBirth(){
@@ -45,15 +62,15 @@ Date Client::getUpdatedAt(){
 }
 
 void Client::setID(const string &ID){
-    this -> ID = ID;
+    this -> ID = (Client::isValidID(ID)) ? ID : "";
 }
 
 void Client::setName(const string &name){
-    this -> name = name;
+    this -> name = (Client::isValidName(name)) ? name : "";
 }
 
-void Client::setGender(const int &gender){
-    this -> gender = gender;
+void Client::setGender(const string &gender){
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
 }
 
 void Client::setCCCD(const string &CCCD){
@@ -61,7 +78,7 @@ void Client::setCCCD(const string &CCCD){
 }
 
 void Client::setBirth(const Date &birth){
-    this -> birth = birth;
+    this -> birth = (Date(birth).isValidDate()) ? birth : Date();;
 }
 
 void Client::setCreatedAt(const Date &createdAt){
@@ -72,19 +89,35 @@ void Client::setUpdatedAt(const Date &updatedAt){
     this -> updatedAt = updatedAt;
 }
 
-bool Client::isValidID(){
-    if (this -> ID.size() < 8) return false; // ID có độ dài là 8 số
-    for (int i = 0; i < this -> ID.size();i++){
-        if (this -> ID[i] < '0' || this -> ID[i] > '9') return false;
+string Client::formatGender(string str){
+    for_each(str.begin(), str.end(), [](char & c) {
+        c = ::tolower(c);
+    });
+    str[0] = (str[0] >= 'A' && str[0] <= 'Z') ? str[0] : str[0] - 32;
+    return str;
+}
+
+bool Client::isValidGender(string str){
+    for_each(str.begin(), str.end(), [](char & c) {
+        c = ::tolower(c);
+    });
+    if (str != "male" && str != "female" && str != "other") return false;
+    return true;
+}
+
+bool Client::isValidID(const string &str){
+    if (str.size() != 8) return false; // ID có độ dài là 8 số
+    for (int i = 0; i < str.size();i++){
+        if (str[i] < '0' || str[i] > '9') return false;
     }
     return true;
 }
 
-bool Client::isValidName(){
-    if (this -> name.size() < 3) return false; // Tên có ít nhất 3 kí tự
-    for (int i = 0;i < this -> name.size();i++){
-        if (this -> name[i] == ' ') continue;
-        if ((this -> name[i] < 'a' || this -> name[i] > 'z') && (this -> name[i] < 'A' || this -> name[i] > 'Z')) return false;
+bool Client::isValidName(const string &str){
+    if (str.size() < 3) return false; // Tên có ít nhất 3 kí tự
+    for (int i = 0;i < str.size();i++){
+        if (str[i] == ' ') continue;
+        if ((str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z')) return false;
     }
     return true;
 }
@@ -92,15 +125,21 @@ bool Client::isValidName(){
 void Client::show(){
     cout << "ID: " << this -> ID << endl;
     cout << "Name: " << this -> name << endl;
-    cout << "Birth: " << this -> birth << endl;
-    cout << "Created At: " << this -> createdAt << endl;
+    cout << "Gender: " << this -> gender << endl;
+    cout << "Age: " << this -> age << endl;
+    cout << "Birth: " << this -> birth;
+    cout << "CCCD: " << this -> CCCD << endl;
+    cout << "Created At: " << this -> createdAt;
+    if (this -> updatedAt.isValidDate())
+        cout << "Updated At: " << this -> updatedAt;
 }
 
-void Client::update(const string &name, const int &gender, const string &CCCD, const Date &birth){
-    this -> name = name;
-    this -> gender = gender;
+void Client::update(const string &name, const string &gender, const string &CCCD, const Date &birth){
+    this -> name = (Client::isValidName(name)) ? name : "";
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
     this -> CCCD = CCCD;
-    this -> birth = birth;
+    this -> birth = (Date(birth).isValidDate()) ? birth : Date();
+    this -> age = this -> getAge();
     this -> updatedAt = Date::getCurrentDate();
 }
 
@@ -108,34 +147,37 @@ const Client& Client::operator=(const Client &C){
     this -> ID = C.ID;
     this -> name = C.name;
     this -> gender = C.gender;
-    this -> CCCD = CCCD;
-    this -> birth = birth;
-    this -> createdAt = C.updatedAt;
+    this -> CCCD = C.CCCD;
+    this -> birth = C.birth;
+    this -> age = C.age;
+    this -> createdAt = C.createdAt;
     this -> updatedAt = C.updatedAt;
     return (*this);
 }
 
 istream& operator>>(istream &in, Client &D){
-    cout << "Type Clients's ID: ";
-    in >> D.ID;
-    while (!D.isValidID()){
-        cout << "Invalid ID, type again: ";
-        in >> D.ID;
-    }
     cout << "Type Clients's name: ";
     fflush(stdin);
     getline(in, D.name);
-    while (!D.isValidName()){
+    while (!Client::isValidName(D.name)){
         cout << "Invalid Name, type again: ";
         fflush(stdin);
         getline(in, D.name);
     }
-    cout << "Type Client's gender(number): ";
-    in >> D.gender;
+    cout << "Type Client's gender(Male/Female/Other): ";
+    fflush(stdin);
+    cin >> D.gender;
+    while (!Client::isValidGender(D.gender)){
+        cout << "Invalid gender, type again: ";
+        fflush(stdin);
+        cin >> D.gender;
+    }
+    D.gender = Client::formatGender(D.gender);
     cout << "Type Client's CCCD: ";
     in >> D.CCCD;
     cout << "Type Client's birth(dd-mm-yyyy): ";
     cin >> D.birth;
+    D.age = D.getAge();
     D.createdAt = Date::getCurrentDate();
     D.updatedAt = Date();
     return in;
@@ -144,7 +186,8 @@ istream& operator>>(istream &in, Client &D){
 ostream& operator<<(ostream &out, const Client &C){
     out << "ID: " << C.ID << endl;
     out << "Name: " << C.name << endl;
-    out << "Gender: " << Client(C).getGender() << endl;
+    out << "Gender: " << C.gender << endl;
+    cout << "Age: " << C.age << endl;
     out << "Birth: " << C.birth;
     out << "CCCD: " << C.CCCD << endl;
     out << "Created At: " << C.createdAt;
