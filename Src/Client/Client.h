@@ -1,24 +1,27 @@
 #ifndef CLIENT_H
 #define CLIENT_H
-#include "../Datetime/Datetime.h"
+#include "Datetime.h"
 class Client{
     private:
         string ID;
         string name;
-        int gender;
+        string gender;
         string CCCD;
+        int age;
         Date birth;
         Date createdAt;
         Date updatedAt;
     public:
         Client();
-        Client(const string&, const string&, const int&, const string&, const Date&);
+        Client(const Client&);
+        Client(const string&, const string&, const string &gender, const string&, const Date&);
         
         // Getter
         string getID();
         string getName();
         string getGender();
         string getCCCD();
+        int getAge();
         Date getBirth();
         Date getCreatedAt();
         Date getUpdatedAt();
@@ -26,16 +29,18 @@ class Client{
         // Setter
         void setID(const string&);
         void setName(const string&);
-        void setGender(const int&);
+        void setGender(const string&);
         void setCCCD(const string&);
         void setBirth(const Date&);
         void setCreatedAt(const Date&);
         void setUpdatedAt(const Date&);
 
-        bool isValidID();
-        bool isValidName();
+        static string formatGender(string);
+        static bool isValidGender(string);
+        static bool isValidID(const string&);
+        static bool isValidName(const string&);
         void show();
-        void update(const string&, const int&, const string&, const Date&); // Name, gender, CCCD, birth
+        void update(const string&, const string&, const string&, const Date&); // Name, gender, CCCD, birth
 
         const Client& operator=(const Client&);
         friend ostream& operator<<(ostream&, const Client&);
