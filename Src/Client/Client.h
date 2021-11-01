@@ -35,8 +35,8 @@ class Client{
 
         static string formatGender(string);
         static bool isValidGender(string);
-        static bool isValidID(string);
-        static bool isValidName(string);
+        static bool isValidID(const string&);
+        static bool isValidName(const string&);
         void show();
         void update(const string&, const string&, const string&, const Date&); // Name, gender, CCCD, birth
 

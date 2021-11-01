@@ -96,7 +96,7 @@ bool Client::isValidGender(string str){
     return true;
 }
 
-bool Client::isValidID(string str){
+bool Client::isValidID(const string &str){
     if (str.size() != 8) return false; // ID có độ dài là 8 số
     for (int i = 0; i < str.size();i++){
         if (str[i] < '0' || str[i] > '9') return false;
@@ -104,7 +104,7 @@ bool Client::isValidID(string str){
     return true;
 }
 
-bool Client::isValidName(string str){
+bool Client::isValidName(const string &str){
     if (str.size() < 3) return false; // Tên có ít nhất 3 kí tự
     for (int i = 0;i < str.size();i++){
         if (str[i] == ' ') continue;
