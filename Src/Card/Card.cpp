@@ -3,29 +3,36 @@
 Card::Card(){
 
 }
-Card::Card(const string &IdAccount, const string &IdHolder, const string &pin, const int &balance)
+Card::Card(const string &ID, const string &IdHolder, const string &pin, const long &balance)
 {
-    this->IdAccount = IdAccount;
+    this->ID = ID;
     this->IdHolder = IdHolder;
     this->pin = pin;
     this->balance = balance;
     this->createdAt = Date::getCurrentDate();
     this->updatedAt = Date();
+
+    this->ID = (Card::isValidID(ID)) ? ID : "";
+    this->IdHolder = (Card::isValidIdHolder(IdHolder)) ? IdHolder : "";
+    this->pin =(Card::isValidPin(pin)) ? pin : "";
+    this->balance = balance;
+    this->createdAt = Date::getCurrentDate();
+    this->updatedAt = Date();
 }
 //Getter
-string Card::getIdAccount()
+string Card::getID()
 {
-    return this->IdAccount;
+    return this->ID;
 }
 string Card::getIdHolder()
 {
     return this->IdHolder;
 }
-string Card::getpin()
+string Card::getPin()
 {
     return this->pin;
 }
-int Card::getBalance()
+long Card::getBalance()
 {
     return this->balance;
 }
@@ -38,16 +45,16 @@ Date Card::getUpdatedAt()
     return this->updatedAt;
 }
 //Setter
-void Card::setIdAccount(const string &IdAccount){
-    this->IdAccount = IdAccount;
+void Card::setID(const string &ID){
+    this->ID = ID;
 }
 void Card::setIdHolder(const string &IdHolder){
     this->IdHolder = IdHolder;
 }
-void Card::setpin(const string &pin){
+void Card::setPin(const string &pin){
     this->pin = pin;
 }
-void Card::setBalance(const int &balance){
+void Card::setBalance(const long &balance){
     this->balance = balance;
 }
 void Card::setCreatedAt(const Date &createdAt){
@@ -58,7 +65,7 @@ void Card::setUpdatedAt(const Date &updatedAt){
 }
 
 const Card& Card::operator=(const Card &card){
-    this->IdAccount = card.IdAccount;
+    this->ID = card.ID;
     this->IdHolder = card.IdHolder;
     this->pin = card.pin;
     this->balance = card.balance;
@@ -68,21 +75,21 @@ const Card& Card::operator=(const Card &card){
 }
 //input
 istream& operator>>(istream &in, Card &card){
-    cout << "Type Card's IdAccount: ";
-    in >> card.IdAccount;
-    while (!card.isValidIdAccount()){
+    cout << "Type Card's ID: ";
+    in >> card.ID;
+    while (!card.isValidID(card.ID)){
         cout << "Invalid ID, type again: ";
-        in >> card.IdAccount;
+        in >> card.ID;
     }
     cout << "Type Card's IdHolder: ";
     in >> card.IdHolder;
-    while (!card.isValidIdHolder()){
+    while (!card.isValidIdHolder(card.IdHolder)){
         cout << "Invalid IdHolder, type again: ";
         in >> card.IdHolder;
     }
     cout << "Type Card's Pin: ";
     in >> card.pin;
-    while (!card.isValidPin()){
+    while (!card.isValidPin(card.pin)){
         cout << "Invalid pin, type again: ";
         in >> card.pin;
     }
@@ -94,7 +101,7 @@ istream& operator>>(istream &in, Card &card){
 }
 //output
 ostream& operator<<(ostream &out, const Card &card){
-    out << "IdAccount: " << card.IdAccount << endl;
+    out << "ID: " << card.ID << endl;
     out << "IdHolder: " << card.IdHolder << endl;
     out << "Pin: " << card.pin << endl;
     out << "Balance: " << Card(card).getBalance() << endl;
@@ -103,33 +110,36 @@ ostream& operator<<(ostream &out, const Card &card){
         out << "Updated At: " << card.updatedAt;
     return out;
 }
-bool Card::isValidIdAccount(){
-    if (this->IdAccount.size() < 16) return false; // IdAccount có độ dài là 16 số
-    for (int i = 0; i < this->IdAccount.size();i++){
-        if (this->IdAccount[i] < '0' || this->IdAccount[i] > '9') return false;
+bool Card::isValidID(const string &str){
+    if (str.size() != 12) return false; // ID có độ dài là 8 số
+    for (int i = 0; i < str.size();i++){
+        if (str[i] < '0' || str[i] > '9') return false;
     }
     return true;
 }
-bool Card::isValidIdHolder(){
-    if (this->IdHolder.size() < 10) return false; // IdHolder có độ dài là 10 số
-    for (int i = 0; i < this->IdHolder.size();i++){
-        if (this->IdHolder[i] < '0' || this->IdHolder[i] > '9') return false;
+bool Card::isValidIdHolder(const string &str){
+    if (str.size() != 8) return false; // ID có độ dài là 8 số
+    for (int i = 0; i < str.size();i++){
+        if (str[i] < '0' || str[i] > '9') return false;
     }
     return true;
 }
-bool Card::isValidPin(){
-    if (this->pin.size() < 6) return false; // IdHolder có độ dài là 6 số
-    for (int i = 0; i < this->pin.size();i++){
-        if (this->pin[i] < '0' || this->pin[i] > '9') return false;
+bool Card::isValidPin(const string &str){
+    if (str.size() != 6) return false; // ID có độ dài là 8 số
+    for (int i = 0; i < str.size();i++){
+        if (str[i] < '0' || str[i] > '9') return false;
     }
     return true;
 }
+
 void Card::show(){
-    cout << "IdAccount: " << this->IdAccount << endl;
+    cout << "ID: " << this->ID << endl;
     cout << "IdHolder: " << this->IdHolder << endl;
     cout << "Pin: " << this->pin << endl;
     cout << "Created At: " << this->createdAt << endl;
     cout << "Update At: " << this->updatedAt << endl;
+    if (this -> updatedAt.isValidDate())
+        cout << "Updated At: " << this -> updatedAt;
 }
 void Card::showBalance(){
     cout << "Balance: " << this->balance << endl;

@@ -3,42 +3,41 @@
 #include "../Datetime/Datetime.h"
 class Card{
     private:
-        string IdAccount;
+        string ID;
         string IdHolder;
         string pin;
-        int balance;
+        long balance;
         Date createdAt;
         Date updatedAt;
     public:
         Card();
-        Card(const string&, const string&, const string&, const int&);
+        Card(const string&, const string&, const string&, const long&);
         
         // Getter
-        string getIdAccount();
+        string getID();
         string getIdHolder();
-        string getpin();
-        int getBalance();
+        string getPin();
+        long getBalance();
         Date getCreatedAt();
         Date getUpdatedAt();
         
         // Setter
-        void setIdAccount(const string&);
+        void setID(const string&);
         void setIdHolder(const string&);
-        void setpin(const string&);
-        void setBalance(const int&);
+        void setPin(const string&);
+        void setBalance(const long&);
         void setCreatedAt(const Date&);
         void setUpdatedAt(const Date&);
         
-        bool isValidIdAccount();
-        bool isValidIdHolder();
-        bool isValidPin();
+        bool isValidID(const string&);
+        bool isValidIdHolder(const string&);
+        bool isValidPin(const string&);
         void show();
         void showBalance();
-        void update( const string&,const int& ); // update pin , balance
+        void update( const string&,const long& ); // update pin , balance
 
         const Card& operator=(const Card&);
         friend ostream& operator<<(ostream&, const Card&);
         friend istream& operator>>(istream&, Card&);
-
 };
 #endif
