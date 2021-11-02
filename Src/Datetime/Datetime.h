@@ -10,16 +10,21 @@ class Date{
 		Date(const int& = -1, const int& = -1, const int& = -1, const int& = -1, const int& = -1, const int& = -1);
 		Date(const char*);
 		Date(const Date&);
+		// Getter
 		int getDay();
 		int getMonth();
 		int getYear();
 		int getHour();
 		int getMinute();
 		int getSecond();
+
 		bool isLeapYear(); // Kiểm tra năm nhuận
 		bool isValidDate();
 		bool isValidHour();
+		
 		static Date getCurrentDate();
+		static int dayOfMonth(const int&, const int&);
+		static int DATEDIFF(const Date&, const Date&);
 		void toDate(const char*); // Convert string sang Date
 
 		const Date& operator=(const Date&);
