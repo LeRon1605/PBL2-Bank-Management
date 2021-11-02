@@ -1,46 +1,52 @@
 #ifndef CARD_H
 #define CARD_H
-#include "../Datetime/Datetime.h"
+#include "../Client/Client.h"
 class Card{
     private:
         string ID;
-        string IdHolder;
+        Client holder;
         string pin;
         long balance;
         Date createdAt;
         Date updatedAt;
+        Date pinUpdatedAt;
     public:
         //  Constructor
         Card();
         Card(const Card&);
-        Card(const string&, const string&, const string&, const long&);
+        Card(const string&, const Client&, const string&, const long&);
+        Card(const string&, const Client&, const string&, const long&, const Date&, const Date& = "", const Date& = "");
+        ~Card();
+
         // Getter
         string getID();
-        string getIdHolder();
+        Client getHolder();
         string getPin();
         long getBalance();
         Date getCreatedAt();
         Date getUpdatedAt();
+        Date getPinUpdatedAt();
+
         // Setter
         void setID(const string&);
-        void setIdHolder(const string&);
+        void setHolder(const Client&);
         void setPin(const string&);
         void setBalance(const long&);
         void setCreatedAt(const Date&);
         void setUpdatedAt(const Date&);
         
-        bool isValidID(const string&);
-        bool isValidIdHolder(const string&);
-        bool isValidPin(const string&);
+        static bool isValidID(const string&);
+        static bool isValidPin(const string&);
         void show();
         void showBalance();
-        void update(const string&, const long&); // update pin , balance
+        bool checkPin(const string&);
+        int withdraw(const long&);
+        void deposit(const long&);
+        void updatePin(const string&, const string&);
 
         const Card& operator=(const Card&);
         friend ostream& operator<<(ostream&, const Card&);
         friend istream& operator>>(istream&, Card&);
 
-        bool checkPin(const string&);
-        void updatePin(const string&);
 };
 #endif
