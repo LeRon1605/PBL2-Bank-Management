@@ -26,6 +26,17 @@ Client::Client(const string &ID, const string &name, const string &gender, const
     this -> updatedAt = Date();
 }
 
+Client::Client(const string &ID, const string &name, const string &gender, const string &CCCD, const Date &birth, const Date &createdAt, const Date &updatedAt){
+    this -> ID = (Client::isValidID(ID)) ? ID : "";
+    this -> name = (Client::isValidName(name)) ? name : "";
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
+    this -> CCCD = CCCD;
+    this -> birth = (Date(birth).isValidDate()) ? birth : Date();
+    this -> age = this -> getAge();
+    this -> createdAt = (Date(createdAt).isValidDate()) ? createdAt : Date();
+    this -> updatedAt = (Date(updatedAt).isValidDate()) ? updatedAt : Date();
+}
+
 string Client::getID(){
     return this -> ID;
 }
@@ -44,7 +55,6 @@ string Client::getCCCD(){
 
 int Client::getAge(){
     Date temp = Date(this -> birth.getDay(), this -> birth.getMonth(), Date::getCurrentDate().getYear());
-    cout << temp;
     if (temp < Date::getCurrentDate()) return Date::getCurrentDate().getYear() - this -> birth.getYear();
     return Date::getCurrentDate().getYear() - this -> birth.getYear() - 1;
 }
@@ -140,6 +150,15 @@ void Client::update(const string &name, const string &gender, const string &CCCD
     this -> CCCD = CCCD;
     this -> birth = (Date(birth).isValidDate()) ? birth : Date();
     this -> age = this -> getAge();
+    this -> updatedAt = Date::getCurrentDate();
+}
+
+void Client::update(const Client &C){
+    this -> name = C.name;
+    this -> gender = C.gender;
+    this -> CCCD = C.CCCD;
+    this -> birth = C.birth;
+    this -> age = C.age;
     this -> updatedAt = Date::getCurrentDate();
 }
 

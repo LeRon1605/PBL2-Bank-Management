@@ -15,7 +15,8 @@ class Client{
         Client();
         Client(const Client&);
         Client(const string&, const string&, const string &gender, const string&, const Date&);
-        
+        Client(const string&, const string&, const string &gender, const string&, const Date&, const Date&, const Date& = "");
+
         // Getter
         string getID();
         string getName();
@@ -41,6 +42,7 @@ class Client{
         static bool isValidName(const string&);
         void show();
         void update(const string&, const string&, const string&, const Date&); // Name, gender, CCCD, birth
+        void update(const Client&);
 
         const Client& operator=(const Client&);
         friend ostream& operator<<(ostream&, const Client&);
