@@ -156,8 +156,8 @@ int Date::DATEDIFF(const Date &A, const Date &B){
     for (int i = 0; i < A.month;i++) dayA += Date::dayOfMonth(i, A.year);
     for (int i = 0; i < B.month;i++) dayB += Date::dayOfMonth(i, B.year);
     if (A.year == B.year) {
-        if (dayA > dayB) hour = ((A.hour*3600 + A.minute*60 + A.second) > (B.hour*3600 + B.minute*60 + B.second)) ? 1 : 0;
-        else hour = ((A.hour*3600 + A.minute*60 + A.second) >= (B.hour*3600 + B.minute*60 + B.second)) ? 0 : -1;
+        if (dayA > dayB) hour = ((A.hour*3600 + A.minute*60 + A.second) >= (B.hour*3600 + B.minute*60 + B.second)) ? 0 : -1;
+        else hour = ((A.hour*3600 + A.minute*60 + A.second) <= (B.hour*3600 + B.minute*60 + B.second)) ? 0 : -1;
         return fabs(dayA - dayB) + hour;
     }
     if (A.year < B.year){
