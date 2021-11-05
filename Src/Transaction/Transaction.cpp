@@ -33,3 +33,62 @@ Transaction::~Transaction(){
 
 }
 
+string Transaction::getID(){
+    return this -> ID;
+}
+
+Card Transaction::getSrcAccount(){
+    return this -> srcAccount;
+}
+
+long Transaction::getCash(){
+    return this -> cash;
+}
+
+int Transaction::getFee(){
+    return this -> fee;
+}
+
+int Transaction::getStatus(){
+    return this -> status;
+}
+
+string Transaction::getStrStatus(){
+    return (this -> status) ? "Success" : "Failure";
+}
+
+Date Transaction::getDate(){
+    return this -> date;
+}
+
+void Transaction::setID(const string &ID){
+    this -> ID = (Transaction::isValidID(ID)) ? ID : "";
+}
+
+void Transaction::setSrcAccount(const Card &C){
+    this -> SrcAccount = C;
+}
+
+void Transaction::setCash(const long &cash){
+    this -> cash = cash;
+}
+
+void Transaction::setFee(const int &fee){
+    this -> fee = fee;
+}
+
+void Transaction::setStatus(const bool &status){
+    this -> status = status;
+}
+
+void Transaction::setDate(const Date &date){
+    this -> date = date;
+}
+
+bool Transaction::isValidID(const string &str){
+    if (str.size() != 8) return false;
+    for (int i = 0; i < str.size();i++){
+        if (str[i] < '0' || str[i] > '9') return false;
+    }
+    return true;
+}

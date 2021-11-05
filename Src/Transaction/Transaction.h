@@ -6,7 +6,7 @@ class Transaction{
         string ID; 
         Card srcAccount; // Tài khoản thực hiện giao dịch 
         long cash; 
-        float fee;
+        int fee;
         bool status; // true: Thành công, false: Thất bại
         Date date;
     public:
@@ -20,20 +20,21 @@ class Transaction{
         string getID();
         Card getSrcAccount();
         long getCash();
-        float getFee();
-        string getStatus();
+        int getFee();
+        int getStatus();
+        string getStrStatus();
         Date getDate();
 
         void setID(const string&);
         void setSrcAccount(const Card&);
         void setCash(const long&);
-        void setFee(const float&);
+        void setFee(const int&);
         void setStatus(const bool&);
         void setDate(const Date&);
 
         static bool isValidID(const string&);
         virtual void show();
-        virtual float calFee();
+        virtual int calFee();
         
         const Transaction& operator=(const Transaction&);
         friend ostream& operator<<(ostream&, const Transaction&);
