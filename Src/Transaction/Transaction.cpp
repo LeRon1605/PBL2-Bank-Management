@@ -4,20 +4,22 @@ Transaction::Transaction(){
 
 }
 
-Transaction::Transaction(const string &ID, const Card &srcAccount, const long &cash, const float &fee, const bool &status, const Date &date){
+Transaction::Transaction(const string &ID, Card *srcAccount, const long &cash, const float &fee, const bool &status, const Date &date){
     this -> ID = ID;
-    this -> srcAccount = (Card::isValidID(Card(srcAccount).getID())) ? srcAccount : Card();
+    this -> srcAccount = (Card::isValidID(Card(*srcAccount).getID())) ? srcAccount : nullptr;
     this -> cash = (cash > 0) ? cash : 0;
     this -> fee = (fee > 0) ? fee : 0;
     this -> status = status;
     this -> date = (Date(date).isValidDate()) ? date : Date();
 }
 
-Transaction::Transaction(const string &ID, const Card &srcAccount, const long &cash){
+Transaction::Transaction(const string &ID, Card *srcAccount, const long &cash){
     this -> ID = ID;
-    this -> srcAccount = (Card::isValidID(Card(srcAccount).getID())) ? srcAccount : Card();
+    this -> srcAccount = srcAccount;
     this -> cash = (cash > 0) ? cash : 0;
     this -> date = Date::getCurrentDate();
+    this -> status = false;
+    this -> fee = 0;
 }
 
 Transaction::Transaction(const Transaction &T){
@@ -38,7 +40,7 @@ string Transaction::getID(){
 }
 
 Card Transaction::getSrcAccount(){
-    return this -> srcAccount;
+    return *(this -> srcAccount);
 }
 
 long Transaction::getCash(){
@@ -65,8 +67,8 @@ void Transaction::setID(const string &ID){
     this -> ID = (Transaction::isValidID(ID)) ? ID : "";
 }
 
-void Transaction::setSrcAccount(const Card &C){
-    this -> SrcAccount = C;
+void Transaction::setSrcAccount(Card *C){
+    this -> srcAccount = C;
 }
 
 void Transaction::setCash(const long &cash){
@@ -85,10 +87,27 @@ void Transaction::setDate(const Date &date){
     this -> date = date;
 }
 
+void Transaction::show(){
+    cout << "Transaction ID: " << this -> ID << endl;
+    cout << "Source Account: " << (*(this -> srcAccount)).getID() << endl;
+    cout << "Amount: " << this -> cash << endl;
+    cout << "Fee: " << this -> fee << endl;
+    cout << "Status: " << this -> getStrStatus() << endl;
+    cout << "Time: " << this -> date << endl;
+}
+
 bool Transaction::isValidID(const string &str){
     if (str.size() != 8) return false;
     for (int i = 0; i < str.size();i++){
         if (str[i] < '0' || str[i] > '9') return false;
     }
     return true;
+}
+
+int Transaction::calFee(){
+    return 0;
+}
+
+void Transaction::makeTransaction(const string &pin){
+
 }

@@ -133,7 +133,7 @@ ostream& operator<<(ostream &out, const Card &card){
     out << "ID: " << card.ID << endl;
     out << "IDholder: " << Client(card.holder).getID() << endl;
     out << "Pin: " << card.pin << endl;
-    out << "Balance: " << Card(card).getBalance() << endl;
+    out << "Balance: " << Card(card).getBalance() << " VND" << endl;
     out << "Created At: " << card.createdAt;
     if (Date(card.updatedAt).isValidDate())
         out << "Updated At: " << card.updatedAt;
@@ -162,7 +162,7 @@ void Card::show(){
     cout << "ID: " << this -> ID << endl;
     cout << "IDholder: " << this -> holder.getID() << endl;
     cout << "Pin: " << this -> pin << endl;
-    cout << "Balance: " << this -> balance << endl;
+    cout << "Balance: " << this -> balance << " VND" <<  endl;
     cout << "Created At: " << this -> createdAt << endl;
     if (this -> updatedAt.isValidDate())
         cout << "Updated At: " << this -> updatedAt;
@@ -172,11 +172,6 @@ void Card::show(){
 
 void Card::showBalance(){
     cout << "Balance: " << this -> balance << endl;
-}
-
-bool Card::checkPin(const string &str){
-    if (this -> pin == str) return true;
-    else return false;
 }
 
 int Card::withdraw(const long &money){
@@ -193,7 +188,7 @@ void Card::deposit(const long &money){
 }
 
 void Card::updatePin(const string &currentPin, const string &newPin){
-    if (this -> checkPin(currentPin))
+    if (this -> pin == currentPin)
         if (Card::isValidPin(pin)){
             if (Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate()) >= 2 && Date::getCurrentDate() > this -> pinUpdatedAt){
                 this -> pin = pin;

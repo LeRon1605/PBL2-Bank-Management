@@ -39,7 +39,6 @@ class Card{
         static bool isValidPin(const string&);
         void show();
         void showBalance();
-        bool checkPin(const string&);
         int withdraw(const long&);
         void deposit(const long&);
         void updatePin(const string&, const string&);
