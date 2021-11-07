@@ -15,18 +15,16 @@ class LinkedList{
 
         int indexOf(const T); // Index đầu của T
         int indexOf(const string&); // ID
-        // int lastIndexOf(const T); // Index cuối cùng của T
-        // int lastIndexOf(const string&); // ID
+        int lastIndexOf(const T); // Index cuối cùng của T
+        int lastIndexOf(const string&); // ID
         bool insertAt(const T, const int&);
         bool add(const T); // Thêm vào đầu
         bool append(const T); // Thêm vào cuối
-        // bool removeAt(const &int); // Xóa phần tử tại vị trí index
-        // bool remove(const T); // Xóa phần tử T đầu tiên
-        // bool remove(const string&); // Xóa phần tử bằng ID
-        // bool removeAll(const T);
-        // bool removeAll(const string&);
-        // bool removeTail(); // Xóa phần tử cuối
-        // bool removeHead(); // Xóa phần tử đầu
+        bool removeAt(const int&); // Xóa phần tử tại vị trí index
+        bool remove(const T); // Xóa phần tử T đầu tiên
+        bool remove(const string&); // Xóa phần tử bằng ID
+        bool removeTail(); // Xóa phần tử cuối
+        bool removeHead(); // Xóa phần tử đầu
         int getLength(); //
         bool isEmpty(); // Kiểm tra xem danh sách có rỗng hay không
         // bool contains(const T); // Kiểm tra xem có tồn tại phần tử T hay không
@@ -80,15 +78,15 @@ int LinkedList<T>::indexOf(const string &ID){
     return -1;
 }
 
-// template <class T>
-// int LinkedList<T>::lastIndexOf(const T element){
+template <class T>
+int LinkedList<T>::lastIndexOf(const T element){
 
-// }
+}
 
-// template <class T>
-// int LinkedList<T>::lastIndexOf(const string &ID){
+template <class T>
+int LinkedList<T>::lastIndexOf(const string &ID){
 
-// }
+}
 
 template <class T>
 bool LinkedList<T>::add(const T element){
@@ -123,8 +121,8 @@ bool LinkedList<T>::insertAt(const T element, const int &index){
         newNode -> setNextNode(ptr);
         ptr -> getPrev() -> setNextNode(newNode);
         ptr -> setPrevNode(newNode);
+        this -> length += 1;
     }
-    this -> length += 1;
     return true;
 }
 template <class T>
@@ -143,15 +141,62 @@ bool LinkedList<T>::append(const T element){
     return true;
 }
 
-// template <class T>
-// bool LinkedList<T>::remove(const T element){
+template <class T> 
+bool LinkedList<T>::removeHead(){
+    if (this -> head != nullptr){
+        Node<T> *temp = this -> head;
+        this -> head = this -> head -> getNext();
+        this -> head -> setPrevNode(nullptr);
+        this -> length -= 1;
+        return true;
+    }
+    return false;
+}
 
-// }
+template <class T>
+bool LinkedList<T>::removeTail(){
+    return false;
+}
 
-// template <class T>
-// bool LinkedList<T>::removeAt(const int &index){
+template <class T>
+bool LinkedList<T>::remove(const T element){
+    int index = this -> indexOf(element);
+    if (index == -1) return false;
+    else{
+        this -> removeAt(index);
+        return true;
+    }
+}
 
-// }
+template <class T>
+bool LinkedList<T>::remove(const string &ID){
+    return false; 
+}  
+
+template <class T>
+bool LinkedList<T>::removeAt(const int &index){
+    if (index < 0 || index >= this -> length) return false;
+    else{
+        if (index == 0) {
+            this -> removeHead();
+            return true;
+        }
+        if (index == this -> length - 1) {
+            this -> removeTail();
+            return true;
+        }
+        int i = 0;
+        Node<T> *ptr = this -> head;
+        while (i != index){
+            i++;
+            ptr = ptr -> getNext();
+        }
+        ptr -> getPrev() -> setNextNode(ptr -> getNext());
+        ptr -> getNext() -> setPrevNode(ptr -> getPrev());
+        this -> length -= 1;
+        return true;
+    }
+}
 
 template <class T>
 int LinkedList<T>::getLength(){
@@ -165,6 +210,11 @@ bool LinkedList<T>::isEmpty(){
 
 // template <class T>
 // bool LinkedList<T>::contains(const T element){
+
+// }
+
+// template <class T>
+// bool LinkedList<T>::contains(const string &ID){
 
 // }
 template <class T>

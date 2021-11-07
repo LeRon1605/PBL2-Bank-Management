@@ -23,6 +23,8 @@ int main(){
 	listCard.add(C);
 	listCard.insertAt(D, 0);
 	listCard[1] = D;
+	listCard.remove(C);
+	cout << listCard.getLength();
 	listCard.show();
 	cout << listCard.indexOf("102200000003") << endl;
 	return 0;
