@@ -15,5 +15,7 @@ class Withdraw: public Transaction
         void show();
         int calFee();
         void makeTransaction(const string&);
+
+        const Withdraw& operator=(const Withdraw&);
 };
 #endif

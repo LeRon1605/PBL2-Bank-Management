@@ -88,6 +88,7 @@ void Transaction::setDate(const Date &date){
 }
 
 void Transaction::show(){
+
     cout << "Transaction ID: " << this -> ID << endl;
     cout << "Source Account: " << (*(this -> srcAccount)).getID() << endl;
     cout << "Amount: " << this -> cash << endl;
@@ -110,4 +111,15 @@ int Transaction::calFee(){
 
 void Transaction::makeTransaction(const string &pin){
 
+}
+
+const Transaction& Transaction::operator=(const Transaction &T){
+    cout << "Transaction this";
+    this -> ID = T.ID;
+    this -> srcAccount = T.srcAccount;
+    this -> cash = T.cash;
+    this -> fee = T.fee;
+    this -> status = T.status;
+    this -> date = T.date;
+    return (*this);
 }

@@ -16,6 +16,15 @@ Withdraw::Withdraw(const string &ID, Card *srcAccount, const long &cash)
 
 }
 
+Withdraw::Withdraw(const Withdraw &D){
+    this -> ID = D.ID;
+    this -> srcAccount = D.srcAccount;
+    this -> cash = D.cash;
+    this -> fee = D.fee;
+    this -> status = D.status;
+    this -> date = D.date;
+}
+
 Withdraw::~Withdraw(){
 
 }
@@ -59,4 +68,15 @@ void Withdraw::makeTransaction(const string &pin){
             cout << "Require at least 50,000 VND to withdraw" << endl;
     else 
         cout << "Pin is not correct" << endl;
+}
+
+const Withdraw& Withdraw::operator=(const Withdraw &W){
+    cout << "Withdraw::operator";
+    this -> ID = W.ID;
+    this -> srcAccount = W.srcAccount;
+    this -> cash = W.cash;
+    this -> fee = W.fee;
+    this -> status = W.status;
+    this -> date = W.date;
+    return (*this);
 }

@@ -16,6 +16,15 @@ Deposit::Deposit(const string &ID, Card *srcAccount, const long &cash)
 
 }
 
+Deposit::Deposit(const Deposit &D){
+    this -> ID = D.ID;
+    this -> srcAccount = D.srcAccount;
+    this -> cash = D.cash;
+    this -> fee = D.fee;
+    this -> status = D.status;
+    this -> date = D.date;
+}
+
 Deposit::~Deposit(){
 
 }
@@ -56,4 +65,14 @@ void Deposit::makeTransaction(const string &pin){
             cout << "Require at least 50,000 VND to Deposit" << endl;
     else 
         cout << "Pin is not correct" << endl;
+}
+
+const Deposit& Deposit::operator=(const Deposit &W){
+    this -> ID = W.ID;
+    this -> srcAccount = W.srcAccount;
+    this -> cash = W.cash;
+    this -> fee = W.fee;
+    this -> status = W.status;
+    this -> date = W.date;
+    return (*this);
 }

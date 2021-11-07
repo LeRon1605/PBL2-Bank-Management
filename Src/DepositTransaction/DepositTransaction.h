@@ -15,5 +15,7 @@ class Deposit: public Transaction
         void show();
         int calFee();
         void makeTransaction(const string&);
+        
+        const Deposit& operator=(const Deposit&);
 };
 #endif

@@ -36,5 +36,8 @@ class Transaction{
         virtual void show();
         virtual int calFee();
         virtual void makeTransaction(const string&);
+
+
+        virtual const Transaction& operator=(const Transaction&);
 };
 #endif
