@@ -4,16 +4,16 @@
 class Transfer: public Transaction
 {
     private:
-        Card *desAccount; // Tài khoản đích
+        Card desAccount; // Tài khoản đích
     public:
         Transfer();
-        Transfer(const string&, Card*, Card*, const long&, const float&, const bool&, const Date&);
-        Transfer(const string&, Card*, Card*, const long&);
+        Transfer(const string&, Card, Card, const long&, const float&, const bool&, const Date&);
+        Transfer(const string&, Card, Card, const long&);
         Transfer(const Transfer&);
 
         ~Transfer();
 
-        void setDesAccount(Card*);
+        void setDesAccount(Card);
         Card getDesAccount();
 
         void show();

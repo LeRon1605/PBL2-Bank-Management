@@ -1,6 +1,7 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 #include "../Datetime/Datetime.h"
+#include <fstream>
 class Client{
     private:
         string ID;
@@ -41,6 +42,7 @@ class Client{
         static bool isValidID(const string&);
         static bool isValidName(const string&);
         void show();
+        void input();
         void update(const string&, const string&, const string&, const Date&); // Name, gender, CCCD, birth
         void update(const Client&);
 
@@ -48,5 +50,8 @@ class Client{
         friend ostream& operator<<(ostream&, const Client&);
         friend istream& operator>>(istream&, Client&);
         bool operator==(const Client&);
+        // friend istream& operator>>(istream&, Client&);
+        friend ifstream& operator>>(ifstream&, Client&);
+        friend ofstream& operator<<(ofstream&, const Client&);
 };
 #endif
