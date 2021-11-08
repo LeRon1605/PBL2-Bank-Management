@@ -19,5 +19,6 @@ class Transfer: public Transaction
         void show();
         int calFee();
         void makeTransaction(const string&);
+        bool operator==(const Transfer&);
 };
 #endif

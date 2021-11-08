@@ -240,6 +240,12 @@ ofstream& operator<<(ofstream &out, const Client &C){
     return out;
 }
 
+bool Client::operator==(const Client &newClient){
+    if(this->ID == newClient.ID && this->name == newClient.name && this->gender == newClient.gender && this->age == newClient.age && this->birth == newClient.birth && this->CCCD == newClient.CCCD && this->createdAt == newClient.createdAt && this->updatedAt == newClient.updatedAt){
+        return true;
+    }
+    return false;
+}
 ifstream& operator>>(ifstream &in, Client &C){
     string date;
     in >> C.ID;
