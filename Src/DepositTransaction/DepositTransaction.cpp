@@ -4,13 +4,13 @@ Deposit::Deposit(){
 
 }
 
-Deposit::Deposit(const string &ID, Card *srcAccount, const long &cash, const float &fee, const bool &status, const Date &date)
+Deposit::Deposit(const string &ID, Card srcAccount, const long &cash, const float &fee, const bool &status, const Date &date)
     : Transaction(ID, srcAccount, cash, fee, status, date)
 {
 
 }
 
-Deposit::Deposit(const string &ID, Card *srcAccount, const long &cash)
+Deposit::Deposit(const string &ID, Card srcAccount, const long &cash)
     : Transaction(ID, srcAccount, cash)
 {
 
@@ -31,12 +31,12 @@ Deposit::~Deposit(){
 
 void Deposit::show(){
     cout << "Transaction ID: " << this -> ID << endl;
-    cout << "Source Account: " << (*(this -> srcAccount)).getID() << endl;
+    cout << "Source Account: " << ((this -> srcAccount)).getID() << endl;
     cout << "Amount: " << this -> cash << " VND" << endl;
     cout << "Fee: " << this -> fee << " VND" << endl;
     if (this -> status)
-        cout << "Balance: " << (*(this -> srcAccount)).getBalance() << " VND (+" << this -> cash - this -> fee << " VND)" << endl;
-    else cout << "Balance: " << (*(this -> srcAccount)).getBalance() << " VND" << endl;
+        cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND (+" << this -> cash - this -> fee << " VND)" << endl;
+    else cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND" << endl;
     cout << "Status: " << this -> getStrStatus() << endl;
     cout << "Time: " << this -> date << endl;
 }
@@ -53,9 +53,9 @@ int Deposit::calFee(){
 }
 
 void Deposit::makeTransaction(const string &pin){
-    if ((*(this -> srcAccount)).getPin() == pin)
+    if (((this -> srcAccount)).getPin() == pin)
         if (this -> cash >= 50000){
-            (*(this -> srcAccount)).deposit(this -> cash - this -> calFee());
+            ((this -> srcAccount)).deposit(this -> cash - this -> calFee());
             this -> status = true;
             this -> fee = this -> calFee();
             this -> date = Date::getCurrentDate();

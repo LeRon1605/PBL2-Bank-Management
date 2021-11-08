@@ -6,8 +6,8 @@ class Deposit: public Transaction
     private:
     public:
         Deposit();
-        Deposit(const string&, Card*, const long&, const float&, const bool&, const Date&);
-        Deposit(const string&, Card*, const long&);
+        Deposit(const string&, Card, const long&, const float&, const bool&, const Date&);
+        Deposit(const string&, Card, const long&);
         Deposit(const Deposit&);
 
         ~Deposit();

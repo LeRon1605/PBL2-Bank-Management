@@ -22,6 +22,7 @@ class Date{
 		bool isValidDate();
 		bool isValidHour();
 		
+		string toString();
 		static Date getCurrentDate();
 		static int dayOfMonth(const int&, const int&);
 		static int DATEDIFF(const Date&, const Date&);

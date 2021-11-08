@@ -1,4 +1,5 @@
 #include "Client.h"
+#include <string>
 #include <algorithm>
 Client::Client(){
 
@@ -11,7 +12,7 @@ Client::Client(const Client &D){
     this -> CCCD = D.CCCD;
     this -> birth = D.birth;
     this -> age = D.age;
-    this -> createdAt = Date::getCurrentDate();
+    this -> createdAt = D.createdAt;
     this -> updatedAt = Date();
 }
 
@@ -174,43 +175,88 @@ const Client& Client::operator=(const Client &C){
     return (*this);
 }
 
-istream& operator>>(istream &in, Client &D){
+void Client::input(){
     cout << "Type Clients's name: ";
     fflush(stdin);
-    getline(in, D.name);
-    while (!Client::isValidName(D.name)){
+    getline(cin, this -> name);
+    while (!Client::isValidName(this -> name)){
         cout << "Invalid Name, type again: ";
         fflush(stdin);
-        getline(in, D.name);
+        getline(cin, this -> name);
     }
     cout << "Type Client's gender(Male/Female/Other): ";
     fflush(stdin);
-    cin >> D.gender;
-    while (!Client::isValidGender(D.gender)){
+    cin >> this -> gender;
+    while (!Client::isValidGender(this -> gender)){
         cout << "Invalid gender, type again: ";
         fflush(stdin);
-        cin >> D.gender;
+        cin >> this -> gender;
     }
-    D.gender = Client::formatGender(D.gender);
+    this -> gender = Client::formatGender(this -> gender);
     cout << "Type Client's CCCD: ";
-    in >> D.CCCD;
+    cin >> this -> CCCD;
     cout << "Type Client's birth(dd-mm-yyyy): ";
-    cin >> D.birth;
-    D.age = D.getAge();
-    D.createdAt = Date::getCurrentDate();
-    D.updatedAt = Date();
-    return in;
+    cin >> this -> birth;
+    this -> age = this -> getAge();
+    this -> createdAt = Date::getCurrentDate();
+    this -> updatedAt = Date();
+}
+// istream& operator>>(istream &in, Client &D){
+//     cout << "Type Clients's name: ";
+//     fflush(stdin);
+//     getline(in, D.name);
+//     while (!Client::isValidName(D.name)){
+//         cout << "Invalid Name, type again: ";
+//         fflush(stdin);
+//         getline(in, D.name);
+//     }
+//     cout << "Type Client's gender(Male/Female/Other): ";
+//     fflush(stdin);
+//     cin >> D.gender;
+//     while (!Client::isValidGender(D.gender)){
+//         cout << "Invalid gender, type again: ";
+//         fflush(stdin);
+//         cin >> D.gender;
+//     }
+//     D.gender = Client::formatGender(D.gender);
+//     cout << "Type Client's CCCD: ";
+//     in >> D.CCCD;
+//     cout << "Type Client's birth(dd-mm-yyyy): ";
+//     cin >> D.birth;
+//     D.age = D.getAge();
+//     D.createdAt = Date::getCurrentDate();
+//     D.updatedAt = Date();
+//     return in;
+// }
+
+ofstream& operator<<(ofstream &out, const Client &C){
+    out << C.ID << endl;
+    out << C.name << endl;
+    out << C.gender << endl;
+    out << C.CCCD << endl;
+    out << Date(C.birth).toString() << endl;
+    out << Date(C.createdAt).toString() << endl;
+    out << Date(C.updatedAt).toString() << endl;
+    return out;
 }
 
-ostream& operator<<(ostream &out, const Client &C){
-    out << "ID: " << C.ID << endl;
-    out << "Name: " << C.name << endl;
-    out << "Gender: " << C.gender << endl;
-    cout << "Age: " << C.age << endl;
-    out << "Birth: " << C.birth;
-    out << "CCCD: " << C.CCCD << endl;
-    out << "Created At: " << C.createdAt;
-    if (Client(C).updatedAt.isValidDate())
-        out << "Updated At: " << C.updatedAt;
-    return out;
+ifstream& operator>>(ifstream &in, Client &C){
+    string date;
+    in >> C.ID;
+    in.ignore();
+    getline(in, C.name);
+    in >> C.gender;
+    in >> C.CCCD;
+    in.ignore();
+    getline(in, date);
+    cout << date << endl;
+    C.birth = Date(date.c_str());
+    getline(in, date);
+    cout << date << endl;
+    C.createdAt = Date(date.c_str());
+    in.ignore();
+    getline(in, date);
+    C.updatedAt = Date(date.c_str());
+    C.age = C.getAge();
+    return in;
 }

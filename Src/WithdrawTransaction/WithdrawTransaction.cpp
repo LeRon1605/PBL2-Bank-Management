@@ -4,13 +4,13 @@ Withdraw::Withdraw(){
 
 }
 
-Withdraw::Withdraw(const string &ID, Card *srcAccount, const long &cash, const float &fee, const bool &status, const Date &date)
+Withdraw::Withdraw(const string &ID, Card srcAccount, const long &cash, const float &fee, const bool &status, const Date &date)
     : Transaction(ID, srcAccount, cash, fee, status, date)
 {
 
 }
 
-Withdraw::Withdraw(const string &ID, Card *srcAccount, const long &cash)
+Withdraw::Withdraw(const string &ID, Card srcAccount, const long &cash)
     : Transaction(ID, srcAccount, cash)
 {
 
@@ -31,12 +31,12 @@ Withdraw::~Withdraw(){
 
 void Withdraw::show(){
     cout << "Transaction ID: " << this -> ID << endl;
-    cout << "Source Account: " << (*(this -> srcAccount)).getID() << endl;
+    cout << "Source Account: " << ((this -> srcAccount)).getID() << endl;
     cout << "Amount: " << this -> cash << " VND" << endl;
     cout << "Fee: " << this -> fee << " VND" << endl;
     if (this -> status)
-        cout << "Balance: " << (*(this -> srcAccount)).getBalance() << " VND (-" << this -> cash - this -> fee << " VND)" << endl;
-    else cout << "Balance: " << (*(this -> srcAccount)).getBalance() << " VND" << endl;
+        cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND (-" << this -> cash - this -> fee << " VND)" << endl;
+    else cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND" << endl;
     cout << "Status: " << this -> getStrStatus() << endl;
     cout << "Time: " << this -> date << endl;
 }
@@ -53,10 +53,10 @@ int Withdraw::calFee(){
 }
 
 void Withdraw::makeTransaction(const string &pin){
-    if ((*(this -> srcAccount)).getPin() == pin)
+    if (((this -> srcAccount)).getPin() == pin)
         if (this -> cash >= 50000) 
-            if ((*(this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
-                (*(this -> srcAccount)).withdraw(this -> cash + this -> calFee());
+            if (((this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
+                ((this -> srcAccount)).withdraw(this -> cash + this -> calFee());
                 this -> status = true;
                 this -> fee = calFee();
                 this -> date = Date::getCurrentDate();
