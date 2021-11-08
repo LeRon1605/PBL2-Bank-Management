@@ -2,14 +2,14 @@
 
 #### 1. SỬ DỤNG
 ##### 1.1. ĐỊNH DẠNG
-- Format kiểu dữ liệu là: dd-mm-yyyy hh:mm:ss
+- Format kiểu dữ liệu là: dd/mm/yyyy hh:mm:ss
 - `hh:mm:ss` không cần thiết phải có
-- Ví dụ: 30-04-2002
-- Ví dụ: 30-04-2002 12:00:01
+- Ví dụ: 30/04/2002
+- Ví dụ: 30/04/2002 12:00:01
 ##### 1.2. KHỞI TẠO
 `
-    DATE A = "30-04-2002 12:00:01";
-    DATE B("30-04-2002");
+    DATE A = "30/04/2002 12:00:01";
+    DATE B("30/04/2002");
     DATE C = A;
 `
 ##### 1.3. PHƯƠNG THỨC

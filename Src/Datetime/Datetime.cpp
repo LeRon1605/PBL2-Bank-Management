@@ -51,13 +51,13 @@ void Date::toDate(const char *time){
 
     // Split string dd-mm-yyyy and save data to day, month, year
     if (dateStr){
-        str = strtok(dateStr, "-");
+        str = strtok(dateStr, "/");
         while (str != NULL){
             if (col == 1) this -> day = atoi(str);
             else if (col == 2) this -> month = atoi(str);
             else if (col == 3) this -> year = atoi(str);
             col++;
-            str = strtok(NULL, "-");   		
+            str = strtok(NULL, "/");   		
         }
     }
 
@@ -135,6 +135,10 @@ bool Date::isValidHour(){
     return true;
 }
 
+string Date::toString(){
+    return to_string(this -> day) + "/" + to_string(this -> month) + "/" + to_string(this -> year) + " " + to_string(this -> hour) + ":" + to_string(this -> minute) + ":" + to_string(this -> second); 
+}
+
 int Date::dayOfMonth(const int &month, const int &year){
     switch (month)
     {
@@ -176,7 +180,7 @@ Date Date::getCurrentDate(){
     time_t now = time(0);
     static char currentDate[20];
     tm *timeinfo = localtime(&now);
-    strftime (currentDate, 20, "%d-%m-%Y %H:%M:%S", timeinfo);
+    strftime (currentDate, 20, "%d/%m/%Y %H:%M:%S", timeinfo);
     return Date(currentDate);
 }
 
@@ -185,7 +189,7 @@ ostream& operator<<(ostream &out, const Date &D){
     if (Date(D).isValidHour())
         out << setw(2) << D.hour << ":" << setw(2) << D.minute << ":" << setw(2) << D.second << " ";
     if (Date(D).isValidDate())
-        out << setw(2) << D.day << "-" << setw(2) << D.month << "-" << setw(4) << D.year;
+        out << setw(2) << D.day << "/" << setw(2) << D.month << "/" << setw(4) << D.year;
     out << endl;
     out << setfill(' ');
     return out;
