@@ -255,10 +255,8 @@ ifstream& operator>>(ifstream &in, Client &C){
     in >> C.CCCD;
     in.ignore();
     getline(in, date);
-    cout << date << endl;
     C.birth = Date(date.c_str());
     getline(in, date);
-    cout << date << endl;
     C.createdAt = Date(date.c_str());
     in.ignore();
     getline(in, date);
