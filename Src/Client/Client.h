@@ -47,6 +47,9 @@ class Client{
         void update(const Client&);
 
         const Client& operator=(const Client&);
+        friend ostream& operator<<(ostream&, const Client&);
+        friend istream& operator>>(istream&, Client&);
+        bool operator==(const Client&);
         // friend istream& operator>>(istream&, Client&);
         friend ifstream& operator>>(ifstream&, Client&);
         friend ofstream& operator<<(ofstream&, const Client&);

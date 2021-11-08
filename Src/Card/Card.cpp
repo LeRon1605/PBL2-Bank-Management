@@ -198,3 +198,9 @@ void Card::updatePin(const string &currentPin, const string &newPin){
         }else cout << "Invalid PIN" << endl;
     else cout << "Inccorect PIN" << endl;
 }
+bool Card::operator==(const Card &newCard){
+    if(this->ID == newCard.ID && this->holder == newCard.holder && this->balance == newCard.balance && this->pin == newCard.pin && this->createdAt == newCard.createdAt && this->updatedAt == newCard.updatedAt){
+        return true;
+    }
+    return false;
+}

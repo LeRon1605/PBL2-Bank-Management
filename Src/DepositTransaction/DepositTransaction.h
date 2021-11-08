@@ -17,5 +17,6 @@ class Deposit: public Transaction
         void makeTransaction(const string&);
         
         const Deposit& operator=(const Deposit&);
+        bool operator==(const Deposit&);
 };
 #endif

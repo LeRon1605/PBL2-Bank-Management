@@ -82,3 +82,9 @@ void Transfer::makeTransaction(const string &pin){
     else 
         cout << "Pin is not correct" << endl;
 }
+bool Transfer::operator==(const Transfer &newTransfer){
+    if(this->ID == newTransfer.ID && this->srcAccount == newTransfer.srcAccount &&  this->desAccount == newTransfer.desAccount && this->cash == newTransfer.cash && this->fee == newTransfer.fee && this->status == newTransfer.status && this->date == newTransfer.date){
+        return true;
+    }
+    return false;
+}

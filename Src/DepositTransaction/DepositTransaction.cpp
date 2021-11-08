@@ -76,3 +76,10 @@ const Deposit& Deposit::operator=(const Deposit &W){
     this -> date = W.date;
     return (*this);
 }
+
+bool Deposit::operator==(const Deposit &newDeposit){
+    if(this->ID == newDeposit.ID && this->srcAccount == newDeposit.srcAccount && this->cash == newDeposit.cash && this->fee == newDeposit.fee && this->status == newDeposit.status && this->date == newDeposit.date){
+        return true;
+    }
+    return false;
+}

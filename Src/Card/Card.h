@@ -46,6 +46,6 @@ class Card{
         const Card& operator=(const Card&);
         friend ostream& operator<<(ostream&, const Card&);
         friend istream& operator>>(istream&, Card&);
-
+        bool operator==(const Card&);
 };
 #endif
