@@ -39,5 +39,6 @@ class Transaction{
 
 
         virtual const Transaction& operator=(const Transaction&);
+        bool operator==(const Transaction&);
 };
 #endif

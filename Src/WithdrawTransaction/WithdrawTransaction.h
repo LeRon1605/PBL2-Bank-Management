@@ -17,5 +17,6 @@ class Withdraw: public Transaction
         void makeTransaction(const string&);
 
         const Withdraw& operator=(const Withdraw&);
+        bool operator==(const Withdraw&);
 };
 #endif

@@ -47,6 +47,6 @@ class Client{
         const Client& operator=(const Client&);
         friend ostream& operator<<(ostream&, const Client&);
         friend istream& operator>>(istream&, Client&);
-
+        bool operator==(const Client&);
 };
 #endif

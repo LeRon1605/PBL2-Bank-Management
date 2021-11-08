@@ -80,3 +80,10 @@ const Withdraw& Withdraw::operator=(const Withdraw &W){
     this -> date = W.date;
     return (*this);
 }
+
+bool Withdraw::operator==(const Withdraw &newWithdraw){
+    if(this->ID == newWithdraw.ID && this->srcAccount == newWithdraw.srcAccount && this->cash == newWithdraw.cash && this->fee == newWithdraw.fee && this->status == newWithdraw.status && this->date == newWithdraw.date){
+        return true;
+    }
+    return false;
+}

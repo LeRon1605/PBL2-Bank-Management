@@ -123,3 +123,10 @@ const Transaction& Transaction::operator=(const Transaction &T){
     this -> date = T.date;
     return (*this);
 }
+
+bool Transaction::operator==(const Transaction& newTransaction){
+    if( this->ID == newTransaction.ID && this->srcAccount == newTransaction.srcAccount && this->cash == newTransaction.cash && this->fee == newTransaction.fee && this->status == newTransaction.status && this->date == newTransaction.date){
+        return true;
+    }
+    return false;
+}

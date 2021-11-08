@@ -214,3 +214,10 @@ ostream& operator<<(ostream &out, const Client &C){
         out << "Updated At: " << C.updatedAt;
     return out;
 }
+
+bool Client::operator==(const Client &newClient){
+    if(this->ID == newClient.ID && this->name == newClient.name && this->gender == newClient.gender && this->age == newClient.age && this->birth == newClient.birth && this->CCCD == newClient.CCCD && this->createdAt == newClient.createdAt && this->updatedAt == newClient.updatedAt){
+        return true;
+    }
+    return false;
+}
