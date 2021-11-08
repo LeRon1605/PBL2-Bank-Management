@@ -27,8 +27,8 @@ class LinkedList{
         bool removeHead(); // Xóa phần tử đầu
         int getLength(); //
         bool isEmpty(); // Kiểm tra xem danh sách có rỗng hay không
-        // bool contains(const T); // Kiểm tra xem có tồn tại phần tử T hay không
-        // bool contains(const string&);
+        bool contains(const T); // Kiểm tra xem có tồn tại phần tử T hay không
+        bool contains(const string&);
         void show(); // Hiển thị
         // void sort(bool (*compare)(const T, const T));
 
@@ -80,12 +80,26 @@ int LinkedList<T>::indexOf(const string &ID){
 
 template <class T>
 int LinkedList<T>::lastIndexOf(const T element){
-
+    Node<T> *ptr = this -> tail;
+        int index = length - 1;
+        while (ptr != nullptr){
+            if (ptr -> getData() == element) return index;
+            index--;
+            ptr = ptr -> getPrev();
+        }
+        return -1;  // trả về giá trị index = giá trị phần tử cuối cùng của T (nếu kh có phần tử return -1)
 }
 
 template <class T>
 int LinkedList<T>::lastIndexOf(const string &ID){
-
+    Node<T> *ptr = this -> tail;
+        int index = length - 1;
+        while (ptr != nullptr){
+            if (ptr -> getData().getID() == ID) return index;
+            index--;
+            ptr = ptr -> getPrev();
+        }
+        return -1;  // trả về giá trị index = giá trị phần tử cuối cùng có ID (nếu kh có phần tử return -1)
 }
 
 template <class T>
@@ -107,7 +121,7 @@ bool LinkedList<T>::add(const T element){
 template <class T>
 bool LinkedList<T>::insertAt(const T element, const int &index){
     int i = 0;
-    if (index > this -> length) return false;
+    if (index >= this -> length || index < 0) return false;
     if (index == 0) this -> add(element);
     else if (index == this -> length) this -> append(element);
     else{
@@ -125,21 +139,7 @@ bool LinkedList<T>::insertAt(const T element, const int &index){
     }
     return true;
 }
-template <class T>
-bool LinkedList<T>::append(const T element){
-    Node<T> *newNode = new Node<T>(element);
-    if (newNode == nullptr) return false;
-    if (this -> head == nullptr && this -> tail == nullptr){
-        this -> head = newNode;
-        this -> tail = newNode;
-    }else{
-        newNode -> setPrevNode(this -> tail);
-        this -> tail -> setNextNode(newNode);
-        this -> tail = newNode; 
-    }
-    this -> length += 1;
-    return true;
-}
+
 
 template <class T> 
 bool LinkedList<T>::removeHead(){
@@ -155,6 +155,13 @@ bool LinkedList<T>::removeHead(){
 
 template <class T>
 bool LinkedList<T>::removeTail(){
+    if (this -> tail != nullptr){
+        Node<T> *temp = this -> tail;
+        this -> tail = this -> tail -> getPrev();
+        this -> tail -> setNextNode(nullptr);
+        this -> length -= 1;
+        return true;
+    }
     return false;
 }
 
@@ -170,7 +177,12 @@ bool LinkedList<T>::remove(const T element){
 
 template <class T>
 bool LinkedList<T>::remove(const string &ID){
-    return false; 
+    int index = this -> indexOf(ID);
+    if (index == -1) return false;
+    else{
+        this -> removeAt(index);
+        return true;
+    }
 }  
 
 template <class T>
@@ -208,15 +220,28 @@ bool LinkedList<T>::isEmpty(){
     return (this -> head == nullptr);
 }
 
-// template <class T>
-// bool LinkedList<T>::contains(const T element){
+template <class T>
+bool LinkedList<T>::contains(const T element){
+    Node<T> *ptr = this -> head;
+    while (ptr != nullptr){
+        if (ptr -> getData() == element) return true;
+        ptr = ptr -> getNext();
+    }
+    return false;
+}
 
-// }
 
-// template <class T>
-// bool LinkedList<T>::contains(const string &ID){
+template <class T>
+bool LinkedList<T>::contains(const string &ID){
+    Node<T> *ptr = this -> head;
+    while (ptr != nullptr){
+        if (ptr -> getData().getID() == ID) return true;
+        ptr = ptr -> getNext();
+    }
+    return false;
+}
 
-// }
+
 template <class T>
 void LinkedList<T>::show(){
     Node<T> *ptr = this -> head;
