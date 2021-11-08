@@ -140,6 +140,21 @@ bool LinkedList<T>::insertAt(const T element, const int &index){
     return true;
 }
 
+template <class T>
+bool LinkedList<T>::append(const T element){
+    Node<T> *newNode = new Node<T>(element);
+    if (newNode == nullptr) return false;
+    if (this -> head == nullptr && this -> tail == nullptr){
+        this -> head = newNode;
+        this -> tail = newNode;
+    }else{
+        newNode -> setPrevNode(this -> tail);
+        this -> tail -> setNextNode(newNode);
+        this -> tail = newNode; 
+    }
+    this -> length += 1;
+    return true;
+}
 
 template <class T> 
 bool LinkedList<T>::removeHead(){
