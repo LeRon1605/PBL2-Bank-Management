@@ -4,16 +4,16 @@ Transfer::Transfer(){
 
 }
 
-Transfer::Transfer(const string &ID, Card *srcAccount, Card *desAccount, const long &cash, const float &fee, const bool &status, const Date &date)
+Transfer::Transfer(const string &ID, Card srcAccount, Card desAccount, const long &cash, const float &fee, const bool &status, const Date &date)
     : Transaction(ID, srcAccount, cash, fee, status, date)
 {
     this -> desAccount = desAccount;
 }
 
-Transfer::Transfer(const string &ID, Card *srcAccount, Card *desAccount, const long &cash)
+Transfer::Transfer(const string &ID, Card srcAccount, Card desAccount, const long &cash)
     : Transaction(ID, srcAccount, cash)
 {
-    this -> desAccount = (Card::isValidID((*desAccount).getID())) ? desAccount : nullptr;
+    this -> desAccount = (Card::isValidID((desAccount).getID())) ? desAccount : Card();
 }
 
 Transfer::Transfer(const Transfer &D){
@@ -30,23 +30,23 @@ Transfer::~Transfer(){
 
 }
 
-void Transfer::setDesAccount(Card *C){
+void Transfer::setDesAccount(Card C){
     this -> desAccount = C;
 }
 
 Card Transfer::getDesAccount(){
-    return *(this -> desAccount);
+    return (this -> desAccount);
 }
 
 void Transfer::show(){
     cout << "Transaction ID: " << this -> ID << endl;
-    cout << "Source Account: " << (*(this -> srcAccount)).getID() << endl;
-    cout << "Destination Account: " << (*(this -> desAccount)).getID() << endl;
+    cout << "Source Account: " << ((this -> srcAccount)).getID() << endl;
+    cout << "Destination Account: " << ((this -> desAccount)).getID() << endl;
     cout << "Amount: " << this -> cash << " VND" << endl;
     cout << "Fee: " << this -> fee << " VND" << endl;
     if (this -> status)
-        cout << "Balance: " << (*(this -> srcAccount)).getBalance() << " VND (-" << this -> cash - this -> fee << " VND)" << endl;
-    else cout << "Balance: " << (*(this -> srcAccount)).getBalance() << " VND" << endl;
+        cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND (-" << this -> cash - this -> fee << " VND)" << endl;
+    else cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND" << endl;
     cout << "Status: " << this -> getStrStatus() << endl;
     cout << "Time: " << this -> date << endl;
 }
@@ -65,15 +65,15 @@ int Transfer::calFee(){
 }
 
 void Transfer::makeTransaction(const string &pin){
-    if ((*(this -> srcAccount)).getPin() == pin)
+    if (((this -> srcAccount)).getPin() == pin)
         if (this -> cash >= 50000) 
-            if ((*(this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
-                (*(this -> srcAccount)).withdraw(this -> cash + this -> calFee());
-                (*(this -> desAccount)).deposit(this -> cash);
+            if (((this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
+                ((this -> srcAccount)).withdraw(this -> cash + this -> calFee());
+                ((this -> desAccount)).deposit(this -> cash);
                 this -> status = true;
                 this -> fee = calFee();
                 this -> date = Date::getCurrentDate();
-                cout << "Successfully Transfer " << this -> cash << " to " << (*(this -> desAccount)).getID() << endl;
+                cout << "Successfully Transfer " << this -> cash << " to " << ((this -> desAccount)).getID() << endl;
             }
             else
                 cout << "Your balance doesn't enough to Transfer" << endl;
