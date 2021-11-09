@@ -1,6 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
 #include "../Client/Client.h"
+#include <fstream>
 class Card{
     private:
         string ID;
@@ -46,6 +47,9 @@ class Card{
         const Card& operator=(const Card&);
         friend ostream& operator<<(ostream&, const Card&);
         friend istream& operator>>(istream&, Card&);
+        void input();
+        friend ofstream& operator<<(ofstream&, const Card&);
+        friend ifstream& operator>>(ifstream&, Card&);
         bool operator==(const Card&);
 };
 #endif

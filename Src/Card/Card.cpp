@@ -112,35 +112,35 @@ const Card& Card::operator=(const Card &card){
     return (*this);
 }
 //input
-istream& operator>>(istream &in, Card &card){
-    cout << "Type Card's Pin: ";
-    in >> card.pin;
-    while (!card.isValidPin(card.pin)){
-        cout << "Invalid pin, type again: ";
-        in >> card.pin;
-    }
-    cout << "Type Card's Balance: ";
-    in >> card.balance;
+// istream& operator>>(istream &in, Card &card){
+//     cout << "Type Card's Pin: ";
+//     in >> card.pin;
+//     while (!card.isValidPin(card.pin)){
+//         cout << "Invalid pin, type again: ";
+//         in >> card.pin;
+//     }
+//     cout << "Type Card's Balance: ";
+//     in >> card.balance;
 
-    card.holder = Client();
-    card.createdAt = Date::getCurrentDate();
-    card.updatedAt = Date();
-    card.pinUpdatedAt = Date();
-    return in;
-}
+//     card.holder = Client();
+//     card.createdAt = Date::getCurrentDate();
+//     card.updatedAt = Date();
+//     card.pinUpdatedAt = Date();
+//     return in;
+// }
 //output
-ostream& operator<<(ostream &out, const Card &card){
-    out << "ID: " << card.ID << endl;
-    out << "IDholder: " << Client(card.holder).getID() << endl;
-    out << "Pin: " << card.pin << endl;
-    out << "Balance: " << Card(card).getBalance() << " VND" << endl;
-    out << "Created At: " << card.createdAt;
-    if (Date(card.updatedAt).isValidDate())
-        out << "Updated At: " << card.updatedAt;
-    if (Date(card.pinUpdatedAt).isValidDate())
-        out << "Pin Updated At: " << card.pinUpdatedAt << endl;
-    return out;
-}
+// ostream& operator<<(ostream &out, const Card &card){
+//     out << "ID: " << card.ID << endl;
+//     out << "IDholder: " << Client(card.holder).getID() << endl;
+//     out << "Pin: " << card.pin << endl;
+//     out << "Balance: " << Card(card).getBalance() << " VND" << endl;
+//     out << "Created At: " << card.createdAt;
+//     if (Date(card.updatedAt).isValidDate())
+//         out << "Updated At: " << card.updatedAt;
+//     if (Date(card.pinUpdatedAt).isValidDate())
+//         out << "Pin Updated At: " << card.pinUpdatedAt << endl;
+//     return out;
+// }
 //check
 bool Card::isValidID(const string &str){
     if (str.size() != 12) return false; // ID có độ dài là 12 số
@@ -198,9 +198,52 @@ void Card::updatePin(const string &currentPin, const string &newPin){
         }else cout << "Invalid PIN" << endl;
     else cout << "Inccorect PIN" << endl;
 }
+
 bool Card::operator==(const Card &newCard){
     if(this->ID == newCard.ID && this->holder == newCard.holder && this->balance == newCard.balance && this->pin == newCard.pin && this->createdAt == newCard.createdAt && this->updatedAt == newCard.updatedAt){
         return true;
     }
     return false;
 }
+
+void Card::input(){
+
+    cout << "Type Card's Pin: ";
+    cin >> this -> pin;
+    while (!Card::isValidPin(this -> pin)){
+        cout << "Invalid pin, type again: ";
+        cin >> this -> pin;
+    }
+    cout << "Type Card's Balance: ";
+    cin >> this -> balance;
+    this -> holder = Client();
+    this -> createdAt = Date::getCurrentDate();
+    this -> updatedAt = Date();
+    this -> pinUpdatedAt = Date();
+}
+
+ofstream& operator<<(ofstream &out, const Card &card){
+    out << card.ID << endl;
+    out << card.holder << endl;
+    out << card.pin << endl;
+    out << card.balance << endl;
+    out << Date(card.createdAt).toString() << endl;
+    out << Date(card.updatedAt).toString() << endl;
+    out << Date(card.pinUpdatedAt).toString() << endl;
+    return out;
+}
+ifstream& operator>>(ifstream &in, Card &card){
+    string date;
+    in >> card.ID;
+    // Client : holder
+    in >> card.pin;
+    card.balance = card.getBalance();
+    getline(in, date);
+    card.createdAt = Date(date.c_str());
+    in.ignore();
+    getline(in, date);
+    card.updatedAt = Date(date.c_str());
+    getline(in, date);
+    card.pinUpdatedAt = Date(date.c_str());
+    return in;
+}   
