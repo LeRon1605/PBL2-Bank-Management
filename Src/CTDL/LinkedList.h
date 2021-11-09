@@ -30,7 +30,8 @@ class LinkedList{
         bool contains(const T); // Kiểm tra xem có tồn tại phần tử T hay không
         bool contains(const string&);
         void show(); // Hiển thị
-        // void sort(bool (*compare)(const T, const T));
+        void sort(Node<T>, Node<T>);
+        void sort(bool (*compare)(const T, const T));
 
         T& operator[](const int&);
         // ostream& operator<<(ostream&, const LinkedList&);
@@ -266,11 +267,30 @@ void LinkedList<T>::show(){
     }
 }
 
-// template <class T>
-// void LinkedList<T>::sort(bool (*compare)(const T, const T)){
-    
-// }
+template <class T>
+void LinkedList<T>::sort(Node<T> lower, Node<T> upper){
+    lower = head; 
+    upper = NULL;
+    T temp;
+    while(lower != NULL){
+        upper = lower -> next;
+        while(lower != NULL){
+            if(lower -> data > upper -> data){
+                temp = lower -> data;
+                lower -> data = upper -> data;
+                upper -> data = temp;
+            }
+            upper = upper -> next;
+        }
+        lower = lower -> next;
+    }  
+}
 
+template <class T>
+void LinkedList<T>::sort(bool (*compare)(const T lower, const T upper)){
+    
+
+}
 template <class T>
 T& LinkedList<T>::operator[](const int &index){
     static T empty;
