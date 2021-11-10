@@ -7,6 +7,7 @@ class ClientManager: public Manager<Client>
 {
     private:
         LinkedList<Client> list;
+        static int totalClientCreated;
     public:
         ClientManager();
         ~ClientManager();
@@ -22,5 +23,7 @@ class ClientManager: public Manager<Client>
         bool removeByID(const string&);
         void listByDate(const Date&);
         bool updateByID(const Client, const string&);
+
+        
 };
 #endif
