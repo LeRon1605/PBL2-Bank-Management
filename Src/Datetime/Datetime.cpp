@@ -184,13 +184,20 @@ Date Date::getCurrentDate(){
     return Date(currentDate);
 }
 
+bool Date::compareDate(const Date &A, const Date &B){
+    return A.day == B.day && A.month == B.month && A.year == B.year;
+}
+
+bool Date::compareHour(const Date &A, const Date &B){
+    return A.hour == B.hour && A.minute == B.minute && A.second == B.second;
+}
+
 ostream& operator<<(ostream &out, const Date &D){
     out << setfill('0');
     if (Date(D).isValidHour())
-        out << setw(2) << D.hour << ":" << setw(2) << D.minute << ":" << setw(2) << D.second << " ";
+        out << right << setw(2) << D.hour << ":" << right << setw(2) << D.minute << ":" << right << setw(2) << D.second << " ";
     if (Date(D).isValidDate())
-        out << setw(2) << D.day << "/" << setw(2) << D.month << "/" << setw(4) << D.year;
-    out << endl;
+        out << right << setw(2) << D.day << "/" << right << setw(2) << D.month << "/" << right << setw(4) << D.year;
     out << setfill(' ');
     return out;
 }
@@ -245,11 +252,9 @@ bool operator<=(const Date &A, const Date &B){
 }
 
 bool operator==(const Date &A, const Date &B){
-    if (((A.year*365 + A.month*30 + A.day) == (B.year*365 + B.month*30 + B.day)) && ((A.hour*3600 + A.minute*60 + A.second) == (B.hour*3600 + B.minute*60 + B.second))) return true;
-    return false;
+    return Date::compareDate(A, B) && Date::compareHour(A, B);
 }
 
 bool operator!=(const Date &A, const Date &B){
-    if (((A.year*365 + A.month*30 + A.day) != (B.year*365 + B.month*30 + B.day)) || ((A.hour*3600 + A.minute*60 + A.second) != (B.hour*3600 + B.minute*60 + B.second))) return true;
-    return false;
+    return !(Date::compareDate(A, B) && Date::compareHour(A, B));
 }

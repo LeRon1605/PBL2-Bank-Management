@@ -42,6 +42,7 @@ class Card{
         void showBalance();
         int withdraw(const long&);
         void deposit(const long&);
+        void update(const Card&);
         void updatePin(const string&, const string&);
 
         const Card& operator=(const Card&);
