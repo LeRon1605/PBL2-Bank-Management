@@ -3,7 +3,7 @@
 #include "../Manager.h"
 #include "../../CTDL/LinkedList.h"
 #include "../../Client/Client.h"
-class ClientManager //public Manager<Client> 
+class ClientManager: public Manager<Client> 
 {
     private:
         LinkedList<Client> list;

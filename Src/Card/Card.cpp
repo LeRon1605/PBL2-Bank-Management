@@ -1,4 +1,5 @@
 #include "Card.h"
+#include "../Repo/Repo.h"
 #include <string>
 //Constructor
 Card::Card()
@@ -12,8 +13,9 @@ Card::Card(const Card &card)
     this -> holder = card.holder;
     this -> pin = card.pin;
     this -> balance = card.balance;
-    this -> createdAt = Date::getCurrentDate();
-    this -> updatedAt = Date();
+    this -> createdAt = card.createdAt;
+    this -> updatedAt = card.updatedAt;
+    this -> pinUpdatedAt = card.pinUpdatedAt;
 }
 
 Card::Card(const string &ID, const Client &holder, const string &pin, const long &balance)
@@ -163,11 +165,11 @@ void Card::show(){
     cout << "IDholder: " << this -> holder.getID() << endl;
     cout << "Pin: " << this -> pin << endl;
     cout << "Balance: " << this -> balance << " VND" <<  endl;
-    cout << "Created At: " << this -> createdAt << endl;
+    cout << "Created At: " << this -> createdAt;
     if (this -> updatedAt.isValidDate())
         cout << "Updated At: " << this -> updatedAt;
     if (this -> pinUpdatedAt.isValidDate())
-        cout << "Pin Updated At: " << this -> pinUpdatedAt << endl;
+        cout << "Pin Updated At: " << this -> pinUpdatedAt;
 }
 
 void Card::showBalance(){
@@ -207,7 +209,6 @@ bool Card::operator==(const Card &newCard){
 }
 
 void Card::input(){
-
     cout << "Type Card's Pin: ";
     cin >> this -> pin;
     while (!Card::isValidPin(this -> pin)){
@@ -232,18 +233,20 @@ ofstream& operator<<(ofstream &out, const Card &card){
     out << Date(card.pinUpdatedAt).toString() << endl;
     return out;
 }
+
 ifstream& operator>>(ifstream &in, Card &card){
-    string date;
+    string data;
     in >> card.ID;
-    // Client : holder
+    in >> data;
+    card.holder = Repository<Client>::getByID(data, "Client.txt");
     in >> card.pin;
-    card.balance = card.getBalance();
-    getline(in, date);
-    card.createdAt = Date(date.c_str());
+    in >> card.balance;
     in.ignore();
-    getline(in, date);
-    card.updatedAt = Date(date.c_str());
-    getline(in, date);
-    card.pinUpdatedAt = Date(date.c_str());
+    getline(in, data);
+    card.createdAt = Date(data.c_str());
+    getline(in, data);
+    card.updatedAt = Date(data.c_str());
+    getline(in, data);
+    card.pinUpdatedAt = Date(data.c_str());
     return in;
 }   

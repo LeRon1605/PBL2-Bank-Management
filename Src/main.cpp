@@ -52,13 +52,23 @@ int main(){
 	// list.add(ptr);
 	// list.show();
 
-	LinkedList<Client> listB;
-	listB.addTail(Ron);
-	listB.addTail(RonB);
-	listB.addTail(RonA);
-	listB.insertAt(RonA, 1);
-	//listB.sort(compare);
-	cout << listB.remove(test);
-	listB.show();
+	// LinkedList<Client> listB;
+	// listB.addTail(Ron);
+	// listB.addTail(RonB);
+	// listB.addTail(RonA);
+	// listB.insertAt(RonA, 1);
+	// //listB.sort(compare);
+	// cout << listB.remove(test);
+	// listB.show();
+	ifstream in;
+	Card A;
+	in.open("../Data/Card.txt");
+	int n;
+	in >> n;
+	for (int i = 0; i < n;i++){
+		in >> A;
+		A.show();
+	}
+	A.getHolder().show();
 	return 0;
 }
