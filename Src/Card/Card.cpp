@@ -1,6 +1,7 @@
 #include "Card.h"
 #include "../Repo/Repo.h"
 #include <string>
+#include <iomanip>
 //Constructor
 Card::Card()
 {
@@ -161,15 +162,19 @@ bool Card::isValidPin(const string &str){
 }
 
 void Card::show(){
-    cout << "ID: " << this -> ID << endl;
-    cout << "IDholder: " << this -> holder.getID() << endl;
-    cout << "Pin: " << this -> pin << endl;
-    cout << "Balance: " << this -> balance << " VND" <<  endl;
-    cout << "Created At: " << this -> createdAt;
-    if (this -> updatedAt.isValidDate())
-        cout << "Updated At: " << this -> updatedAt;
-    if (this -> pinUpdatedAt.isValidDate())
-        cout << "Pin Updated At: " << this -> pinUpdatedAt;
+    // cout << "ID: " << this -> ID << endl;
+    // cout << "IDholder: " << this -> holder.getID() << endl;
+    // cout << "Pin: " << this -> pin << endl;
+    // cout << "Balance: " << this -> balance << " VND" <<  endl;
+    // cout << "Created At: " << this -> createdAt;
+    // if (this -> updatedAt.isValidDate())
+    //     cout << "Updated At: " << this -> updatedAt;
+    // if (this -> pinUpdatedAt.isValidDate())
+    //     cout << "Pin Updated At: " << this -> pinUpdatedAt;
+    cout << left << setw(15) << this -> ID << left << setw(15) << this -> holder.getID() << left << setw(10) << this -> pin << left << setw(15) << to_string(this -> balance) + " VND" ;
+    cout << left << setw(30) << this -> createdAt << setw(11) << ' ';
+    cout <<  left << setw(30) << this -> updatedAt << setw(11) << ' ';;
+    cout << left << setw(30) << this -> pinUpdatedAt << endl;
 }
 
 void Card::showBalance(){
@@ -193,12 +198,17 @@ void Card::updatePin(const string &currentPin, const string &newPin){
     if (this -> pin == currentPin)
         if (Card::isValidPin(pin)){
             if (Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate()) >= 2 && Date::getCurrentDate() > this -> pinUpdatedAt){
-                this -> pin = pin;
+                this -> pin = newPin;
                 this -> pinUpdatedAt = Date::getCurrentDate();
                 this -> updatedAt = Date::getCurrentDate();
-            }else cout << "You have to wait " << 2 - Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate()) << " day left to change your PIN account" << endl;
-        }else cout << "Invalid PIN" << endl;
-    else cout << "Inccorect PIN" << endl;
+            }else throw string("You have to wait " + to_string(2 - Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate())) + " day left to change your PIN account");
+        }else throw string("Invalid PIN");
+    else throw string("Inccorect PIN");
+}
+
+void Card::update(const Card &C){
+    this -> balance = C.balance;
+    this -> updatedAt = Date::getCurrentDate();
 }
 
 bool Card::operator==(const Card &newCard){
@@ -225,7 +235,7 @@ void Card::input(){
 
 ofstream& operator<<(ofstream &out, const Card &card){
     out << card.ID << endl;
-    out << card.holder << endl;
+    out << Client(card.holder).getID() << endl;
     out << card.pin << endl;
     out << card.balance << endl;
     out << Date(card.createdAt).toString() << endl;
