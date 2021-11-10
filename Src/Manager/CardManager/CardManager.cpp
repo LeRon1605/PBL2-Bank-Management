@@ -74,6 +74,7 @@ int CardManager::indexOf(const string &ID){
 }
 
 bool CardManager::add(Card C){
+    if ((this -> countClientCard(C.getHolder().getID())) >= 3) return false; 
     CardManager::totalCardCreated++;
     return this -> list.addTail(C);
 }
@@ -144,4 +145,21 @@ bool CardManager::changePin(const string &ID, const string &currentPin, const st
         ptr = ptr -> getNext();
     }
     return true;
+}
+
+int CardManager::countClientCard(const string &ClientID){
+    Node<Card> *ptr = this -> list.getHead();
+    int count = 0;
+    while (ptr != nullptr){
+        if (ptr -> getData().getHolder().getID() == ClientID) count++;
+        ptr = ptr -> getNext();
+    }
+    return count;
+}
+
+void CardManager::listAllClientCard(const string &ClientID){
+    Node<Card> *ptr = this -> list.getHead();
+    while (ptr != nullptr){
+        if (ptr -> getData().getHolder().getID() == ClientID) ptr -> getData().getHolder().show();
+    }
 }

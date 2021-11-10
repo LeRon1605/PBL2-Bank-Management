@@ -4,21 +4,16 @@
 #include "Manager/ClientManager/ClientManager.h"
 #include "Manager/CardManager/CardManager.h"
 #include "Repo/Repo.h"
+#include "Helper/Helper.h"
 // #include "CTDL/Node.h"
 // #include "CTDL/LinkedList.cpp"
-bool compare(const Client A, const Client B){
-	return (Client(A).getID() > Client(B).getID());
-}
-bool test(const Client A){
-	return Client(A).getGender() == "Female";
-}
 using namespace std;
 int main(){
 	// // Code
 	Client Ron("10220013", "Ron Le", "Male", "30001234", "16/05/2002");
 	Client RonB("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
 	Client RonA("10220015", "Le Quoc Ron", "male", "30001234", "16/07/2002");
-	// Card D("102200000003", Ron, "160502", 70000);
+	Card D("102200000003", Ron, "160502", 70000);
 	// Withdraw W("10000000", C, 50000);
 	// Transaction *ptr = new Withdraw(W);
 	// ptr -> makeTransaction(C.getPin());
@@ -53,11 +48,13 @@ int main(){
 	// list.show();
 
 	// LinkedList<Client> listB;
-	// listB.addTail(Ron);
-	// listB.addTail(RonB);
-	// listB.addTail(RonA);
+	// listB.addHead(Ron);
+	// RonB.setCreatedAt("3/6/2021");
+	// listB.addHead(RonB);
+	// listB.addHead(RonA);
 	// listB.insertAt(RonA, 1);
-	// //listB.sort(compare);
+	// listB.sort(sortDescByCreatedAt);
+	// listB.show();
 	// cout << listB.remove(test);
 	// listB.show();
 	// ifstream in;
@@ -70,12 +67,19 @@ int main(){
 	// 	A.show();
 	// }
 	// A.getHolder().show();
-	CardManager A;
-	// A.changePin("102200000000", "133333", "133333");
-	Card C(A.generateID(), Ron, "160502", 70000);
-	A.add(C);
-	A.listByDate("10/11/2021");
-	// Date A = "16/05/2002";
+	//CardManager A;
+	// // A.changePin("102200000000", "133333", "133333");
+	//Card C(A.generateID(), Ron, "160502", 70000);
+	// A.add(C);
+	// // A.listByDate("10/11/2021");
+	// A.removeByID("100000000000");
+	// // Date A = "16/05/2002";
 	// cout << (A == "16/05/2002") << endl;
+	//A.add(C);
+	// cout << A.add(C) << endl;
+	// A.show();
+	// CardManager A;
+	// A.changePin("100000000003", "150503", "150503");
+	cout << Repository<Card>::findAndRemove(compareHolderID, "10220013", "Card.txt");
 	return 0;
 }

@@ -19,20 +19,20 @@ class LinkedList{
         int indexOf(const T); // Index đầu của T
         int indexOf(bool (*compare)(const T));
         int lastIndexOf(const T); // Index cuối cùng của T
-        int lastIndexOf(bool (*compare)(const T)); 
+        int lastIndexOf(bool (*compare)(const T, const string&), const string&); 
         bool insertAt(const T, const int&);
         bool addHead(const T); // Thêm vào đầu
         bool addTail(const T); // Thêm vào cuối
         bool removeAt(const int&); // Xóa phần tử tại vị trí index
         bool remove(const T); // Xóa phần tử T đầu tiên
-        bool remove(bool (*compare)(const T));
+        bool remove(bool (*compare)(const T, const string&), const string &);
         bool removeTail(); // Xóa phần tử cuối
         bool removeHead(); // Xóa phần tử đầu
         bool replace(const T, const int&);
         int getLength(); //
         bool isEmpty(); // Kiểm tra xem danh sách có rỗng hay không
         bool contains(const T); // Kiểm tra xem có tồn tại phần tử T hay không
-        bool contains(bool (*compare)(const T));
+        bool contains(bool (*compare)(const T, const string&), const string &str);
         void show(); // Hiển thị
         void sort(Node<T>, Node<T>);
         void sort(bool (*compare)(const T, const T));
@@ -105,11 +105,11 @@ int LinkedList<T>::lastIndexOf(const T element){
 }
 
 template <class T>
-int LinkedList<T>::lastIndexOf(bool (*compare)(const T)){
+int LinkedList<T>::lastIndexOf(bool (*compare)(const T, const string&), const string &str){
     Node<T> *ptr = this -> tail;
         int index = length - 1;
         while (ptr != nullptr){
-            if (compare(ptr -> getData())) return index;
+            if (compare(ptr -> getData(), str)) return index;
             index--;
             ptr = ptr -> getPrev();
         }
@@ -223,7 +223,7 @@ bool LinkedList<T>::remove(const T element){
 }
 
 template <class T>
-bool LinkedList<T>::remove(bool (*compare)(const T)){
+bool LinkedList<T>::remove(bool (*compare)(const T, const string&), const string &str){
     int index = this -> indexOf(compare);
     if (index == -1) return false;
     else{
@@ -296,10 +296,10 @@ bool LinkedList<T>::contains(const T element){
 
 
 template <class T>
-bool LinkedList<T>::contains(bool (*compare)(const T)){
+bool LinkedList<T>::contains(bool (*compare)(const T, const string&), const string &str){
     Node<T> *ptr = this -> head;
     while (ptr != nullptr){
-        if (compare(ptr -> getData())) return true;
+        if (compare(ptr -> getData(), str)) return true;
         ptr = ptr -> getNext();
     }
     return false;
@@ -311,6 +311,7 @@ void LinkedList<T>::show(){
     Node<T> *ptr = this -> head;
     while (ptr != nullptr){
         ptr -> getData().show();
+        cout << endl;
         ptr = ptr -> getNext();
     }
 }
