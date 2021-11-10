@@ -2,6 +2,7 @@
 #include "DepositTransaction/DepositTransaction.h"
 #include "TransferTransaction/TransferTransaction.h"
 #include "Manager/ClientManager/ClientManager.h"
+#include "Manager/CardManager/CardManager.h"
 #include "Repo/Repo.h"
 // #include "CTDL/Node.h"
 // #include "CTDL/LinkedList.cpp"
@@ -17,9 +18,8 @@ int main(){
 	Client Ron("10220013", "Ron Le", "Male", "30001234", "16/05/2002");
 	Client RonB("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
 	Client RonA("10220015", "Le Quoc Ron", "male", "30001234", "16/07/2002");
-	Card C("102200000000", Ron, "160502", 70000);
 	// Card D("102200000003", Ron, "160502", 70000);
-	Withdraw W("10000000", C, 50000);
+	// Withdraw W("10000000", C, 50000);
 	// Transaction *ptr = new Withdraw(W);
 	// ptr -> makeTransaction(C.getPin());
 	// ptr -> show();
@@ -60,15 +60,22 @@ int main(){
 	// //listB.sort(compare);
 	// cout << listB.remove(test);
 	// listB.show();
-	ifstream in;
-	Card A;
-	in.open("../Data/Card.txt");
-	int n;
-	in >> n;
-	for (int i = 0; i < n;i++){
-		in >> A;
-		A.show();
-	}
-	A.getHolder().show();
+	// ifstream in;
+	// Card A;
+	// in.open("../Data/Card.txt");
+	// int n;
+	// in >> n;
+	// for (int i = 0; i < n;i++){
+	// 	in >> A; 
+	// 	A.show();
+	// }
+	// A.getHolder().show();
+	CardManager A;
+	// A.changePin("102200000000", "133333", "133333");
+	Card C(A.generateID(), Ron, "160502", 70000);
+	A.add(C);
+	A.listByDate("10/11/2021");
+	// Date A = "16/05/2002";
+	// cout << (A == "16/05/2002") << endl;
 	return 0;
 }

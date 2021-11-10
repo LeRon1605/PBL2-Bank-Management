@@ -28,6 +28,7 @@ class LinkedList{
         bool remove(bool (*compare)(const T));
         bool removeTail(); // Xóa phần tử cuối
         bool removeHead(); // Xóa phần tử đầu
+        bool replace(const T, const int&);
         int getLength(); //
         bool isEmpty(); // Kiểm tra xem danh sách có rỗng hay không
         bool contains(const T); // Kiểm tra xem có tồn tại phần tử T hay không
@@ -171,11 +172,20 @@ bool LinkedList<T>::addTail(const T element){
 
 template <class T> 
 bool LinkedList<T>::removeHead(){
+    if (this -> head == this -> tail){
+        Node<T> *temp = this -> head;
+        this -> head = nullptr;
+        this -> tail = nullptr;
+        this -> length -= 1;
+        delete temp;
+        return true;
+    }
     if (this -> head != nullptr){
         Node<T> *temp = this -> head;
         this -> head = this -> head -> getNext();
         this -> head -> setPrevNode(nullptr);
         this -> length -= 1;
+        delete temp;
         return true;
     }
     return false;
@@ -183,11 +193,20 @@ bool LinkedList<T>::removeHead(){
 
 template <class T>
 bool LinkedList<T>::removeTail(){
+    if (this -> head == this -> tail){
+        Node<T> *temp = this -> head;
+        this -> head = nullptr;
+        this -> tail = nullptr;
+        this -> length -= 1;
+        delete temp;
+        return true;
+    }
     if (this -> tail != nullptr){
         Node<T> *temp = this -> tail;
         this -> tail = this -> tail -> getPrev();
         this -> tail -> setNextNode(nullptr);
         this -> length -= 1;
+        delete temp;
         return true;
     }
     return false;
@@ -231,9 +250,26 @@ bool LinkedList<T>::removeAt(const int &index){
             i++;
             ptr = ptr -> getNext();
         }
+        Node<T> *temp = ptr;
         ptr -> getPrev() -> setNextNode(ptr -> getNext());
         ptr -> getNext() -> setPrevNode(ptr -> getPrev());
         this -> length -= 1;
+        delete temp;
+        return true;
+    }
+}
+
+template <class T>
+bool LinkedList<T>::replace(const T element, const int &index){
+    if (index < 0 || index >= this -> length) return false;
+    else {
+        int i = 0;
+        Node<T> *ptr = this -> head;
+        while (i != index){
+            i++;
+            ptr = ptr -> getNext();
+        }
+        ptr -> setData(element);
         return true;
     }
 }

@@ -24,6 +24,8 @@ class Date{
 		
 		string toString();
 		static Date getCurrentDate();
+		static bool compareDate(const Date&, const Date&);
+		static bool compareHour(const Date&, const Date&);
 		static int dayOfMonth(const int&, const int&);
 		static int DATEDIFF(const Date&, const Date&);
 		void toDate(const char*); // Convert string sang Date
