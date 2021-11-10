@@ -19,7 +19,7 @@ class Repository
 template <class T>
 T Repository<T>::getByID(const string &ID, const string &fileName){
     ifstream in;
-    in.open(fileName);
+    in.open("../Data/" + fileName);
     int n;
     in >> n;
     T temp;
@@ -33,7 +33,7 @@ T Repository<T>::getByID(const string &ID, const string &fileName){
 template <class T>
 bool Repository<T>::contains(const string &ID, const string &fileName){
     ifstream in;
-    in.open(fileName);
+    in.open("../Data/" + fileName);
     int n;
     in >> n;
     T temp;
@@ -47,9 +47,9 @@ bool Repository<T>::contains(const string &ID, const string &fileName){
 template <class T>
 bool Repository<T>::findAndUpdate(T value, const string &fileName){
     ofstream temp;
-    temp.open("../Data/temp.txt");
+    temp.open("../Data/temp.txt", ios::out);
     ifstream in;
-    in.open("../Data/" + fileName);
+    in.open("../Data/" + fileName, ios::in);
     int n;
     in >> n;
     temp << n << endl;
@@ -63,8 +63,8 @@ bool Repository<T>::findAndUpdate(T value, const string &fileName){
         }
         temp << tempElement;
     }
-    temp.close();
     in.close();
+    temp.close();
     remove(("../Data/" + fileName).c_str());
     rename("../Data/temp.txt", ("../Data/" + fileName).c_str());
     return success;
@@ -72,25 +72,23 @@ bool Repository<T>::findAndUpdate(T value, const string &fileName){
 
 template <class T>
 bool Repository<T>::findAndRemove(const string &ID, const string &fileName){
-    if (this -> exists(ID)){
-        ofstream temp;
-        temp.open("../Data/temp.txt");
-        ifstream in;
-        in.open("../Data/" + fileName);
-        int n;
-        in >> n;
-        temp << n - 1 << endl;
-        T tempElement;
-        for (int i = 0; i < n;i++){
-            in >> tempElement;
-            if (tempElement.getID() != ID) temp << tempElement;
-        }
-        temp.close();
-        in.close();
-        remove(("../Data/" + fileName).c_str());
-        rename("../Data/temp.txt", ("../Data/" + fileName).c_str());
-        return true;
+    if (!Repository<T>::contains(ID, fileName)) return false;
+    ofstream temp;
+    temp.open("../Data/temp.txt");
+    ifstream in;
+    in.open("../Data/" + fileName);
+    int n;
+    in >> n;
+    temp << n - 1 << endl;
+    T tempElement;
+    for (int i = 0; i < n;i++){
+        in >> tempElement;
+        if (tempElement.getID() != ID) temp << tempElement;
     }
-    return false;
+    temp.close();
+    in.close();
+    remove(("../Data/" + fileName).c_str());
+    rename("../Data/temp.txt", ("../Data/" + fileName).c_str());
+    return true;
 }
 #endif

@@ -7,7 +7,7 @@ ClientManager::ClientManager(){
     for (int i = 0; i < numberOfClient;i++){
         Client temp;
         in >> temp;
-        this -> list.add(temp);
+        this -> list.addTail(temp);
     }
     in.close();
 }

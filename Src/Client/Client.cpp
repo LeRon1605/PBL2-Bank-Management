@@ -13,7 +13,7 @@ Client::Client(const Client &D){
     this -> birth = D.birth;
     this -> age = D.age;
     this -> createdAt = D.createdAt;
-    this -> updatedAt = Date();
+    this -> updatedAt = D.updatedAt;
 }
 
 Client::Client(const string &ID, const string &name, const string &gender, const string &CCCD, const Date &birth){
@@ -249,16 +249,15 @@ bool Client::operator==(const Client &newClient){
 ifstream& operator>>(ifstream &in, Client &C){
     string date;
     in >> C.ID;
-    in.ignore();
+    in.ignore(2000,'\n');
     getline(in, C.name);
     in >> C.gender;
     in >> C.CCCD;
-    in.ignore();
+    in.ignore(2000,'\n');
     getline(in, date);
     C.birth = Date(date.c_str());
     getline(in, date);
     C.createdAt = Date(date.c_str());
-    in.ignore();
     getline(in, date);
     C.updatedAt = Date(date.c_str());
     C.age = C.getAge();
