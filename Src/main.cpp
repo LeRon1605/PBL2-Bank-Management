@@ -4,16 +4,14 @@
 #include "Manager/ClientManager/ClientManager.h"
 #include "Manager/CardManager/CardManager.h"
 #include "Repo/Repo.h"
-#include "Helper/Helper.h"
 // #include "CTDL/Node.h"
 // #include "CTDL/LinkedList.cpp"
 using namespace std;
 int main(){
 	// // Code
-	Client Ron("10220013", "Ron Le", "Male", "30001234", "16/05/2002");
 	Client RonB("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
 	Client RonA("10220015", "Le Quoc Ron", "male", "30001234", "16/07/2002");
-	Card D("102200000003", Ron, "160502", 70000);
+	// Card D("102200000003", Ron, "160502", 50000);
 	// Withdraw W("10000000", C, 50000);
 	// Transaction *ptr = new Withdraw(W);
 	// ptr -> makeTransaction(C.getPin());
@@ -78,8 +76,12 @@ int main(){
 	//A.add(C);
 	// cout << A.add(C) << endl;
 	// A.show();
-	// CardManager A;
+	//CardManager A;
+	//cout << A.updateByID( D,"100000000000");
 	// A.changePin("100000000003", "150503", "150503");
-	cout << Repository<Card>::findAndRemove(compareHolderID, "10220013", "Card.txt");
+	//cout << Repository<Card>::findAndRemove(compareHolderID, "10220013", "Card.txt");
+	ClientManager A;
+	A.updateByID( RonB,"10000000");
+	//A.add(Ron);
 	return 0;
 }

@@ -1,5 +1,6 @@
 #include "Client.h"
 #include <string>
+#include <iomanip>
 #include <algorithm>
 Client::Client(){
 
@@ -134,15 +135,15 @@ bool Client::isValidName(const string &str){
 }
 
 void Client::show(){
-    cout << "ID: " << this -> ID << endl;
-    cout << "Name: " << this -> name << endl;
-    cout << "Gender: " << this -> gender << endl;
-    cout << "Age: " << this -> age << endl;
-    cout << "Birth: " << this -> birth;
-    cout << "CCCD: " << this -> CCCD << endl;
-    cout << "Created At: " << this -> createdAt;
+    cout << left << setw(15) << this -> ID;
+    cout << left << setw(20) << this -> name;
+    cout << left << setw(10) << this -> gender;
+    cout << left << setw(15) << this -> CCCD;
+    cout << left << setw(10) << this -> age;
+    cout << this -> birth << setw(5) << ' ';
+    cout << this -> createdAt << setw(11) << ' ';
     if (this -> updatedAt.isValidDate())
-        cout << "Updated At: " << this -> updatedAt;
+        cout << this -> updatedAt;
 }
 
 void Client::update(const string &name, const string &gender, const string &CCCD, const Date &birth){

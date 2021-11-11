@@ -145,7 +145,7 @@ void Card::show(){
     cout << left << setw(15) << this -> ID << left << setw(15) << this -> holder.getID() << left << setw(10) << this -> pin << left << setw(15) << to_string(this -> balance) + " VND" ;
     cout << left << setw(30) << this -> createdAt << setw(11) << ' ';
     cout <<  left << setw(30) << this -> updatedAt << setw(11) << ' ';;
-    cout << left << setw(30) << this -> pinUpdatedAt << endl;
+    cout << left << setw(30) << this -> pinUpdatedAt;
 }
 
 void Card::showBalance(){
