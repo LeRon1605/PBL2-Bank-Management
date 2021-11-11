@@ -201,33 +201,6 @@ void Client::input(){
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
 }
-// istream& operator>>(istream &in, Client &D){
-//     cout << "Type Clients's name: ";
-//     fflush(stdin);
-//     getline(in, D.name);
-//     while (!Client::isValidName(D.name)){
-//         cout << "Invalid Name, type again: ";
-//         fflush(stdin);
-//         getline(in, D.name);
-//     }
-//     cout << "Type Client's gender(Male/Female/Other): ";
-//     fflush(stdin);
-//     cin >> D.gender;
-//     while (!Client::isValidGender(D.gender)){
-//         cout << "Invalid gender, type again: ";
-//         fflush(stdin);
-//         cin >> D.gender;
-//     }
-//     D.gender = Client::formatGender(D.gender);
-//     cout << "Type Client's CCCD: ";
-//     in >> D.CCCD;
-//     cout << "Type Client's birth(dd-mm-yyyy): ";
-//     cin >> D.birth;
-//     D.age = D.getAge();
-//     D.createdAt = Date::getCurrentDate();
-//     D.updatedAt = Date();
-//     return in;
-// }
 
 ofstream& operator<<(ofstream &out, const Client &C){
     out << C.ID << endl;

@@ -46,8 +46,8 @@ class Card{
         void updatePin(const string&, const string&);
 
         const Card& operator=(const Card&);
-        friend ostream& operator<<(ostream&, const Card&);
-        friend istream& operator>>(istream&, Card&);
+        // friend ostream& operator<<(ostream&, const Card&);
+        // friend istream& operator>>(istream&, Card&);
         void input();
         friend ofstream& operator<<(ofstream&, const Card&);
         friend ifstream& operator>>(ifstream&, Card&);

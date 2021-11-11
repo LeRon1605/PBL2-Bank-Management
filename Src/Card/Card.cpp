@@ -114,36 +114,7 @@ const Card& Card::operator=(const Card &card){
     this -> pinUpdatedAt = card.pinUpdatedAt;
     return (*this);
 }
-//input
-// istream& operator>>(istream &in, Card &card){
-//     cout << "Type Card's Pin: ";
-//     in >> card.pin;
-//     while (!card.isValidPin(card.pin)){
-//         cout << "Invalid pin, type again: ";
-//         in >> card.pin;
-//     }
-//     cout << "Type Card's Balance: ";
-//     in >> card.balance;
 
-//     card.holder = Client();
-//     card.createdAt = Date::getCurrentDate();
-//     card.updatedAt = Date();
-//     card.pinUpdatedAt = Date();
-//     return in;
-// }
-//output
-// ostream& operator<<(ostream &out, const Card &card){
-//     out << "ID: " << card.ID << endl;
-//     out << "IDholder: " << Client(card.holder).getID() << endl;
-//     out << "Pin: " << card.pin << endl;
-//     out << "Balance: " << Card(card).getBalance() << " VND" << endl;
-//     out << "Created At: " << card.createdAt;
-//     if (Date(card.updatedAt).isValidDate())
-//         out << "Updated At: " << card.updatedAt;
-//     if (Date(card.pinUpdatedAt).isValidDate())
-//         out << "Pin Updated At: " << card.pinUpdatedAt << endl;
-//     return out;
-// }
 //check
 bool Card::isValidID(const string &str){
     if (str.size() != 12) return false; // ID có độ dài là 12 số
