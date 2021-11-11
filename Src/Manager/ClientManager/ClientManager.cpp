@@ -1,4 +1,7 @@
 #include "ClientManager.h"
+#include "../../Repo/Repo.h"
+#include "../../Helper/Helper.h"
+#include "../../Card/Card.h"
 #include <iomanip>
 int ClientManager::totalClientCreated = 0;
 ClientManager::ClientManager(){
@@ -28,9 +31,12 @@ ClientManager::~ClientManager(){
 
 void ClientManager::show(){
     Node<Client> *ptr = this->list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(30) << "Name" << left << setw(10) << "Gender" << left << setw(15) << "CCCD" << left << setw(10) << "Age" << left << setw(15) << "Birth" << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << endl;
+    cout << left << setw(15) << "ID" << left << setw(20) << "Name" << left << setw(10) << "Gender";
+    cout << left << setw(15) << "CCCD" << left << setw(10) << "Age" << left << setw(15) << "Birth";
+    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << endl;
     while (ptr != nullptr){
         ptr->getData().show();
+        cout << endl;
         ptr = ptr->getNext();
     }
 }
@@ -86,26 +92,39 @@ bool ClientManager::add(const Client C){
 }
 
 bool ClientManager::remove(const Client C){
+    if (this -> list.contains(C)) {
+        Repository<Card>::findAndRemove(compareHolderID, Client(C).getID(), "Card.txt");
+    }
     return this -> list.remove(C);
 }
 
 bool ClientManager::removeByID(const string &ID){
     int index = this -> indexOf(ID);
     if (index == -1) return false;
-    else return this -> list.removeAt(index);
+    else {
+        Repository<Card>::findAndRemove(compareHolderID, ID, "Card.txt");
+        return this -> list.removeAt(index);
+    }
 }
 
 void ClientManager::listByDate(const Date &D){
     Node<Client> *ptr = this -> list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(30) << "Name" << left << setw(10) << "Gender" << left << setw(15) << "CCCD" << left << setw(10) << "Age" << left << setw(15) << "Birth" << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << endl;
+    cout << left << setw(15) << "ID" << left << setw(20) << "Name" << left << setw(10) << "Gender";
+    cout << left << setw(15) << "CCCD" << left << setw(10) << "Age" << left << setw(15) << "Birth";
+    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << endl;
     while (ptr != nullptr){
-        if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) ptr -> getData().show();
+        if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) {
+            ptr -> getData().show();
+            cout << endl;
+        }
         ptr = ptr -> getNext();
     }
 }
 
 bool ClientManager::updateByID(Client C, const string &ID){
     int index = this -> indexOf(ID);
-    return this -> list.replace(C, index);
+    if (index == -1) return false;
+    this -> list[index].update(C);
+    return true;
 
 }

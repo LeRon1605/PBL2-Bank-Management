@@ -17,7 +17,7 @@ class LinkedList{
         Node<T>* getTail();
 
         int indexOf(const T); // Index đầu của T
-        int indexOf(bool (*compare)(const T));
+        int indexOf(bool (*compare)(const T, const string&), const string&);
         int lastIndexOf(const T); // Index cuối cùng của T
         int lastIndexOf(bool (*compare)(const T, const string&), const string&); 
         bool insertAt(const T, const int&);
@@ -81,11 +81,11 @@ int LinkedList<T>::indexOf(const T element){
 }
 
 template <class T>
-int LinkedList<T>::indexOf(bool (*compare)(const T)){
+int LinkedList<T>::indexOf(bool (*compare)(const T, const string&), const string &str){
     Node<T> *ptr = this -> head;
     int index = 0;
     while (ptr != nullptr){
-        if (compare(ptr -> getData())) return index;
+        if (compare(ptr -> getData(), str)) return index;
         index++;
         ptr = ptr -> getNext();
     }
@@ -224,7 +224,7 @@ bool LinkedList<T>::remove(const T element){
 
 template <class T>
 bool LinkedList<T>::remove(bool (*compare)(const T, const string&), const string &str){
-    int index = this -> indexOf(compare);
+    int index = this -> indexOf(compare, str);
     if (index == -1) return false;
     else{
         this -> removeAt(index);

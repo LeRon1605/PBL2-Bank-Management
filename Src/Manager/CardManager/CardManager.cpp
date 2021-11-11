@@ -1,4 +1,5 @@
 #include "CardManager.h"
+#include "../../Helper/Helper.h"
 #include <iomanip>
 int CardManager::totalCardCreated = 0;
 CardManager::CardManager(){
@@ -31,6 +32,7 @@ void CardManager::show(){
     cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder" << left << setw(10) << "Pin" << left << setw(15) << "Balance" << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
     while (ptr != nullptr){
         ptr -> getData().show();
+        cout << endl;
         ptr = ptr -> getNext();
     }
 }
@@ -64,13 +66,7 @@ int CardManager::indexOf(const Card C){
 }
 
 int CardManager::indexOf(const string &ID){
-    Node<Card> *ptr = this -> list.getHead();
-    int index = 0;
-    while (ptr != nullptr){
-        if (ptr -> getData().getID() == ID) return index;
-        ptr = ptr -> getNext();
-    }
-    return -1;
+    return this -> list.indexOf(compareID, ID);
 }
 
 bool CardManager::add(Card C){
@@ -84,9 +80,7 @@ bool CardManager::remove(const Card C){
 }
 
 bool CardManager::removeByID(const string &ID){
-    int index = this -> indexOf(ID);
-    if (index == -1) return false;
-    else return this -> list.removeAt(index);
+    return this -> list.remove(compareID, ID);
 }
 
 void CardManager::listByDate(const Date &D){
@@ -100,7 +94,9 @@ void CardManager::listByDate(const Date &D){
 
 bool CardManager::updateByID(Card C, const string &ID){
     int index = this -> indexOf(ID);
-    return this -> list.replace(C, index);
+    if (index == -1) return false;
+    this -> list[index].update(C);
+    return true;
 }
 
 void CardManager::removeAll(const string &ClientID){
