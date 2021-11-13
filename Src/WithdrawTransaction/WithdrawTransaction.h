@@ -12,6 +12,7 @@ class Withdraw: public Transaction
 
         ~Withdraw();
 
+        string getType();
         void show();
         int calFee();
         void makeTransaction(const string&);

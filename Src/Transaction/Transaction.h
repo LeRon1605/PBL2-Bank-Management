@@ -33,12 +33,11 @@ class Transaction{
         void setDate(const Date&);
 
         static bool isValidID(const string&);
+
+        virtual string getType() = 0;
         virtual void show() = 0;
         virtual int calFee() = 0;
         virtual void makeTransaction(const string&) = 0;
 
-
-        // virtual const Transaction& operator=(const Transaction&);
-        bool operator==(const Transaction&);
 };
 #endif

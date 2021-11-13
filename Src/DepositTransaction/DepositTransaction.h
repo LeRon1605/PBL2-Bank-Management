@@ -1,5 +1,6 @@
 #ifndef DEPOSIT_TRANSACTION_H
 #define DEPOSIT_TRANSACTION_H
+#include <fstream>
 #include "../Transaction/Transaction.h"
 class Deposit: public Transaction
 {
@@ -12,11 +13,15 @@ class Deposit: public Transaction
 
         ~Deposit();
 
+        string getType();
         void show();
         int calFee();
         void makeTransaction(const string&);
         
         const Deposit& operator=(const Deposit&);
         bool operator==(const Deposit&);
+
+        friend ifstream& operator>>(ifstream&, Deposit&);
+        friend ofstream& operator<<(ofstream&, const Deposit&);
 };
 #endif

@@ -70,6 +70,10 @@ void Withdraw::makeTransaction(const string &pin){
         cout << "Pin is not correct" << endl;
 }
 
+string Withdraw::getType(){
+    return "Withdraw";
+}
+
 const Withdraw& Withdraw::operator=(const Withdraw &W){
     cout << "Withdraw::operator";
     this -> ID = W.ID;

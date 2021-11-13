@@ -80,8 +80,23 @@ int main(){
 	//cout << A.updateByID( D,"100000000000");
 	// A.changePin("100000000003", "150503", "150503");
 	//cout << Repository<Card>::findAndRemove(compareHolderID, "10220013", "Card.txt");
-	ClientManager A;
-	A.updateByID( RonB,"10000000");
+	// ClientManager A;
+	// A.show();
 	//A.add(Ron);
+	// CardManager A;
+	// A.listAllClientCard("10220013");
+	// ifstream test;
+	// test.open("../Data/Transaction.txt");
+	// int n, m;
+	// test >> n >> m;
+	// Deposit temp;
+	// string a;
+	// for (int i = 0; i < n; i++){
+	// 	test >> a;
+	// 	test >> temp;
+	// 	temp.getSrcAccount().show();
+	// 	temp.show();
+	// }
+	// test.close();
 	return 0;
 }

@@ -157,5 +157,6 @@ void CardManager::listAllClientCard(const string &ClientID){
     Node<Card> *ptr = this -> list.getHead();
     while (ptr != nullptr){
         if (ptr -> getData().getHolder().getID() == ClientID) ptr -> getData().getHolder().show();
+        ptr = ptr -> getNext();
     }
 }

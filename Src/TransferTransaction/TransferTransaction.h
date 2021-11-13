@@ -16,6 +16,7 @@ class Transfer: public Transaction
         void setDesAccount(Card);
         Card getDesAccount();
 
+        string getType();
         void show();
         int calFee();
         void makeTransaction(const string&);

@@ -1,5 +1,5 @@
 #include "DepositTransaction.h"
-
+#include "../Repo/Repo.h"
 Deposit::Deposit(){
 
 }
@@ -67,6 +67,10 @@ void Deposit::makeTransaction(const string &pin){
         cout << "Pin is not correct" << endl;
 }
 
+string Deposit::getType(){
+    return "Deposit";
+}
+
 const Deposit& Deposit::operator=(const Deposit &W){
     this -> ID = W.ID;
     this -> srcAccount = W.srcAccount;
@@ -82,4 +86,27 @@ bool Deposit::operator==(const Deposit &newDeposit){
         return true;
     }
     return false;
+}
+
+ifstream& operator>>(ifstream &in, Deposit &D){
+    string srcAccountID, date;
+    getline(in >> ws, D.ID);
+    getline(in >> ws, srcAccountID);
+    D.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
+    in >> D.cash;
+    in >> D.fee;
+    in >> D.status;
+    getline(in >> ws, date);
+    D.date = Date(date.c_str());
+    return in;
+}
+
+ofstream& operator<<(ofstream &out, const Deposit &D){
+    out << D.ID << endl;
+    out << Deposit(D).srcAccount.getID() << endl;
+    out << D.cash << endl;
+    out << D.fee << endl;
+    out << D.status << endl;
+    out << Deposit(D).date.toString() << endl;
+    return out;
 }

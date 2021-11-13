@@ -16,6 +16,6 @@ class Manager{
         virtual bool remove(const T) = 0; // Xóa
         virtual bool removeByID(const string&) = 0; // Xóa bằng ID
         virtual void listByDate(const Date&) = 0; // Liệt kê bằng ngày
-        virtual bool updateByID(const T, const string&) = 0;  // Cập nhật bằng ID
+        // virtual bool updateByID(const T, const string&) = 0;  // Cập nhật bằng ID
 };
 #endif
