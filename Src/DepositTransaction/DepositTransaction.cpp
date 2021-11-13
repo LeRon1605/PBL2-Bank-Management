@@ -102,6 +102,7 @@ ifstream& operator>>(ifstream &in, Deposit &D){
 }
 
 ofstream& operator<<(ofstream &out, const Deposit &D){
+    out << Deposit(D).getType() << endl;
     out << D.ID << endl;
     out << Deposit(D).srcAccount.getID() << endl;
     out << D.cash << endl;
