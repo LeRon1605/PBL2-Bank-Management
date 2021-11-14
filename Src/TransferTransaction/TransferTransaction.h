@@ -1,6 +1,7 @@
 #ifndef TRANSFER_TRANSACTION_H
 #define TRANSFER_TRANSACTION_H
 #include "../Transaction/Transaction.h"
+#include <fstream>
 class Transfer: public Transaction
 {
     private:
@@ -21,5 +22,8 @@ class Transfer: public Transaction
         int calFee();
         void makeTransaction(const string&);
         bool operator==(const Transfer&);
+
+        friend ifstream& operator>>(ifstream&, Transfer&);
+        friend ofstream& operator<<(ofstream&, const Transfer&);
 };
 #endif

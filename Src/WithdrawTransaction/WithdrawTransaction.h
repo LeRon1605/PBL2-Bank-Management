@@ -1,6 +1,7 @@
 #ifndef WITHDRAW_TRANSACTION_H
 #define WITHDRAW_TRANSACTION_H
 #include "../Transaction/Transaction.h"
+#include <fstream>
 class Withdraw: public Transaction
 {
     private:
@@ -19,5 +20,7 @@ class Withdraw: public Transaction
 
         const Withdraw& operator=(const Withdraw&);
         bool operator==(const Withdraw&);
+        friend ifstream& operator>>(ifstream&, Withdraw&);
+        friend ofstream& operator<<(ofstream&, const Withdraw&);
 };
 #endif

@@ -1,5 +1,5 @@
 #include "TransferTransaction.h"
-
+#include "../Repo/Repo.h"
 Transfer::Transfer(){
 
 }
@@ -91,4 +91,30 @@ bool Transfer::operator==(const Transfer &newTransfer){
         return true;
     }
     return false;
+}
+
+ifstream& operator>>(ifstream &in, Transfer &T){
+    string srcAccountID, desAccountID, date;
+    getline(in >> ws, T.ID);
+    getline(in >> ws, srcAccountID);
+    T.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
+    getline(in >> ws, desAccountID);
+    T.desAccount = Repository<Card>::getByID(desAccountID, "Card.txt");
+    in >> T.cash;
+    in >> T.fee;
+    in >> T.status;
+    getline(in >> ws, date);
+    T.date = Date(date.c_str());
+    return in;
+}
+ofstream& operator<<(ofstream &out, const Transfer &T){
+    out << Transfer(T).getType() << endl;
+    out << T.ID << endl;
+    out << Transfer(T).srcAccount.getID() << endl;
+    out << Transfer(T).desAccount.getID() << endl;
+    out << T.cash << endl;
+    out << T.fee << endl;
+    out << T.status << endl;
+    out << Transfer(T).date.toString() << endl;
+    return out;
 }
