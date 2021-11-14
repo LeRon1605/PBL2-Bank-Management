@@ -86,7 +86,8 @@ int ClientManager::indexOf(const string &ID){
     return -1;
 }
 
-bool ClientManager::add(const Client C){
+bool ClientManager::add(Client C){
+    C.setID(this -> generateID());
     ClientManager::totalClientCreated++;
     return this -> list.addTail(C);
 }

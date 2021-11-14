@@ -4,22 +4,22 @@ Transfer::Transfer(){
 
 }
 
-Transfer::Transfer(const string &ID, Card srcAccount, Card desAccount, const long &cash, const float &fee, const bool &status, const Date &date)
+Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const long &cash, const float &fee, const bool &status, const Date &date)
     : Transaction(ID, srcAccount, cash, fee, status, date)
 {
-    this -> desAccount = desAccount;
+    this -> destAccount = destAccount;
 }
 
-Transfer::Transfer(const string &ID, Card srcAccount, Card desAccount, const long &cash)
+Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const long &cash)
     : Transaction(ID, srcAccount, cash)
 {
-    this -> desAccount = (Card::isValidID((desAccount).getID())) ? desAccount : Card();
+    this -> destAccount = (Card::isValidID((destAccount).getID())) ? destAccount : Card();
 }
 
 Transfer::Transfer(const Transfer &D){
     this -> ID = D.ID;
     this -> srcAccount = D.srcAccount;
-    this -> desAccount = D.desAccount;
+    this -> destAccount = D.destAccount;
     this -> cash = D.cash;
     this -> fee = D.fee;
     this -> status = D.status;
@@ -30,18 +30,18 @@ Transfer::~Transfer(){
 
 }
 
-void Transfer::setDesAccount(Card C){
-    this -> desAccount = C;
+void Transfer::setDestAccount(Card C){
+    this -> destAccount = C;
 }
 
-Card Transfer::getDesAccount(){
-    return (this -> desAccount);
+Card Transfer::getDestAccount(){
+    return (this -> destAccount);
 }
 
 void Transfer::show(){
     cout << "Transaction ID: " << this -> ID << endl;
     cout << "Source Account: " << ((this -> srcAccount)).getID() << endl;
-    cout << "Destination Account: " << ((this -> desAccount)).getID() << endl;
+    cout << "Destination Account: " << ((this -> destAccount)).getID() << endl;
     cout << "Amount: " << this -> cash << " VND" << endl;
     cout << "Fee: " << this -> fee << " VND" << endl;
     if (this -> status)
@@ -64,16 +64,17 @@ int Transfer::calFee(){
     return (50000 + 0.03*this -> cash);
 }
 
-void Transfer::makeTransaction(const string &pin){
+bool Transfer::makeTransaction(const string &pin){
     if (((this -> srcAccount)).getPin() == pin)
         if (this -> cash >= 50000) 
             if (((this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
                 ((this -> srcAccount)).withdraw(this -> cash + this -> calFee());
-                ((this -> desAccount)).deposit(this -> cash);
+                ((this -> destAccount)).deposit(this -> cash);
                 this -> status = true;
                 this -> fee = calFee();
                 this -> date = Date::getCurrentDate();
-                cout << "Successfully Transfer " << this -> cash << " to " << ((this -> desAccount)).getID() << endl;
+                cout << "Successfully Transfer " << this -> cash << " to " << ((this -> destAccount)).getID() << endl;
+                return true;
             }
             else
                 cout << "Your balance doesn't enough to Transfer" << endl;
@@ -81,25 +82,26 @@ void Transfer::makeTransaction(const string &pin){
             cout << "Require at least 50,000 VND to transfer" << endl;
     else 
         cout << "Pin is not correct" << endl;
+    return false;
 }
 
 string Transfer::getType(){
     return "Transfer";
 }
 bool Transfer::operator==(const Transfer &newTransfer){
-    if(this->ID == newTransfer.ID && this->srcAccount == newTransfer.srcAccount &&  this->desAccount == newTransfer.desAccount && this->cash == newTransfer.cash && this->fee == newTransfer.fee && this->status == newTransfer.status && this->date == newTransfer.date){
+    if(this->ID == newTransfer.ID && this->srcAccount == newTransfer.srcAccount &&  this->destAccount == newTransfer.destAccount && this->cash == newTransfer.cash && this->fee == newTransfer.fee && this->status == newTransfer.status && this->date == newTransfer.date){
         return true;
     }
     return false;
 }
 
 ifstream& operator>>(ifstream &in, Transfer &T){
-    string srcAccountID, desAccountID, date;
+    string srcAccountID, destAccountID, date;
     getline(in >> ws, T.ID);
     getline(in >> ws, srcAccountID);
     T.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
-    getline(in >> ws, desAccountID);
-    T.desAccount = Repository<Card>::getByID(desAccountID, "Card.txt");
+    getline(in >> ws, destAccountID);
+    T.destAccount = Repository<Card>::getByID(destAccountID, "Card.txt");
     in >> T.cash;
     in >> T.fee;
     in >> T.status;
@@ -111,7 +113,7 @@ ofstream& operator<<(ofstream &out, const Transfer &T){
     out << Transfer(T).getType() << endl;
     out << T.ID << endl;
     out << Transfer(T).srcAccount.getID() << endl;
-    out << Transfer(T).desAccount.getID() << endl;
+    out << Transfer(T).destAccount.getID() << endl;
     out << T.cash << endl;
     out << T.fee << endl;
     out << T.status << endl;

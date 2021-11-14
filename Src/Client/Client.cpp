@@ -142,8 +142,7 @@ void Client::show(){
     cout << left << setw(10) << this -> age;
     cout << this -> birth << setw(5) << ' ';
     cout << this -> createdAt << setw(11) << ' ';
-    if (this -> updatedAt.isValidDate())
-        cout << this -> updatedAt;
+    cout << this -> updatedAt;
 }
 
 void Client::update(const string &name, const string &gender, const string &CCCD, const Date &birth){
@@ -196,7 +195,7 @@ void Client::input(){
     this -> gender = Client::formatGender(this -> gender);
     cout << "Type Client's CCCD: ";
     cin >> this -> CCCD;
-    cout << "Type Client's birth(dd-mm-yyyy): ";
+    cout << "Type Client's birth(dd/mm/yyyy): ";
     cin >> this -> birth;
     this -> age = this -> getAge();
     this -> createdAt = Date::getCurrentDate();

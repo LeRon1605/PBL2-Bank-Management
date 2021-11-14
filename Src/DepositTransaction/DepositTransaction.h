@@ -16,7 +16,7 @@ class Deposit: public Transaction
         string getType();
         void show();
         int calFee();
-        void makeTransaction(const string&);
+        bool makeTransaction(const string&);
         
         const Deposit& operator=(const Deposit&);
         bool operator==(const Deposit&);

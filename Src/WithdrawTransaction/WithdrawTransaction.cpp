@@ -52,7 +52,7 @@ int Withdraw::calFee(){
     return 13000;
 }
 
-void Withdraw::makeTransaction(const string &pin){
+bool Withdraw::makeTransaction(const string &pin){
     if (((this -> srcAccount)).getPin() == pin)
         if (this -> cash >= 50000) 
             if (((this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
@@ -61,6 +61,7 @@ void Withdraw::makeTransaction(const string &pin){
                 this -> fee = calFee();
                 this -> date = Date::getCurrentDate();
                 cout << "Successfully withdraw " << this -> cash << endl;
+                return true;
             }
             else
                 cout << "Your balance doesn't enough to withdraw" << endl;
@@ -68,6 +69,7 @@ void Withdraw::makeTransaction(const string &pin){
             cout << "Require at least 50,000 VND to withdraw" << endl;
     else 
         cout << "Pin is not correct" << endl;
+    return false;
 }
 
 string Withdraw::getType(){

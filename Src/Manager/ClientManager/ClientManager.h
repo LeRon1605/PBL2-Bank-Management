@@ -18,7 +18,7 @@ class ClientManager: public Manager<Client>
         Client findByID(const string&);
         int indexOf(const Client);
         int indexOf(const string&); 
-        bool add(const Client);
+        bool add(Client);
         bool remove(const Client);
         bool removeByID(const string&);
         void listByDate(const Date&);

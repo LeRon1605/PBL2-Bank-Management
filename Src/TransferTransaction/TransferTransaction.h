@@ -5,7 +5,7 @@
 class Transfer: public Transaction
 {
     private:
-        Card desAccount; // Tài khoản đích
+        Card destAccount; // Tài khoản đích
     public:
         Transfer();
         Transfer(const string&, Card, Card, const long&, const float&, const bool&, const Date&);
@@ -14,13 +14,13 @@ class Transfer: public Transaction
 
         ~Transfer();
 
-        void setDesAccount(Card);
-        Card getDesAccount();
+        void setDestAccount(Card);
+        Card getDestAccount();
 
         string getType();
         void show();
         int calFee();
-        void makeTransaction(const string&);
+        bool makeTransaction(const string&);
         bool operator==(const Transfer&);
 
         friend ifstream& operator>>(ifstream&, Transfer&);

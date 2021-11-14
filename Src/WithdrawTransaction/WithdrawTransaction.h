@@ -16,7 +16,7 @@ class Withdraw: public Transaction
         string getType();
         void show();
         int calFee();
-        void makeTransaction(const string&);
+        bool makeTransaction(const string&);
 
         const Withdraw& operator=(const Withdraw&);
         bool operator==(const Withdraw&);

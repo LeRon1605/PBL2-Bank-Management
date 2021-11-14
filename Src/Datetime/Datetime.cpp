@@ -198,6 +198,7 @@ ostream& operator<<(ostream &out, const Date &D){
         out << right << setw(2) << D.hour << ":" << right << setw(2) << D.minute << ":" << right << setw(2) << D.second << " ";
     if (Date(D).isValidDate())
         out << right << setw(2) << D.day << "/" << right << setw(2) << D.month << "/" << right << setw(4) << D.year;
+    else out << "--:--:-- --/--/----";
     out << setfill(' ');
     return out;
 }

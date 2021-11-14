@@ -70,7 +70,8 @@ int CardManager::indexOf(const string &ID){
 }
 
 bool CardManager::add(Card C){
-    if ((this -> countClientCard(C.getHolder().getID())) >= 3) return false; 
+    if ((this -> countClientCard(C.getHolder().getID())) >= 3) return false;
+    C.setID(this -> generateID()); 
     CardManager::totalCardCreated++;
     return this -> list.addTail(C);
 }

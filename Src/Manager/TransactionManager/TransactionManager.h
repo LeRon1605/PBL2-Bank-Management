@@ -3,7 +3,7 @@
 #include "../../Transaction/Transaction.h"
 #include "../../CTDL/LinkedList.h"
 #include "../Manager.h"
-class TransactionManager: Manager<Transaction*> 
+class TransactionManager: public Manager<Transaction*> 
 {
     private:
         LinkedList<Transaction*> list;
@@ -15,11 +15,11 @@ class TransactionManager: Manager<Transaction*>
         string generateID(); // Tạo ID
         void show(); // Hiển thị tất cả
         void showByID(const string&); // Hiển thị bằng ID
-        Transaction* findByID(const string&) = 0; // Tìm bằng ID
-        int indexOf(const Transaction*); // 
+        Transaction* findByID(const string&); // Tìm bằng ID
+        int indexOf(Transaction*); // 
         int indexOf(const string&); 
-        bool add(const Transaction*); // Thêm vào danh sách
-        bool remove(const Transaction*); // Xóa
+        bool add(Transaction*); // Thêm vào danh sách
+        bool remove(Transaction*); // Xóa
         bool removeByID(const string&); // Xóa bằng ID
         void listByDate(const Date&); // Liệt kê bằng ngày
     

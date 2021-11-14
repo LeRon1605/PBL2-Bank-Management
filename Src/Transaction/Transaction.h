@@ -37,7 +37,8 @@ class Transaction{
         virtual string getType() = 0;
         virtual void show() = 0;
         virtual int calFee() = 0;
-        virtual void makeTransaction(const string&) = 0;
+        virtual bool makeTransaction(const string&) = 0;
 
+        friend ifstream& operator>>(ifstream&, Transaction&);
 };
 #endif

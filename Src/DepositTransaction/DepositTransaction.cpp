@@ -52,7 +52,7 @@ int Deposit::calFee(){
     return (10000 + 0.02*this -> cash);
 }
 
-void Deposit::makeTransaction(const string &pin){
+bool Deposit::makeTransaction(const string &pin){
     if (((this -> srcAccount)).getPin() == pin)
         if (this -> cash >= 50000){
             ((this -> srcAccount)).deposit(this -> cash - this -> calFee());
@@ -60,11 +60,13 @@ void Deposit::makeTransaction(const string &pin){
             this -> fee = this -> calFee();
             this -> date = Date::getCurrentDate();
             cout << "Successfully Deposit " << this -> cash << endl;
+            return true;
         }    
         else 
             cout << "Require at least 50,000 VND to Deposit" << endl;
     else 
         cout << "Pin is not correct" << endl;
+    return false;
 }
 
 string Deposit::getType(){

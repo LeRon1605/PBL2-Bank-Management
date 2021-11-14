@@ -3,15 +3,16 @@
 #include "TransferTransaction/TransferTransaction.h"
 #include "Manager/ClientManager/ClientManager.h"
 #include "Manager/CardManager/CardManager.h"
+#include "Manager/TransactionManager/TransactionManager.h"
 #include "Repo/Repo.h"
 // #include "CTDL/Node.h"
 // #include "CTDL/LinkedList.cpp"
 using namespace std;
 int main(){
 	// // Code
-	Client RonB("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
+	Client Ron("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
 	Client RonA("10220015", "Le Quoc Ron", "male", "30001234", "16/07/2002");
-	// Card D("102200000003", Ron, "160502", 50000);
+	Card D("102200000003", Ron, "160502", 50000);
 	// Withdraw W("10000000", C, 50000);
 	// Transaction *ptr = new Withdraw(W);
 	// ptr -> makeTransaction(C.getPin());
@@ -84,19 +85,38 @@ int main(){
 	// A.show();
 	//A.add(Ron);
 	// CardManager A;
+	// A.add();
 	// A.listAllClientCard("10220013");
 	// ifstream test;
 	// test.open("../Data/Transaction.txt");
 	// int n, m;
 	// test >> n >> m;
-	// Deposit temp;
+	// // Deposit temp;
 	// string a;
-	// for (int i = 0; i < n; i++){
+	// // for (int i = 0; i < n; i++){
+	// // 	test >> a;
+	// // 	test >> temp;
+	// // 	temp.getSrcAccount().show();
+	// // 	temp.show();
+	// // }
+	// // test.close();
+	// for (int i = 0; i < n;i++){
 	// 	test >> a;
+	// 	Deposit temp;
 	// 	test >> temp;
-	// 	temp.getSrcAccount().show();
-	// 	temp.show();
+	// 	Transaction *ptr = new Deposit(temp);
+	// 	ptr -> show();
 	// }
-	// test.close();
+	// Transaction *ptr = new Withdraw;
+	// TransactionManager b;
+	// b.showAllClientTransaction("10000001");
+	// ClientManager b;
+	// // Client A;
+	// // A.input();
+	// // b.add(A);
+	// b.show();
+	TransactionManager A;
+	Transaction *ptr = A.findByID("10000000");
+	ptr -> show();
 	return 0;
 }
