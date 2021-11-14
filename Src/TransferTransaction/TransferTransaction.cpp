@@ -16,14 +16,14 @@ Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const lo
     this -> destAccount = (Card::isValidID((destAccount).getID())) ? destAccount : Card();
 }
 
-Transfer::Transfer(const Transfer &D){
-    this -> ID = D.ID;
-    this -> srcAccount = D.srcAccount;
-    this -> destAccount = D.destAccount;
-    this -> cash = D.cash;
-    this -> fee = D.fee;
-    this -> status = D.status;
-    this -> date = D.date;
+Transfer::Transfer(const Transfer &T){
+    this -> ID = T.ID;
+    this -> srcAccount = T.srcAccount;
+    this -> destAccount = T.destAccount;
+    this -> cash = T.cash;
+    this -> fee = T.fee;
+    this -> status = T.status;
+    this -> date = T.date;
 }
 
 Transfer::~Transfer(){

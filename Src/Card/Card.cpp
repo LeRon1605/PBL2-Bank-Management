@@ -142,9 +142,12 @@ void Card::show(){
     //     cout << "Updated At: " << this -> updatedAt;
     // if (this -> pinUpdatedAt.isValidDate())
     //     cout << "Pin Updated At: " << this -> pinUpdatedAt;
-    cout << left << setw(15) << this -> ID << left << setw(15) << this -> holder.getID() << left << setw(10) << this -> pin << left << setw(15) << to_string(this -> balance) + " VND" ;
+    cout << left << setw(15) << this -> ID;
+    cout << left << setw(15) << this -> holder.getID();
+    cout << left << setw(10) << this -> pin;
+    cout << left << setw(15) << to_string(this -> balance) + " VND" ;
     cout << left << setw(30) << this -> createdAt << setw(11) << ' ';
-    cout <<  left << setw(30) << this -> updatedAt << setw(11) << ' ';;
+    cout << left << setw(30) << this -> updatedAt << setw(11) << ' ';;
     cout << left << setw(30) << this -> pinUpdatedAt;
 }
 

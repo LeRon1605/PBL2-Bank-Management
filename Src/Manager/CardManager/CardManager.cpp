@@ -29,7 +29,9 @@ CardManager::~CardManager(){
 
 void CardManager::show(){
     Node<Card> *ptr = this -> list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder" << left << setw(10) << "Pin" << left << setw(15) << "Balance" << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
+    cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder";
+    cout << left << setw(10) << "Pin" << left << setw(15) << "Balance";
+    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
     while (ptr != nullptr){
         ptr -> getData().show();
         cout << endl;
@@ -86,7 +88,9 @@ bool CardManager::removeByID(const string &ID){
 
 void CardManager::listByDate(const Date &D){
     Node<Card> *ptr = this -> list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder" << left << setw(10) << "Pin" << left << setw(15) << "Balance" << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
+    cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder";
+    cout << left << setw(10) << "Pin" << left << setw(15) << "Balance";
+    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
     while (ptr != nullptr){
         if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) ptr -> getData().show();
         ptr = ptr -> getNext();
