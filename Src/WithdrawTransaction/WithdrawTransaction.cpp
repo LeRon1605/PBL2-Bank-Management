@@ -1,5 +1,5 @@
 #include "WithdrawTransaction.h"
-
+#include "../Repo/Repo.h"
 Withdraw::Withdraw(){
 
 }
@@ -90,4 +90,28 @@ bool Withdraw::operator==(const Withdraw &newWithdraw){
         return true;
     }
     return false;
+}
+
+
+ifstream& operator>>(ifstream &in, Withdraw &W){
+    string srcAccountID, date;
+    getline(in >> ws, W.ID);
+    getline(in >> ws, srcAccountID);
+    W.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
+    in >> W.cash;
+    in >> W.fee;
+    in >> W.status;
+    getline(in >> ws, date);
+    W.date = Date(date.c_str());
+    return in;
+}
+ofstream& operator<<(ofstream &out, const Withdraw &W){
+    out << Withdraw(W).getType() << endl;
+    out << W.ID << endl;
+    out << Withdraw(W).srcAccount.getID() << endl;
+    out << W.cash << endl;
+    out << W.fee << endl;
+    out << W.status << endl;
+    out << Withdraw(W).date.toString() << endl;
+    return out;
 }
