@@ -101,7 +101,7 @@ int LinkedList<T>::lastIndexOf(const T element){
             index--;
             ptr = ptr -> getPrev();
         }
-        return -1;  // trả về giá trị index = giá trị phần tử cuối cùng của T (nếu kh có phần tử return -1)
+        return -1;  
 }
 
 template <class T>
@@ -113,7 +113,7 @@ int LinkedList<T>::lastIndexOf(bool (*compare)(const T, const string&), const st
             index--;
             ptr = ptr -> getPrev();
         }
-        return -1;  // trả về giá trị index = giá trị phần tử cuối cùng có ID (nếu kh có phần tử return -1)
+        return -1;  
 }
 
 template <class T>

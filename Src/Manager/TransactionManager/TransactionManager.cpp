@@ -4,6 +4,7 @@
 #include "../../DepositTransaction/DepositTransaction.h"
 #include "../../Repo/Repo.h"
 #include <fstream>
+#include <iomanip>
 int TransactionManager::totalTransactionCreated = 0;
 TransactionManager::TransactionManager(){
     ifstream in;
@@ -92,9 +93,9 @@ int TransactionManager::indexOf(Transaction *T){
     // Node<Transaction*> *ptr = this -> list.getHead();
     // int index = 0;
     // while (ptr != nullptr){
-    //     if (Withdraw(*T) == ptr -> getData() && T -> getType() == "Withdraw") return index;
-    //     if (Deposit(*T) == ptr -> getData() && T -> getType() == "Deposit") return index;
-    //     if (Transfer(*T) == ptr -> getData() && T -> getType() == "Transfer") return index;
+    //     if (ptr -> getData() == Withdraw(*T) && T -> getType() == "Withdraw") return index;
+    //     if (ptr -> getData() == Deposit(*T) && T -> getType() == "Deposit") return index;
+    //     if (ptr -> getData() == Transfer(*T) && T -> getType() == "Transfer") return index;
     //     index++;
     //     ptr = ptr-> getNext();
     // }
@@ -111,19 +112,26 @@ bool TransactionManager::add(Transaction *T){
 }
 
 bool TransactionManager::remove(Transaction *T){
-    // int index = this -> indexOf(T);
-    // if (index == -1) return false;
-    // return this -> list.removeAt(index);
     return false;
 }
 
 bool TransactionManager::removeByID(const string &ID){
     int index = this -> indexOf(ID);
-    return this -> list.removeAt(index);
+    if (index == -1) return false;
+    else return this -> list.removeAt(index);
 }
-
+//
 void TransactionManager::listByDate(const Date &D){
-
+    Node<Transaction*> *ptr = this -> list.getHead();
+    cout << left << setw(15) << "ID" << left << setw(20) << "srcAccount" << left << setw(15) << "cash";
+    cout << left << setw(15) << "fee" << left << setw(10) << "status" << left << setw(30) << "date";
+    while (ptr != nullptr){
+        if (Date::compareDate(ptr ->getData()->getDate(), D)) {
+            ptr -> getData()->show();
+            cout << endl;
+        }
+        ptr = ptr -> getNext();
+    }
 }
 
 bool TransactionManager::makeWithdraw(const string &CardID, const long &cash, const string &PIN){
@@ -141,15 +149,23 @@ bool TransactionManager::makeTransfer(const string &SrcAccount, const string &De
     Repository<Card>::findAndUpdate(T.getDestAccount(), "Card.txt");
     Transaction *ptr = new Transfer(T);
     this -> add(ptr);
-    return false;
+    return result;
 }
 
 bool TransactionManager::makeDeposit(const string &CardID, const long &cash, const string &PIN){
-    return false;
+    Transaction *ptr = new Deposit(this -> generateID(), Repository<Card>::getByID(CardID, "Card.txt"), cash);
+    bool result = ptr -> makeTransaction(PIN);
+    Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
+    this -> add(ptr);
+    return result;
 }
 
 void TransactionManager::showWithdraw(){
-
+    Node<Transaction*> *ptr = this->list.getHead();
+    while (ptr != nullptr){
+        if (ptr -> getData() -> getType() == "Withdraw") ptr -> getData() -> show();
+        ptr = ptr -> getNext();
+    }
 }
 
 void TransactionManager::showTransfer(){
@@ -161,7 +177,11 @@ void TransactionManager::showTransfer(){
 }
 
 void TransactionManager::showDeposit(){
-
+    Node<Transaction*> *ptr = this -> list.getHead();
+    while (ptr != nullptr){
+        if (ptr -> getData() -> getType() == "Deposit") ptr -> getData() -> show();
+        ptr = ptr -> getNext();
+    }
 }
 
 void TransactionManager::showAllClientTransaction(const string &ClientID){
@@ -173,5 +193,9 @@ void TransactionManager::showAllClientTransaction(const string &ClientID){
 }
 
 void TransactionManager::showAllCardTransaction(const string &CardID){
-    
+    Node<Transaction*> *ptr = this -> list.getHead();
+    while (ptr != nullptr){
+        if(ptr -> getData()-> getSrcAccount().getID() == CardID)  ptr -> getData() -> show();
+        ptr = ptr -> getNext();
+    }
 }

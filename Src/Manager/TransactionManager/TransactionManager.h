@@ -16,7 +16,7 @@ class TransactionManager: public Manager<Transaction*>
         void show(); // Hiển thị tất cả
         void showByID(const string&); // Hiển thị bằng ID
         Transaction* findByID(const string&); // Tìm bằng ID
-        int indexOf(Transaction*); // 
+        int indexOf(Transaction*);
         int indexOf(const string&); 
         bool add(Transaction*); // Thêm vào danh sách
         bool remove(Transaction*); // Xóa
@@ -31,7 +31,7 @@ class TransactionManager: public Manager<Transaction*>
         void showTransfer(); // Hiển thị tất cả các giao dịch chuyển khoản
         void showDeposit(); // Hiển thị tất cả cáp giao dịch nạp
 
-        void showAllClientTransaction(const string&);
-        void showAllCardTransaction(const string&); 
+        void showAllClientTransaction(const string&); // Hiển thị tất cả các giao dịch của khách hàng
+        void showAllCardTransaction(const string&); // Hiển thị tất cả các giao dịch của thẻ
 };
 #endif

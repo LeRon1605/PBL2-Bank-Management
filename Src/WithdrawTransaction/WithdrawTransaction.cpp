@@ -16,13 +16,13 @@ Withdraw::Withdraw(const string &ID, Card srcAccount, const long &cash)
 
 }
 
-Withdraw::Withdraw(const Withdraw &D){
-    this -> ID = D.ID;
-    this -> srcAccount = D.srcAccount;
-    this -> cash = D.cash;
-    this -> fee = D.fee;
-    this -> status = D.status;
-    this -> date = D.date;
+Withdraw::Withdraw(const Withdraw &W){
+    this -> ID = W.ID;
+    this -> srcAccount = W.srcAccount;
+    this -> cash = W.cash;
+    this -> fee = W.fee;
+    this -> status = W.status;
+    this -> date = W.date;
 }
 
 Withdraw::~Withdraw(){
