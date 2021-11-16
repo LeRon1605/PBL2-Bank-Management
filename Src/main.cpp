@@ -3,6 +3,7 @@
 #include "Manager/TransactionManager/TransactionManager.h"
 #include "Menu/Menu.h"
 #include "Helper/Helper.h"
+#include "Repo/Repo.h"
 #include <conio.h>
 #include <iomanip>
 // #include "CTDL/Node.h"
@@ -120,6 +121,7 @@ int main(){
 	// ptr -> show();
 	Menu application;
 	ClientManager *CManager;
+	CardManager *cardManager;
 	do{
 		application.printMenu(background);
 		application.printMenu(mainMenu);
@@ -210,9 +212,143 @@ int main(){
 				}while (application.getChoice() != 7);
 				break;
 			case 2:
-				application.printMenu(background);
-				application.printMenu(cardManagerMenu);
 				system("cls");
+				cardManager = new CardManager();
+				do{
+					application.printMenu(background);
+					application.printMenu(cardManagerMenu);
+					application.inputChoice(1, 14);
+					switch(application.getChoice()){
+						case 1:
+							{
+								Card newCard;
+								newCard.input();
+								if(cardManager -> add(newCard)) cout << "=> The ngan hang duoc tao thanh cong" << endl;
+								else cout << "=> The ngan hang duoc tao that bai" << endl;
+							}
+							break;
+						case 2:
+							{
+								string CardID;
+								cout << "Nhap ID the ngan hang muon xoa: ";
+								cin >> CardID;
+								if(cardManager -> removeByID(CardID)) cout << "Xoa thanh cong the ngan hang co ID: " << CardID << endl;
+								else cout << "The ngan hang co ID: " << CardID << "khong ton tai" << endl;
+							}
+							break;
+						case 3 :
+							{
+								string CardID, newPin , currentPin;
+								cout << "Nhap ID the ngan hang muon doi ma pin: ";
+								cin >> CardID;
+								Card temp = cardManager -> findByID(CardID);
+								if(temp.isNull()) cout << "The ngan hang khong ton tai" << endl;
+								else
+								{
+									cout << "Nhap ma pin cu: ";
+									cin >> currentPin;
+									cout << "Nhap ma pin moi: ";
+									cin >> newPin;
+									if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "Doi ma pin thanh cong" << endl;
+									else cout << "Doi ma pin khong thanh cong";
+								}
+							}
+							break;
+						case 4 :
+							{
+								string CardID;
+								cout << "Nhap ID the ngan hang muon hien thi thong tin: ";
+								cin >> CardID;
+								Card temp = cardManager -> findByID(CardID);
+								if(temp.isNull()) cout << "The ngan hang khong ton tai" << endl;
+								else
+								{
+									cardManager -> showByID(CardID);
+								}
+								getch();
+							}
+							break;
+						case 5 :
+							{
+								string CardID;
+								cout << "Nhap ID the ngan hang muon hien thi thong tin chu the: ";
+								cin >> CardID;
+								Card temp = cardManager -> findByID(CardID);
+								if(temp.isNull()) cout << "The ngan hang khong ton tai" << endl;
+								else
+								{
+									cardManager -> showInf(CardID);
+								}
+							}
+							break;
+						case 6 :
+							{
+								
+							}
+							break;
+						case 7 :
+							{
+								string CardID;
+								cout << "Nhap ID the ngan hang muon tim kiem: ";
+								cin >> CardID;
+								Card temp = cardManager -> findByID(CardID);
+								if(temp.isNull()) cout << "The khong ton tai" << endl;
+								else
+								{
+									cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
+									cout << left << setw(15) << "| ID" << left << setw(20) << "| IdHholder";
+									cout << left << setw(15) << "| Pin"<< left << setw(20) << "| Balance" ;
+									cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << left << setw(30) <<"| Pin Update At" << "|" << endl; 
+									cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
+									temp.show();
+									cout << endl;
+								}
+							}
+							break;
+						case 8 :
+							system("cls");
+							cardManager ->show();
+							cout << "=> Nhan phim bat ki de quay tro ve.";
+							getch();
+							break;
+						case 9 :
+							{
+								string ClientID;
+								cout << "Nhap ID khach hang muon hien thi danh sach the ngan hang: ";
+								cin >> ClientID;
+								Client temp = Repository<Client>::getByID(ClientID, "Client.txt");
+								if(temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								else
+								{
+									cardManager -> listAllClientCard(ClientID);
+								}
+							}
+							break;
+						case 10 :
+							{
+								string ClientID;
+								cout << "Nhap ID khach hang muon xoa tat ca cac the ngan hang: ";
+								cin >> ClientID;
+								Client temp = Repository<Client>::getByID(ClientID, "Client.txt");
+								if(temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								else
+								{
+									cardManager ->removeAll(ClientID);
+								}
+							}
+							break;
+						case 11 :
+							{
+								Date temp;
+								cout << "Nhap ngay can thong ke(dd/mm/yyyy): ";
+								cin >> temp;
+								cardManager -> listByDate(temp);
+							}	
+							break;
+						case 12 :
+						 	delete cardManager;
+					}
+				}while (application.getChoice() != 12);
 				break;
 			case 3:
 				system("cls");

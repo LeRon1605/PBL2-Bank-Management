@@ -5,7 +5,13 @@
 //Constructor
 Card::Card()
 {
-
+    this -> ID = "";
+    this -> holder = Client();
+    this -> pin = "";
+    this -> balance = 0;
+    this -> createdAt = "";
+    this -> updatedAt = "";
+    this -> pinUpdatedAt = "";
 }
 
 Card::Card(const Card &card)
@@ -131,24 +137,19 @@ bool Card::isValidPin(const string &str){
     }
     return true;
 }
+bool Card::isNull(){
+    return ((*this) == Card());
+}
 
 void Card::show(){
-    // cout << "ID: " << this -> ID << endl;
-    // cout << "IDholder: " << this -> holder.getID() << endl;
-    // cout << "Pin: " << this -> pin << endl;
-    // cout << "Balance: " << this -> balance << " VND" <<  endl;
-    // cout << "Created At: " << this -> createdAt;
-    // if (this -> updatedAt.isValidDate())
-    //     cout << "Updated At: " << this -> updatedAt;
-    // if (this -> pinUpdatedAt.isValidDate())
-    //     cout << "Pin Updated At: " << this -> pinUpdatedAt;
-    cout << left << setw(15) << this -> ID;
-    cout << left << setw(15) << this -> holder.getID();
-    cout << left << setw(10) << this -> pin;
-    cout << left << setw(15) << to_string(this -> balance) + " VND" ;
-    cout << left << setw(30) << this -> createdAt << setw(11) << ' ';
-    cout << left << setw(30) << this -> updatedAt << setw(11) << ' ';;
-    cout << left << setw(30) << this -> pinUpdatedAt;
+    cout << "| " << left << setw(10) << this -> ID;
+    cout << "| " << left << setw(15) << this -> holder.getID();
+    cout << "| " << left << setw(10) << this -> pin;
+    cout << "| " << left << setw(15) << to_string(this -> balance) + " VND" ;
+    cout << "| " << this -> createdAt << setw(9) << ' ';
+    cout << "| " << this -> updatedAt << setw(8) << ' ';;
+    cout << "| " << this -> pinUpdatedAt << setw(15) << ' ';
+    cout << endl << setfill('-') << setw(150) << '-' << setfill(' ');
 }
 
 void Card::showBalance(){
