@@ -25,7 +25,7 @@ T Repository<T>::getByID(const string &ID, const string &fileName){
     int n, totalDoc;
     in >> n;
     in >> totalDoc;
-    T temp;
+    T temp; 
     for (int i = 0; i < n;i++){
         in >> temp;
         if (temp.getID() == ID) return temp;

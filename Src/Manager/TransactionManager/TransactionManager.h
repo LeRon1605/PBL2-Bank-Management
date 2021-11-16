@@ -13,7 +13,7 @@ class TransactionManager: public Manager<Transaction*>
         ~TransactionManager();
 
         string generateID(); // Tạo ID
-        void show(); // Hiển thị tất cả
+        void show(); // Hiển thị tất cả
         void showByID(const string&); // Hiển thị bằng ID
         Transaction* findByID(const string&); // Tìm bằng ID
         int indexOf(Transaction*);
@@ -22,7 +22,6 @@ class TransactionManager: public Manager<Transaction*>
         bool remove(Transaction*); // Xóa
         bool removeByID(const string&); // Xóa bằng ID
         void listByDate(const Date&); // Liệt kê bằng ngày
-    
         bool makeWithdraw(const string&, const long&, const string&); // Thực hiện giao dịch rút
         bool makeTransfer(const string&, const string&, const long&, const string&); // Thực hiện giao dịch chuyển khoản
         bool makeDeposit(const string&, const long&, const string&); // Thực hiện giao dịch nạp

@@ -38,6 +38,7 @@ class Card{
         
         static bool isValidID(const string&);
         static bool isValidPin(const string&);
+        bool isNull();
         void show();
         void showBalance();
         int withdraw(const long&);
