@@ -1,38 +1,44 @@
 #include "Client.h"
+#include "../Helper/Helper.h"
 #include <string>
 #include <iomanip>
 #include <algorithm>
 Client::Client(){
-
+    this -> ID = "";
+    this -> name = "";
+    this -> gender = "";
+    this -> address = "";
+    this -> age = 0;
+    this -> createdAt = "";
+    this -> updatedAt = "";
 }
 
 Client::Client(const Client &D){
     this -> ID = D.ID;
     this -> name = D.name;
     this -> gender = D.gender;
-    this -> CCCD = D.CCCD;
+    this -> address = D.address;
     this -> birth = D.birth;
     this -> age = D.age;
     this -> createdAt = D.createdAt;
     this -> updatedAt = D.updatedAt;
 }
 
-Client::Client(const string &ID, const string &name, const string &gender, const string &CCCD, const Date &birth){
-    this -> ID = (Client::isValidID(ID)) ? ID : "";
+Client::Client(const string &name, const string &gender, const string &address, const Date &birth){
     this -> name = (Client::isValidName(name)) ? name : "";
     this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
-    this -> CCCD = CCCD;
+    this -> address = address;
     this -> birth = (Date(birth).isValidDate()) ? birth : Date();
     this -> age = this -> getAge();
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
 }
 
-Client::Client(const string &ID, const string &name, const string &gender, const string &CCCD, const Date &birth, const Date &createdAt, const Date &updatedAt){
+Client::Client(const string &ID, const string &name, const string &gender, const string &address, const Date &birth, const Date &createdAt, const Date &updatedAt){
     this -> ID = (Client::isValidID(ID)) ? ID : "";
     this -> name = (Client::isValidName(name)) ? name : "";
     this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
-    this -> CCCD = CCCD;
+    this -> address = address;
     this -> birth = (Date(birth).isValidDate()) ? birth : Date();
     this -> age = this -> getAge();
     this -> createdAt = (Date(createdAt).isValidDate()) ? createdAt : Date();
@@ -51,8 +57,8 @@ string Client::getGender(){
     return this -> gender;
 }
 
-string Client::getCCCD(){
-    return this -> CCCD;
+string Client::getAddress(){
+    return this -> address;
 }
 
 int Client::getAge(){
@@ -85,8 +91,8 @@ void Client::setGender(const string &gender){
     this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
 }
 
-void Client::setCCCD(const string &CCCD){
-    this -> CCCD = CCCD;
+void Client::setAddress(const string &address){
+    this -> address = address;
 }
 
 void Client::setBirth(const Date &birth){
@@ -134,32 +140,37 @@ bool Client::isValidName(const string &str){
     return true;
 }
 
-void Client::show(){
-    cout << left << setw(15) << this -> ID;
-    cout << left << setw(20) << this -> name;
-    cout << left << setw(10) << this -> gender;
-    cout << left << setw(15) << this -> CCCD;
-    cout << left << setw(10) << this -> age;
-    cout << this -> birth << setw(5) << ' ';
-    cout << this -> createdAt << setw(11) << ' ';
-    cout << this -> updatedAt;
+bool Client::isNull(){
+    return ((*this) == Client());
 }
 
-void Client::update(const string &name, const string &gender, const string &CCCD, const Date &birth){
-    this -> name = (Client::isValidName(name)) ? name : "";
-    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
-    this -> CCCD = CCCD;
-    this -> birth = (Date(birth).isValidDate()) ? birth : Date();
+void Client::show(){
+    cout << "| " << left << setw(13) << this -> ID;
+    cout << "| " << left << setw(18) << this -> name;
+    cout << "| " << left << setw(8) << this -> gender;
+    cout << "| " << left << setw(18) << this -> address;
+    cout << "| " << left << setw(8) << this -> age;
+    cout << "| " << this -> birth << setw(3) << ' ' << "| ";
+    cout << this -> createdAt << setw(9) << ' ' << "| ";
+    cout << this -> updatedAt << setw(8) << ' ' << "| ";
+    cout << endl << setfill('-') << setw(150) << '-' << setfill(' ');
+}
+
+void Client::update(const string &name, const string &gender, const string &address, const Date &birth){
+    this -> name = (Client::isValidName(name)) ? name : this -> name;
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : this -> gender;
+    this -> address = (address.size() > 0) ? address : this -> address;
+    this -> birth = (Date(birth).isValidDate()) ? birth : this -> birth;
     this -> age = this -> getAge();
     this -> updatedAt = Date::getCurrentDate();
 }
 
 void Client::update(const Client &C){
-    this -> name = C.name;
-    this -> gender = C.gender;
-    this -> CCCD = C.CCCD;
-    this -> birth = C.birth;
-    this -> age = C.age;
+    this -> name = (Client::isValidName(C.name)) ? C.name : this -> name;
+    this -> gender = (Client::isValidGender(C.gender)) ? C.gender : this -> gender;
+    this -> address = (C.address.size() > 0) ? C.address : this -> address;
+    this -> birth = (Date(C.birth).isValidDate()) ? C.birth : this -> birth;
+    this -> age = this -> getAge();
     this -> updatedAt = Date::getCurrentDate();
 }
 
@@ -167,7 +178,7 @@ const Client& Client::operator=(const Client &C){
     this -> ID = C.ID;
     this -> name = C.name;
     this -> gender = C.gender;
-    this -> CCCD = C.CCCD;
+    this -> address = C.address;
     this -> birth = C.birth;
     this -> age = C.age;
     this -> createdAt = C.createdAt;
@@ -176,7 +187,7 @@ const Client& Client::operator=(const Client &C){
 }
 
 void Client::input(){
-    cout << "Type Clients's name: ";
+    cout << "Enter Clients's name: ";
     fflush(stdin);
     getline(cin, this -> name);
     while (!Client::isValidName(this -> name)){
@@ -184,7 +195,7 @@ void Client::input(){
         fflush(stdin);
         getline(cin, this -> name);
     }
-    cout << "Type Client's gender(Male/Female/Other): ";
+    cout << "Enter Client's gender(Male/Female/Other): ";
     fflush(stdin);
     cin >> this -> gender;
     while (!Client::isValidGender(this -> gender)){
@@ -193,8 +204,9 @@ void Client::input(){
         cin >> this -> gender;
     }
     this -> gender = Client::formatGender(this -> gender);
-    cout << "Type Client's CCCD: ";
-    cin >> this -> CCCD;
+    cout << "Enter Client's Address: ";
+    fflush(stdin);
+    getline(cin, this -> address);
     cout << "Type Client's birth(dd/mm/yyyy): ";
     cin >> this -> birth;
     this -> age = this -> getAge();
@@ -206,7 +218,7 @@ ofstream& operator<<(ofstream &out, const Client &C){
     out << C.ID << endl;
     out << C.name << endl;
     out << C.gender << endl;
-    out << C.CCCD << endl;
+    out << C.address << endl;
     out << Date(C.birth).toString() << endl;
     out << Date(C.createdAt).toString() << endl;
     out << Date(C.updatedAt).toString() << endl;
@@ -214,7 +226,7 @@ ofstream& operator<<(ofstream &out, const Client &C){
 }
 
 bool Client::operator==(const Client &newClient){
-    if(this->ID == newClient.ID && this->name == newClient.name && this->gender == newClient.gender && this->age == newClient.age && this->birth == newClient.birth && this->CCCD == newClient.CCCD && this->createdAt == newClient.createdAt && this->updatedAt == newClient.updatedAt){
+    if(this->ID == newClient.ID && this->name == newClient.name && this->gender == newClient.gender && this->age == newClient.age && this->birth == newClient.birth && this->address == newClient.address && this->createdAt == newClient.createdAt && this->updatedAt == newClient.updatedAt){
         return true;
     }
     return false;
@@ -222,16 +234,14 @@ bool Client::operator==(const Client &newClient){
 ifstream& operator>>(ifstream &in, Client &C){
     string date;
     in >> C.ID;
-    in.ignore(2000,'\n');
-    getline(in, C.name);
+    getline(in >> ws, C.name);
     in >> C.gender;
-    in >> C.CCCD;
-    in.ignore(2000,'\n');
-    getline(in, date);
+    getline(in >> ws, C.address);
+    getline(in >> ws, date);
     C.birth = Date(date.c_str());
-    getline(in, date);
+    getline(in >> ws, date);
     C.createdAt = Date(date.c_str());
-    getline(in, date);
+    getline(in >> ws, date);
     C.updatedAt = Date(date.c_str());
     C.age = C.getAge();
     return in;

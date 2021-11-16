@@ -102,14 +102,14 @@ bool Repository<T>::findAndRemove(const string &ID, const string &fileName){
 
 template <class T>
 bool Repository<T>::findAndRemove(bool (*compare)(const T, const string&), const string &str, const string &fileName){
+    int num = Repository<T>::countDoc(compare, str, fileName);
+    if (num == 0) return false;
     ofstream temp;
     temp.open("../Data/temp.txt");
     ifstream in;
     in.open("../Data/" + fileName);
     int n, totalDoc;
     in >> n;
-    int num = Repository<T>::countDoc(compare, str, fileName);
-    if (num == 0) return false;
     temp << n - num << endl;
     in >> totalDoc;
     temp << totalDoc << endl;

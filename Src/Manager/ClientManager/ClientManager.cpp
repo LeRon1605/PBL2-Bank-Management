@@ -31,9 +31,11 @@ ClientManager::~ClientManager(){
 
 void ClientManager::show(){
     Node<Client> *ptr = this->list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(20) << "Name" << left << setw(10) << "Gender";
-    cout << left << setw(15) << "CCCD" << left << setw(10) << "Age" << left << setw(15) << "Birth";
-    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << endl;
+    cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
+    cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
+    cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
+    cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
+    cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
     while (ptr != nullptr){
         ptr->getData().show();
         cout << endl;
@@ -42,13 +44,13 @@ void ClientManager::show(){
 }
 
 void ClientManager::showByID(const string &ID){
-    Node<Client> *ptr = this->list.getHead();
+    Node<Client> *ptr = this -> list.getHead();
     while (ptr != nullptr){
-        if (ptr->getData().getID() == ID) {
-            ptr->getData().show();
+        if (ptr -> getData().getID() == ID) {
+            ptr -> getData().show();
             return;
         }
-        ptr = ptr->getNext();
+        ptr = ptr -> getNext();
     }
 }
 
@@ -61,7 +63,7 @@ Client ClientManager::findByID(const string &ID){
     while (ptr != nullptr)
     {
         if(ptr -> getData().getID() == ID){
-            return ptr->getData();
+            return ptr -> getData();
         }
         ptr = ptr->getNext();
     }
@@ -110,9 +112,11 @@ bool ClientManager::removeByID(const string &ID){
 
 void ClientManager::listByDate(const Date &D){
     Node<Client> *ptr = this -> list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(20) << "Name" << left << setw(10) << "Gender";
-    cout << left << setw(15) << "CCCD" << left << setw(10) << "Age" << left << setw(15) << "Birth";
-    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << endl;
+    cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
+    cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
+    cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
+    cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
+    cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
     while (ptr != nullptr){
         if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) {
             ptr -> getData().show();

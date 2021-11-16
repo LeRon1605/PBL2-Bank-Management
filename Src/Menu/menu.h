@@ -1,17 +1,18 @@
-class menu
+#ifndef MENU_H
+#define MENU_H
+class Menu
 {
-private:
-    int lc;
-public:
-    menu();
-    ~menu();
-    void background();
-    void showMenu();
-    void showMenuClientManager();
-    void showMenuCardManager();
-    void showMenuTransactionManager();
-    void selection();
-};
+    private:
+        int choice;
+    public:
+        Menu();
+        ~Menu();
 
+        void printMenu(void (*Menu)());
+        void inputChoice(const int&, const int&);
+        int getChoice();
+        bool isValidChoice(const int&, const int&);
+};
+#endif
 
 

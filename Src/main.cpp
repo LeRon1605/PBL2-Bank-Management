@@ -1,18 +1,18 @@
-#include "WithdrawTransaction/WithdrawTransaction.h"
-#include "DepositTransaction/DepositTransaction.h"
-#include "TransferTransaction/TransferTransaction.h"
 #include "Manager/ClientManager/ClientManager.h"
 #include "Manager/CardManager/CardManager.h"
 #include "Manager/TransactionManager/TransactionManager.h"
-#include "Repo/Repo.h"
+#include "Menu/Menu.h"
+#include "Helper/Helper.h"
+#include <conio.h>
+#include <iomanip>
 // #include "CTDL/Node.h"
 // #include "CTDL/LinkedList.cpp"
 using namespace std;
 int main(){
 	// // Code
-	Client Ron("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
-	Client RonA("10220015", "Le Quoc Ron", "male", "30001234", "16/07/2002");
-	Card D("102200000003", Ron, "160502", 50000);
+	// Client Ron("10220014", "Le Quoc Ron", "male", "30001234", "16/07/2002");
+	// Client RonA("10220015", "Le Quoc Ron", "male", "30001234", "16/07/2002");
+	// Card D("102200000003", Ron, "160502", 50000);
 	// Withdraw W("10000000", C, 50000);
 	// Transaction *ptr = new Withdraw(W);
 	// ptr -> makeTransaction(C.getPin());
@@ -115,8 +115,116 @@ int main(){
 	// // A.input();
 	// // b.add(A);
 	// b.show();
-	TransactionManager A;
-	Transaction *ptr = A.findByID("10000000");
-	ptr -> show();
+	// TransactionManager A;
+	// Transaction *ptr = A.findByID("10000000");
+	// ptr -> show();
+	Menu application;
+	ClientManager *CManager;
+	do{
+		application.printMenu(background);
+		application.printMenu(mainMenu);
+		application.inputChoice(1, 4);
+		switch (application.getChoice()){
+			case 1:
+				system("cls");
+				CManager = new ClientManager();
+				do{
+					application.printMenu(background);
+					application.printMenu(clientManagerMenu);
+					application.inputChoice(1, 7);
+					switch (application.getChoice()){
+						case 1:
+							{
+								Client newClient;
+								newClient.input();
+								if (CManager -> add(newClient)) cout << "=> Them khach hang thanh cong" << endl;
+								else cout << "=> Them khach hang that bai" << endl;
+							}
+							break;
+						case 2:
+							{
+								string ClientID;
+								cout << "Nhap ID khach hang muon xoa: ";
+								cin >> ClientID;
+								if (CManager -> removeByID(ClientID)) cout << "Xoa thanh cong khach hang co ID: " << ClientID << endl;
+								else cout << "Khach hang co ID: " << ClientID << " khong ton tai" << endl;
+							}
+							break;
+						case 3:
+							{
+								string ClientID, newName, newGender, newAddress, newBirth;
+								cout << "Nhap ID khach hang muon cap nhat: ";
+								cin >> ClientID;
+								Client temp = CManager -> findByID(ClientID);
+								if (temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								else 
+								{
+									temp.show();
+									cout << "Nhap thong tin cap nhat, nhan enter neu khong co thay doi" << endl;
+									cout << "Nhap ten khach hang: ";
+									getline(cin >> ws, newName);
+									cout << "Nhap gioi tinh khach hang(Male/Female/Other): ";
+									cin >> newGender;
+									cout << "Nhap dia chi khach hang: ";
+									getline(cin >> ws, newAddress);
+									cout << "Nhap ngay sinh khach hang(dd/mm/yyyy): ";
+									getline(cin >> ws, newBirth);
+									if (CManager -> updateByID(Client(newName, newGender, newAddress, Date(newBirth.c_str())), ClientID)) cout << "Cap nhat thanh cong" << endl;
+								}
+							}
+							break;
+						case 4:
+							{
+								string ClientID;
+								cout << "Nhap ID khach hang can tim kiem: ";
+								cin >> ClientID;
+								Client temp = CManager -> findByID(ClientID);
+								if (temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								else {
+									cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
+									cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
+									cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
+									cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
+									cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
+									temp.show();
+									cout << endl;
+								}
+							}
+							break;
+						case 5:
+							system("cls");
+							CManager -> show();
+							cout << "=> Nhan phim bat ki de quay tro ve.";
+							getch();
+							break;
+						case 6:
+							{
+								Date temp;
+								cout << "Nhap ngay can thong ke(dd/mm/yyyy): ";
+								cin >> temp;
+								CManager -> listByDate(temp);
+							}
+						case 7:
+							delete CManager;
+					}
+				}while (application.getChoice() != 7);
+				break;
+			case 2:
+				application.printMenu(background);
+				application.printMenu(cardManagerMenu);
+				system("cls");
+				break;
+			case 3:
+				system("cls");
+				application.printMenu(background);
+				application.printMenu(transactionManagerMenu);
+				break;
+			case 4:
+				cout << "Ket thuc chuong trinh" << endl;
+				break;
+		}
+	}while (application.getChoice() != 4);
+	// ClientManager A;
+	// A.show();
 	return 0;
 }
