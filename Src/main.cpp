@@ -143,6 +143,7 @@ int main(){
 								if(cardManager -> add(newCard)) cout << "=> The ngan hang duoc tao thanh cong" << endl;
 								else cout << "=> The ngan hang duoc tao that bai" << endl;
 							}
+							getch();
 							break;
 						case 2:
 							{
@@ -152,6 +153,7 @@ int main(){
 								if(cardManager -> removeByID(CardID)) cout << "Xoa thanh cong the ngan hang co ID: " << CardID << endl;
 								else cout << "The ngan hang co ID: " << CardID << "khong ton tai" << endl;
 							}
+							getch();
 							break;
 						case 3 :
 							{
@@ -170,6 +172,7 @@ int main(){
 									else cout << "Doi ma pin khong thanh cong";
 								}
 							}
+							getch();
 							break;
 						case 4 :
 							{
@@ -197,6 +200,7 @@ int main(){
 									cardManager -> showInf(CardID);
 								}
 							}
+							getch();
 							break;
 						case 6 :
 							{
@@ -216,6 +220,7 @@ int main(){
 									cout << endl;
 								}
 							}
+							getch();
 							break;
 						case 7 :
 							system("cls");
@@ -240,6 +245,7 @@ int main(){
 									cardManager -> listAllClientCard(ClientID);
 								}
 							}
+							getch();
 							break;
 						case 9 :
 							{
@@ -253,6 +259,7 @@ int main(){
 									cardManager ->removeAll(ClientID);
 								}
 							}
+							getch();
 							break;
 						case 10 :
 							{
@@ -261,6 +268,7 @@ int main(){
 								cin >> temp;
 								cardManager -> listByDate(temp);
 							}	
+							getch();
 							break;
 						case 11 :
 						 	delete cardManager;
