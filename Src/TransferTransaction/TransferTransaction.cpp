@@ -1,4 +1,5 @@
 #include "TransferTransaction.h"
+#include <iomanip>
 #include "../Repo/Repo.h"
 Transfer::Transfer(){
 
@@ -39,16 +40,19 @@ Card Transfer::getDestAccount(){
 }
 
 void Transfer::show(){
-    cout << "Transaction ID: " << this -> ID << endl;
-    cout << "Source Account: " << ((this -> srcAccount)).getID() << endl;
-    cout << "Destination Account: " << ((this -> destAccount)).getID() << endl;
-    cout << "Amount: " << this -> cash << " VND" << endl;
-    cout << "Fee: " << this -> fee << " VND" << endl;
+    cout << "| " << left << setw(13) << this -> ID;
+    cout << "| " << left << setw(13) << this -> getType();
+    cout << "| " << left << setw(18) << this -> srcAccount.getID(); 
+    cout << "| " << left << setw(18) << this -> destAccount.getID();
+    cout << "| " << left << setw(13) << this -> cash;
+    cout << "| " << left << setw(13) << this -> fee;
+    cout << "| " << left << setw(18);
     if (this -> status)
-        cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND (-" << this -> cash - this -> fee << " VND)" << endl;
-    else cout << "Balance: " << ((this -> srcAccount)).getBalance() << " VND" << endl;
-    cout << "Status: " << this -> getStrStatus() << endl;
-    cout << "Time: " << this -> date << endl;
+        cout << to_string(this -> srcAccount.getBalance()) + " (-" + to_string(this -> cash + this -> fee) + " )";
+    else cout << ((this -> srcAccount)).getBalance();
+    cout << "| " << setw(13) << this -> getStrStatus();
+    cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
+    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
 }
 
 // Số tiền dưới 10tr thì phí bằng 5000 + 1% Số tiền chuyển

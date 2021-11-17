@@ -26,7 +26,7 @@ Client::Client(const Client &D){
 
 Client::Client(const string &name, const string &gender, const string &address, const Date &birth){
     this -> name = (Client::isValidName(name)) ? name : "";
-    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "Other";
+    this -> gender = (Client::isValidGender(gender)) ? Client::formatGender(gender) : "";
     this -> address = address;
     this -> birth = (Date(birth).isValidDate()) ? birth : Date();
     this -> age = this -> getAge();

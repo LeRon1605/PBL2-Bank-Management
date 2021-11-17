@@ -29,9 +29,11 @@ CardManager::~CardManager(){
 
 void CardManager::show(){
     Node<Card> *ptr = this -> list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder";
-    cout << left << setw(10) << "Pin" << left << setw(15) << "Balance";
-    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+    cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
+    cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance";
+    cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
     while (ptr != nullptr){
         ptr -> getData().show();
         cout << endl;
@@ -72,7 +74,10 @@ int CardManager::indexOf(const string &ID){
 }
 
 bool CardManager::add(Card C){
-    if ((this -> countClientCard(C.getHolder().getID())) >= 3) return false;
+    if ((this -> countClientCard(C.getHolder().getID())) >= 3) {
+        cout << "Moi khach hang chi duoc phep so huu toi da 3 the ngan hang.";
+        return false;
+    }
     C.setID(this -> generateID()); 
     CardManager::totalCardCreated++;
     return this -> list.addTail(C);
@@ -88,9 +93,11 @@ bool CardManager::removeByID(const string &ID){
 
 void CardManager::listByDate(const Date &D){
     Node<Card> *ptr = this -> list.getHead();
-    cout << left << setw(15) << "ID" << left << setw(15) << "ID Holder";
-    cout << left << setw(10) << "Pin" << left << setw(15) << "Balance";
-    cout << left << setw(30) << "Created At" << left << setw(30) << "Updated At" << left << setw(30) << "Pin Updated At" << endl;
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+    cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
+    cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance";
+    cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
     while (ptr != nullptr){
         if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) ptr -> getData().show();
         ptr = ptr -> getNext();
@@ -161,7 +168,7 @@ int CardManager::countClientCard(const string &ClientID){
 void CardManager::listAllClientCard(const string &ClientID){
     Node<Card> *ptr = this -> list.getHead();
     while (ptr != nullptr){
-        if (ptr -> getData().getHolder().getID() == ClientID) ptr -> getData().getHolder().show();
+        if (ptr -> getData().getHolder().getID() == ClientID) ptr -> getData().show();
         ptr = ptr -> getNext();
     }
 }

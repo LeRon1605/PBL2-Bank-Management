@@ -37,7 +37,7 @@ void ClientManager::show(){
     cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
     cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
     while (ptr != nullptr){
-        ptr->getData().show();
+        ptr -> getData().show();
         cout << endl;
         ptr = ptr->getNext();
     }

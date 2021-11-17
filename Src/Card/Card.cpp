@@ -142,14 +142,14 @@ bool Card::isNull(){
 }
 
 void Card::show(){
-    cout << "| " << left << setw(10) << this -> ID;
-    cout << "| " << left << setw(15) << this -> holder.getID();
-    cout << "| " << left << setw(10) << this -> pin;
-    cout << "| " << left << setw(15) << to_string(this -> balance) + " VND" ;
-    cout << "| " << this -> createdAt << setw(9) << ' ';
-    cout << "| " << this -> updatedAt << setw(8) << ' ';;
-    cout << "| " << this -> pinUpdatedAt << setw(15) << ' ';
-    cout << endl << setfill('-') << setw(150) << '-' << setfill(' ');
+    cout << "| " << left << setw(18) << this -> ID;
+    cout << "| " << left << setw(13) << this -> holder.getID();
+    cout << "| " << left << setw(8) << this -> pin;
+    cout << "| " << left << setw(18) << to_string(this -> balance) + " VND" ;
+    cout << "| " << this -> createdAt << setw(9) << ' ' << "| ";
+    cout << this -> updatedAt << setw(9) << ' ' << "| ";
+    cout << this -> pinUpdatedAt << setw(8) << ' ' << "| ";
+    cout << endl << setfill('-') << setw(155) << '-' << setfill(' ');
 }
 
 void Card::showBalance(){
@@ -170,15 +170,21 @@ void Card::deposit(const long &money){
 }
 
 void Card::updatePin(const string &currentPin, const string &newPin){
-    if (this -> pin == currentPin)
+    if (Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate()) >= 2 && Date::getCurrentDate() > this -> pinUpdatedAt){
         if (Card::isValidPin(pin)){
-            if (Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate()) >= 2 && Date::getCurrentDate() > this -> pinUpdatedAt){
+            if (this -> pin == currentPin){
                 this -> pin = newPin;
                 this -> pinUpdatedAt = Date::getCurrentDate();
                 this -> updatedAt = Date::getCurrentDate();
-            }else throw string("You have to wait " + to_string(2 - Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate())) + " day left to change your PIN account");
+            }else throw string("Inccorect PIN");
         }else throw string("Invalid PIN");
-    else throw string("Inccorect PIN");
+    }else throw string("You have to wait " + to_string(2 - Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate())) + " day left to change your PIN account");
+    // if (this -> pin == currentPin)
+    //     if (Card::isValidPin(pin)){
+    //         if (){
+    //         }else throw string("You have to wait " + to_string(2 - Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate())) + " day left to change your PIN account");
+    //     }else throw string("Invalid PIN");
+    // else throw string("Inccorect PIN");
 }
 
 void Card::update(const Card &C){
@@ -194,6 +200,15 @@ bool Card::operator==(const Card &newCard){
 }
 
 void Card::input(){
+    string clientID;
+    cout << "Type Holder's ID: ";
+    cin >> clientID;
+    this -> holder = Repository<Client>::getByID(clientID, "Client.txt");
+    while (this -> holder.isNull()){
+        cout << "Client doesn't exist, type again: ";
+        cin >> clientID;
+        this -> holder = Repository<Client>::getByID(clientID, "Client.txt");
+    }
     cout << "Type Card's Pin: ";
     cin >> this -> pin;
     while (!Card::isValidPin(this -> pin)){
@@ -202,7 +217,6 @@ void Card::input(){
     }
     cout << "Type Card's Balance: ";
     cin >> this -> balance;
-    this -> holder = Client();
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
     this -> pinUpdatedAt = Date();
