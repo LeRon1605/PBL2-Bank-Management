@@ -44,7 +44,15 @@ void CardManager::show(){
 void CardManager::showByID(const string &ID){
     Node<Card> *ptr = this -> list.getHead();
     while (ptr != nullptr){
-        if (ptr-> getData().getID() == ID) {
+        if (ptr -> getData().getID() == ID) {
+            cout << setw(80) << "THONG TIN CHU THE" << endl;
+            this -> showInf(ptr -> getData().getHolder().getID());
+            cout << endl << setw(78) << "THONG TIN THE" << endl;
+            cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+            cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
+            cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance";
+            cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
+            cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
             ptr -> getData().show();
             return;
         }
@@ -99,7 +107,10 @@ void CardManager::listByDate(const Date &D){
     cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
     cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
     while (ptr != nullptr){
-        if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) ptr -> getData().show();
+        if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) {
+            ptr -> getData().show();
+            cout << endl;
+        }
         ptr = ptr -> getNext();
     }
 }
@@ -129,12 +140,18 @@ void CardManager::removeAll(const string &ClientID){
 
 void CardManager::showInf(const string &ID){
     Node<Card> *ptr = this -> list.getHead();
+    cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
+    cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
+    cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
+    cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
+    cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
     while (ptr != nullptr){
-        if (ptr -> getData().getID() == ID){
+        if (ptr -> getData().getHolder().getID() == ID){
             ptr -> getData().getHolder().show();
         }
         ptr = ptr -> getNext();
     }
+    cout << endl;
 }
 
 bool CardManager::changePin(const string &ID, const string &currentPin, const string &newPin){
@@ -168,9 +185,16 @@ int CardManager::countClientCard(const string &ClientID){
 
 void CardManager::listAllClientCard(const string &ClientID){
     Node<Card> *ptr = this -> list.getHead();
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+	cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
+	cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance";
+	cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
+	cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
     while (ptr != nullptr){
-        if (ptr -> getData().getHolder().getID() == ClientID) ptr -> getData().show();
+        if (ptr -> getData().getHolder().getID() == ClientID) {
+            ptr -> getData().show();
+            cout << endl;
+        }
         ptr = ptr -> getNext();
-        cout << endl;
     }
 }

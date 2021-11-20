@@ -136,7 +136,7 @@ int main(){
 					system("cls");
 					application.printMenu(background);
 					application.printMenu(cardManagerMenu);
-					application.inputChoice(1, 11);
+					application.inputChoice(1, 9);
 					switch(application.getChoice()){
 						case 1:
 							{
@@ -193,48 +193,12 @@ int main(){
 							}
 							break;
 						case 5 :
-							{
-								string CardID;
-								cout << "=> Nhap ID the ngan hang muon hien thi thong tin chu the: ";
-								cin >> CardID;
-								Card temp = cardManager -> findByID(CardID);
-								if(temp.isNull()) cout << "=> The ngan hang khong ton tai" << endl;
-								else
-								{
-									cardManager -> showInf(CardID);
-								}
-								getch();
-							}
-							getch();
-							break;
-						case 6 :
-							{
-								string CardID;
-								cout << "=> Nhap ID the ngan hang muon tim kiem: ";
-								cin >> CardID;
-								Card temp = cardManager -> findByID(CardID);
-								if(temp.isNull()) cout << "=> The khong ton tai" << endl;
-								else
-								{
-									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
-    								cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
-    								cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance";
-									cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
-									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
-									temp.show();
-									cout << endl;
-								}
-								getch();
-							}
-							getch();
-							break;
-						case 7 :
 							system("cls");
 							cardManager ->show();
 							cout << "=> Nhan phim bat ki de quay tro ve.";
 							getch();
 							break;
-						case 8 :
+						case 6 :
 							{
 								string ClientID;
 								cout << "=> Nhap ID khach hang muon hien thi danh sach the ngan hang: ";
@@ -243,18 +207,13 @@ int main(){
 								if(temp.isNull()) cout << "=> Khach hang khong ton tai" << endl;
 								else
 								{
-									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
-									cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
-									cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance";
-									cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
-									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
 									cardManager -> listAllClientCard(ClientID);
 								}
 								getch();
 							}
 							getch();
 							break;
-						case 9 :
+						case 7:
 							{
 								string ClientID;
 								cout << "=> Nhap ID khach hang muon xoa tat ca cac the ngan hang: ";
@@ -269,7 +228,7 @@ int main(){
 							}
 							getch();
 							break;
-						case 10 :
+						case 8 :
 							{
 								Date temp;
 								cout << "=> Nhap ngay can thong ke(dd/mm/yyyy): ";
@@ -278,10 +237,10 @@ int main(){
 								getch();
 							}
 							break;
-						case 11 :
+						case 9 :
 						 	delete cardManager;
 					}
-				}while (application.getChoice() != 11);
+				}while (application.getChoice() != 9);
 				break;
 			case 3:
 				TManager = new TransactionManager();

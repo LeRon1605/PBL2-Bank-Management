@@ -53,13 +53,11 @@ void cardManagerMenu(){
     cout <<"|   2. Xoa The Ngan Hang (ID)                                       |" << endl; 
     cout <<"|   3. Doi Ma Pin Cua The Ngan Hang                                 |" << endl;
     cout <<"|   4. Hien Thi Thong Tin The Ngan Hang                             |" << endl;
-    cout <<"|   5. Hien Thi Thong Tin Chu The                                   |" << endl;  
-    cout <<"|   6. Tim Kiem The Ngan Hang                                       |" << endl;
-    cout <<"|   7. Hien Thi Danh Sach The Ngan Hang                             |" << endl;
-    cout <<"|   8. Hien Thi Danh Sach The Ngan Hang Cua Khach Hang              |" << endl;  
-    cout <<"|   9.Xoa Tat Ca The Ngan Hang Cua Khach Hang                       |" << endl;  
-    cout <<"|   10.Thong Ke The Ngan Hang Duoc Tao Theo Ngay                    |" << endl;
-    cout <<"|   11.Exit                                                         |" << endl;
+    cout <<"|   5. Hien Thi Danh Sach The Ngan Hang                             |" << endl;
+    cout <<"|   6. Hien Thi Danh Sach The Ngan Hang Cua Khach Hang              |" << endl;  
+    cout <<"|   7. Xoa Tat Ca The Ngan Hang Cua Khach Hang                      |" << endl;  
+    cout <<"|   8. Thong Ke The Ngan Hang Duoc Tao Theo Ngay                    |" << endl;
+    cout <<"|   9 .Exit                                                         |" << endl;
     cout <<"|                                                                   |" << endl;
     cout <<"---------------------------------------------------------------------" << endl;
 }

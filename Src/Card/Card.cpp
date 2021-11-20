@@ -171,7 +171,7 @@ void Card::deposit(const long &money){
 
 void Card::updatePin(const string &currentPin, const string &newPin){
     if (Date::DATEDIFF(this -> pinUpdatedAt, Date::getCurrentDate()) >= 2 && Date::getCurrentDate() > this -> pinUpdatedAt){
-        if (Card::isValidPin(pin)){
+        if (Card::isValidPin(newPin)){
             if (this -> pin == currentPin){
                 this -> pin = newPin;
                 this -> pinUpdatedAt = Date::getCurrentDate();

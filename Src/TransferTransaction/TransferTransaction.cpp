@@ -43,18 +43,19 @@ Card Transfer::getDestAccount(){
 void Transfer::show(){
     cout << "| " << left << setw(13) << this -> ID;
     cout << "| " << left << setw(13) << this -> getType();
-    cout << "| " << left << setw(18) << this -> srcAccount.getID(); 
-    cout << "| " << left << setw(18) << this -> destAccount.getID();
+    cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
+    cout << "| " << left << setw(13) << this -> destAccount.getID();
     cout << "| " << left << setw(13) << this -> cash;
     cout << "| " << left << setw(13) << this -> fee;
-    cout << "| " << left << setw(18);
+    cout << "| " << left << setw(28);
     if (this -> status)
         cout << to_string(this -> srcAccount.getBalance()) + " (-" + to_string(this -> cash + this -> fee) + " )";
-    else cout << ((this -> srcAccount)).getBalance() << "| ";
+    else cout << ((this -> srcAccount)).getBalance();
+    cout << "| ";
     if (this -> status) SetColor(0, 2);
     else SetColor(0, 4);
     cout << setw(13) << this -> getStrStatus();
-    SetColor(0, 11);
+    SetColor(0, 15);
     cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
 }
