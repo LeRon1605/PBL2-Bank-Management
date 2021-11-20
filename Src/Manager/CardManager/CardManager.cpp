@@ -171,5 +171,6 @@ void CardManager::listAllClientCard(const string &ClientID){
     while (ptr != nullptr){
         if (ptr -> getData().getHolder().getID() == ClientID) ptr -> getData().show();
         ptr = ptr -> getNext();
+        cout << endl;
     }
 }

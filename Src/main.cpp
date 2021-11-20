@@ -124,6 +124,7 @@ int main(){
 								getch();
 								break;
 							}
+							break;
 						case 7:
 							delete CManager;
 					}
@@ -143,6 +144,7 @@ int main(){
 								newCard.input();
 								if(cardManager -> add(newCard)) cout << "=> The ngan hang duoc tao thanh cong" << endl;
 								else cout << "=> The ngan hang duoc tao that bai" << endl;
+								getch();
 							}
 							getch();
 							break;
@@ -172,6 +174,7 @@ int main(){
 									if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "=> Doi ma pin thanh cong" << endl;
 									else cout << "=> Doi ma pin khong thanh cong";
 								}
+								getch();
 							}
 							getch();
 							break;
@@ -200,6 +203,7 @@ int main(){
 								{
 									cardManager -> showInf(CardID);
 								}
+								getch();
 							}
 							getch();
 							break;
@@ -220,6 +224,7 @@ int main(){
 									temp.show();
 									cout << endl;
 								}
+								getch();
 							}
 							getch();
 							break;
@@ -245,6 +250,7 @@ int main(){
 									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
 									cardManager -> listAllClientCard(ClientID);
 								}
+								getch();
 							}
 							getch();
 							break;
@@ -258,7 +264,7 @@ int main(){
 								else
 								{
 									cardManager -> removeAll(ClientID);
-									cout << "=> Xoa thanh cong" << endl;
+									cout << "=> Xoa the ngan hang thanh cong.";
 								}
 							}
 							getch();
@@ -269,8 +275,8 @@ int main(){
 								cout << "=> Nhap ngay can thong ke(dd/mm/yyyy): ";
 								cin >> temp;
 								cardManager -> listByDate(temp);
-							}	
-							getch();
+								getch();
+							}
 							break;
 						case 11 :
 						 	delete cardManager;
