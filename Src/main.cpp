@@ -122,6 +122,7 @@ int main(){
 								cin >> temp;
 								CManager -> listByDate(temp);
 								getch();
+								break;
 							}
 						case 7:
 							delete CManager;
@@ -148,28 +149,28 @@ int main(){
 						case 2:
 							{
 								string CardID;
-								cout << "Nhap ID the ngan hang muon xoa: ";
+								cout << "=> Nhap ID the ngan hang muon xoa: ";
 								cin >> CardID;
-								if(cardManager -> removeByID(CardID)) cout << "Xoa thanh cong the ngan hang co ID: " << CardID << endl;
-								else cout << "The ngan hang co ID: " << CardID << "khong ton tai" << endl;
+								if(cardManager -> removeByID(CardID)) cout << "=> Xoa thanh cong the ngan hang co ID: " << CardID << endl;
+								else cout << "=> The ngan hang co ID: " << CardID << "khong ton tai" << endl;
 							}
 							getch();
 							break;
 						case 3 :
 							{
 								string CardID, newPin , currentPin;
-								cout << "Nhap ID the ngan hang muon doi ma pin: ";
+								cout << "=> Nhap ID the ngan hang muon doi ma pin: ";
 								cin >> CardID;
 								Card temp = cardManager -> findByID(CardID);
-								if(temp.isNull()) cout << "The ngan hang khong ton tai" << endl;
+								if(temp.isNull()) cout << "=> The ngan hang khong ton tai" << endl;
 								else
 								{
-									cout << "Nhap ma pin cu: ";
+									cout << "=> Nhap ma pin cu: ";
 									cin >> currentPin;
-									cout << "Nhap ma pin moi: ";
+									cout << "=> Nhap ma pin moi: ";
 									cin >> newPin;
-									if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "Doi ma pin thanh cong" << endl;
-									else cout << "Doi ma pin khong thanh cong";
+									if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "=> Doi ma pin thanh cong" << endl;
+									else cout << "=> Doi ma pin khong thanh cong";
 								}
 							}
 							getch();
@@ -177,10 +178,10 @@ int main(){
 						case 4 :
 							{
 								string CardID;
-								cout << "Nhap ID the ngan hang muon hien thi thong tin: ";
+								cout << "=> Nhap ID the ngan hang muon hien thi thong tin: ";
 								cin >> CardID;
 								Card temp = cardManager -> findByID(CardID);
-								if(temp.isNull()) cout << "The ngan hang khong ton tai" << endl;
+								if(temp.isNull()) cout << "=> The ngan hang khong ton tai" << endl;
 								else
 								{
 									cardManager -> showByID(CardID);
@@ -191,10 +192,10 @@ int main(){
 						case 5 :
 							{
 								string CardID;
-								cout << "Nhap ID the ngan hang muon hien thi thong tin chu the: ";
+								cout << "=> Nhap ID the ngan hang muon hien thi thong tin chu the: ";
 								cin >> CardID;
 								Card temp = cardManager -> findByID(CardID);
-								if(temp.isNull()) cout << "The ngan hang khong ton tai" << endl;
+								if(temp.isNull()) cout << "=> The ngan hang khong ton tai" << endl;
 								else
 								{
 									cardManager -> showInf(CardID);
@@ -205,10 +206,10 @@ int main(){
 						case 6 :
 							{
 								string CardID;
-								cout << "Nhap ID the ngan hang muon tim kiem: ";
+								cout << "=> Nhap ID the ngan hang muon tim kiem: ";
 								cin >> CardID;
 								Card temp = cardManager -> findByID(CardID);
-								if(temp.isNull()) cout << "The khong ton tai" << endl;
+								if(temp.isNull()) cout << "=> The khong ton tai" << endl;
 								else
 								{
 									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
@@ -231,10 +232,10 @@ int main(){
 						case 8 :
 							{
 								string ClientID;
-								cout << "Nhap ID khach hang muon hien thi danh sach the ngan hang: ";
+								cout << "=> Nhap ID khach hang muon hien thi danh sach the ngan hang: ";
 								cin >> ClientID;
 								Client temp = Repository<Client>::getByID(ClientID, "Client.txt");
-								if(temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								if(temp.isNull()) cout << "=> Khach hang khong ton tai" << endl;
 								else
 								{
 									cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
@@ -250,13 +251,14 @@ int main(){
 						case 9 :
 							{
 								string ClientID;
-								cout << "Nhap ID khach hang muon xoa tat ca cac the ngan hang: ";
+								cout << "=> Nhap ID khach hang muon xoa tat ca cac the ngan hang: ";
 								cin >> ClientID;
 								Client temp = Repository<Client>::getByID(ClientID, "Client.txt");
-								if(temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								if(temp.isNull()) cout << "=> Khach hang khong ton tai" << endl;
 								else
 								{
-									cardManager ->removeAll(ClientID);
+									cardManager -> removeAll(ClientID);
+									cout << "=> Xoa thanh cong" << endl;
 								}
 							}
 							getch();
@@ -264,7 +266,7 @@ int main(){
 						case 10 :
 							{
 								Date temp;
-								cout << "Nhap ngay can thong ke(dd/mm/yyyy): ";
+								cout << "=> Nhap ngay can thong ke(dd/mm/yyyy): ";
 								cin >> temp;
 								cardManager -> listByDate(temp);
 							}	
@@ -287,19 +289,19 @@ int main(){
 							{
 								string CardID, PIN;
 								long cash; 
-								cout << "Nhap ID tai khoan muon rut tien: ";
+								cout << "=> Nhap ID tai khoan muon rut tien: ";
 								cin >> CardID;
 								if (Repository<Card>::getByID(CardID, "Card.txt").isNull()){
-									cout << "Tai khoan khong ton tai";
+									cout << "=> Tai khoan khong ton tai";
 									getch();
 									break;
 								}
-								cout << "Nhap so tien muon rut: ";
+								cout << "=> Nhap so tien muon rut: ";
 								cin >> cash;
-								cout << "Nhap ma PIN cua tai khoan: ";
+								cout << "=> Nhap ma PIN cua tai khoan: ";
 								cin >> PIN;
-								if (TManager -> makeWithdraw(CardID, cash, PIN)) cout << "Rut tien thanh cong" << endl;
-								else cout << "Rut tien that bai";
+								if (TManager -> makeWithdraw(CardID, cash, PIN)) cout << "=> Rut tien thanh cong" << endl;
+								else cout << "=> Rut tien that bai";
 								getch();
 							}
 							break;
@@ -307,19 +309,19 @@ int main(){
 							{
 								string CardID, PIN;
 								long cash; 
-								cout << "Nhap ID tai khoan muon nap tien: ";
+								cout << "=> Nhap ID tai khoan muon nap tien: ";
 								cin >> CardID;
 								if (Repository<Card>::getByID(CardID, "Card.txt").isNull()){
-									cout << "Tai khoan khong ton tai";
+									cout << "=> Tai khoan khong ton tai";
 									getch();
 									break;
 								}
-								cout << "Nhap so tien muon nap: ";
+								cout << "=> Nhap so tien muon nap: ";
 								cin >> cash;
-								cout << "Nhap ma PIN cua tai khoan: ";
+								cout << "=> Nhap ma PIN cua tai khoan: ";
 								cin >> PIN;
-								if (TManager -> makeDeposit(CardID, cash, PIN)) cout << "Nap tien thanh cong" << endl;
-								else cout << "Nap tien that bai";
+								if (TManager -> makeDeposit(CardID, cash, PIN)) cout << "=> Nap tien thanh cong" << endl;
+								else cout << "=> Nap tien that bai";
 								getch();
 							}
 							break;
@@ -327,26 +329,26 @@ int main(){
 							{
 								string srcAccount, destAccount, PIN;
 								long cash; 
-								cout << "Nhap ID tai khoan thuc hien chuyen tien: ";
+								cout << "=> Nhap ID tai khoan thuc hien chuyen tien: ";
 								cin >> srcAccount;
 								if (Repository<Card>::getByID(srcAccount, "Card.txt").isNull()){
-									cout << "Tai khoan khong ton tai";
+									cout << "=> Tai khoan khong ton tai";
 									getch();
 									break;
 								}
-								cout << "Nhap ID tai khoan nhan tien: ";
+								cout << "=> Nhap ID tai khoan nhan tien: ";
 								cin >> destAccount;
 								if (Repository<Card>::getByID(srcAccount, "Card.txt").isNull()){
-									cout << "Tai khoan khong ton tai";
+									cout << "=> Tai khoan khong ton tai";
 									getch();
 									break;
 								}
-								cout << "Nhap so tien muon chuyen: ";
+								cout << "=> Nhap so tien muon chuyen: ";
 								cin >> cash;
-								cout << "Nhap ma PIN cua tai khoan: ";
+								cout << "=> Nhap ma PIN cua tai khoan: ";
 								cin >> PIN;
-								if (TManager -> makeTransfer(srcAccount, destAccount, cash, PIN)) cout << "Chuyen tien thanh cong" << endl;
-								else cout << "Chuyen tien that bai" << endl; 
+								if (TManager -> makeTransfer(srcAccount, destAccount, cash, PIN)) cout << "=> Chuyen tien thanh cong" << endl;
+								else cout << "=> Chuyen tien that bai" << endl; 
 								getch();
 							}
 							break;
@@ -369,10 +371,10 @@ int main(){
 						case 8:
 							{
 								string TransactionID;
-								cout << "Nhap ID giao dich can tim kiem: ";
+								cout << "=> Nhap ID giao dich can tim kiem: ";
 								cin >> TransactionID;
 								Transaction *ptr = TManager -> findByID(TransactionID);
-								if (ptr == nullptr) cout << "Giao dich khong ton tai" << endl;
+								if (ptr == nullptr) cout << "=> Giao dich khong ton tai" << endl;
 								else{
 									cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
 									cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
@@ -386,7 +388,7 @@ int main(){
 						case 9:
 							{
 								string clientID;
-								cout << "Nhap ID khach hang: ";
+								cout << "=> Nhap ID khach hang: ";
 								cin >> clientID;
 								TManager -> showAllClientTransaction(clientID);
 							}
@@ -395,7 +397,7 @@ int main(){
 						case 10:
 							{
 								string cardID;
-								cout << "Nhap ID the ngan hang: ";
+								cout << "=> Nhap ID the ngan hang: ";
 								cin >> cardID;
 								TManager -> showAllCardTransaction(cardID);
 							}
@@ -404,7 +406,7 @@ int main(){
 						case 11:
 							{
 								Date time;
-								cout << "Nhap ngay can thong ke(dd/mm/yyyy): ";
+								cout << "=> Nhap ngay can thong ke(dd/mm/yyyy): ";
 								cin >> time;
 								TManager -> listByDate(time);
 							}

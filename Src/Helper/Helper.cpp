@@ -1,4 +1,5 @@
 #include "../Card/Card.h"
+#include<windows.h>
 #include <iomanip>
 
 bool compareHolderID(Card C, const string &holderID){
@@ -87,4 +88,12 @@ void print(const string &str, const int &length){
     int paddingLeft = (length - str.size())/2;
     int paddingRight = length - str.size() - paddingLeft;
     cout << setw(paddingLeft) << str << setw(paddingRight) << ' ';
+}
+
+void SetColor(int backgound_color, int text_color)
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    int color_code = backgound_color * 16 + text_color;
+    SetConsoleTextAttribute(hStdout, color_code);
 }

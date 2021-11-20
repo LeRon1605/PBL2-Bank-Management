@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <ctime>
-#include <string.h>
 #include <iomanip>
+#include <string>
+#include <string.h>
 #include <math.h>
 #include "Datetime.h"
 
@@ -204,14 +205,13 @@ ostream& operator<<(ostream &out, const Date &D){
 }
 
 istream& operator>>(istream &in, Date &D){
-    char str[20];
-    fflush(stdin);
-    gets(str);
-    D.toDate(str);
+    string str;
+    getline(in >> ws, str);
+    D.toDate(str.c_str());
     while (D.isValidDate() == false){
         cout << "Invalid date, type again: ";
-        gets(str);
-        D.toDate(str);
+        getline(in >> ws, str);
+        D.toDate(str.c_str());
     }
     return in;
 }

@@ -1,6 +1,7 @@
 #include "DepositTransaction.h"
 #include <iomanip>
 #include "../Repo/Repo.h"
+#include "../Helper/Helper.h"
 Deposit::Deposit(){
 
 }
@@ -40,8 +41,11 @@ void Deposit::show(){
     cout << "| " << left << setw(18);
     if (this -> status)
         cout << to_string(this -> srcAccount.getBalance()) + " (+" + to_string(this -> cash - this -> fee) + " )";
-    else cout << ((this -> srcAccount)).getBalance();
-    cout << "| " << setw(13) << this -> getStrStatus();
+    else cout << ((this -> srcAccount)).getBalance() << "| ";
+    if (this -> status) SetColor(0, 2);
+    else SetColor(0, 4);
+    cout << setw(13) << this -> getStrStatus();
+    SetColor(0, 11);
     cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
 }

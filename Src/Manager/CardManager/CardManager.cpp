@@ -53,7 +53,7 @@ void CardManager::showByID(const string &ID){
 }
 
 string CardManager::generateID(){
-    return to_string(100000000000 + CardManager::totalCardCreated);
+    return to_string(10000000 + CardManager::totalCardCreated);
 }
 
 Card CardManager::findByID(const string &ID){
@@ -114,6 +114,7 @@ bool CardManager::updateByID(Card C, const string &ID){
 void CardManager::removeAll(const string &ClientID){
     Node<Card> *ptr = this -> list.getHead();
     int index = 0;
+    this -> listAllClientCard(ClientID);
     while (ptr != nullptr && this -> list.getLength() > 0){
         if (ptr -> getData().getHolder().getID() == ClientID) {
             ptr = ptr -> getNext();

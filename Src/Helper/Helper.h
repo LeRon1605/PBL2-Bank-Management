@@ -3,6 +3,7 @@
 #include "../Card/Card.h"
 
 bool compareHolderID(Card C, const string &holderID);
+void SetColor(int backgound_color, int text_color);
 void background();
 void mainMenu();
 void clientManagerMenu();
