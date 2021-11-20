@@ -180,9 +180,9 @@ bool TransactionManager::makeDeposit(const string &CardID, const long &cash, con
 void TransactionManager::showWithdraw(){
     Node<Transaction*> *ptr = this->list.getHead();
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
+	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Withdraw") ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -192,9 +192,9 @@ void TransactionManager::showWithdraw(){
 void TransactionManager::showTransfer(){
     Node<Transaction*> *ptr = this -> list.getHead();
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
+	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Transfer") ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -204,9 +204,9 @@ void TransactionManager::showTransfer(){
 void TransactionManager::showDeposit(){
     Node<Transaction*> *ptr = this -> list.getHead();
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
+	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Deposit") ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -216,9 +216,9 @@ void TransactionManager::showDeposit(){
 void TransactionManager::showAllClientTransaction(const string &ClientID){
     Node<Transaction*> *ptr = this -> list.getHead();
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
+	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(20) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
+	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
     while (ptr != nullptr){
         if (ptr -> getData() -> getSrcAccount().getHolder().getID() == ClientID) ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -228,9 +228,9 @@ void TransactionManager::showAllClientTransaction(const string &ClientID){
 void TransactionManager::showAllCardTransaction(const string &CardID){
     Node<Transaction*> *ptr = this -> list.getHead();
     cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
+	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(20) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
+	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
     while (ptr != nullptr){
         if(ptr -> getData()-> getSrcAccount().getID() == CardID)  ptr -> getData() -> show();
         ptr = ptr -> getNext();
