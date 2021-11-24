@@ -18,13 +18,7 @@ Deposit::Deposit(const string &ID, Card srcAccount, const long &cash)
 
 }
 
-Deposit::Deposit(const Deposit &D){
-    this -> ID = D.ID;
-    this -> srcAccount = D.srcAccount;
-    this -> cash = D.cash;
-    this -> fee = D.fee;
-    this -> status = D.status;
-    this -> date = D.date;
+Deposit::Deposit(const Deposit &D): Transaction(D){
 }
 
 Deposit::~Deposit(){
@@ -36,19 +30,19 @@ void Deposit::show(){
     cout << "| " << left << setw(13) << this -> getType();
     cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
     cout << "| " << left << setw(13) << "--------";
-    cout << "| " << left << setw(13) << this -> cash;
-    cout << "| " << left << setw(13) << this -> fee;
+    cout << "| " << left << setw(18) << moneyFormat(this -> cash);
+    cout << "| " << left << setw(13) << moneyFormat(this -> fee);
     cout << "| " << left << setw(28);
     if (this -> status)
-        cout << to_string(this -> srcAccount.getBalance()) + " (+" + to_string(this -> cash - this -> fee) + " )";
-    else cout << ((this -> srcAccount)).getBalance();
+        cout << moneyFormat(this -> balance) + " (+" + moneyFormat(this -> cash - this -> fee) + ")";
+    else cout << moneyFormat(this -> balance);
     cout << "| ";
     if (this -> status) SetColor(0, 2);
     else SetColor(0, 4);
     cout << setw(13) << this -> getStrStatus();
     SetColor(0, 15);
     cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    cout << setfill('-') << setw(170) << '-' << setfill(' ') << endl;
 }
 
 // Số tiền dưới 10tr thì phí bằng 5000
@@ -69,6 +63,7 @@ bool Deposit::makeTransaction(const string &pin){
             this -> status = true;
             this -> fee = this -> calFee();
             this -> date = Date::getCurrentDate();
+            this -> balance = this -> srcAccount.getBalance();
             cout << "Successfully Deposit " << this -> cash << endl;
             return true;
         }    
@@ -105,8 +100,10 @@ ifstream& operator>>(ifstream &in, Deposit &D){
     getline(in >> ws, D.ID);
     getline(in >> ws, srcAccountID);
     D.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
+    if (D.srcAccount.isNull()) D.srcAccount.setID(srcAccountID); //  Card đã bị xóa
     in >> D.cash;
     in >> D.fee;
+    in >> D.balance;
     in >> D.status;
     getline(in >> ws, date);
     D.date = Date(date.c_str());
@@ -119,6 +116,7 @@ ofstream& operator<<(ofstream &out, const Deposit &D){
     out << Deposit(D).srcAccount.getID() << endl;
     out << D.cash << endl;
     out << D.fee << endl;
+    out << D.balance << endl;
     out << D.status << endl;
     out << Deposit(D).date.toString() << endl;
     return out;

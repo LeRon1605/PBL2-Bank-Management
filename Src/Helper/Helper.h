@@ -10,6 +10,10 @@ void clientManagerMenu();
 void cardManagerMenu();
 void transactionManagerMenu();
 void print(const string&, const int&);
+void transactionPanel();
+void clientPanel();
+void cardPanel();
+string moneyFormat(long);
 
 template <class T>
 bool sortAscByCreatedAt(T A, T B){

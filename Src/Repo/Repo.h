@@ -5,6 +5,7 @@
 #include <fstream>
 #include "../CTDL/LinkedList.h"
 using namespace std;
+// Truy vấn trong file.
 template <class T>
 class Repository 
 {

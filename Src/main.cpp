@@ -54,11 +54,7 @@ int main(){
 								if (temp.isNull()) cout << "Khach hang khong ton tai" << endl;
 								else 
 								{
-									cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
-									cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
-									cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
-									cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
-									cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
+									clientPanel();
 									temp.show();
 									cout << endl;
 									cout << "Nhap thong tin cap nhat, nhan (No) neu khong co thay doi" << endl;
@@ -98,11 +94,7 @@ int main(){
 								Client temp = CManager -> findByID(ClientID);
 								if (temp.isNull()) cout << "Khach hang khong ton tai" << endl;
 								else {
-									cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
-									cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
-									cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
-									cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
-									cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
+									clientPanel();
 									temp.show();
 									cout << endl;
 								}
@@ -341,10 +333,7 @@ int main(){
 								Transaction *ptr = TManager -> findByID(TransactionID);
 								if (ptr == nullptr) cout << "=> Giao dich khong ton tai" << endl;
 								else{
-									cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-									cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
-									cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(20) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-									cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+									transactionPanel();
 									ptr -> show();
 								}
 							}

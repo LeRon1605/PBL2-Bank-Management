@@ -7,6 +7,7 @@ class Transaction{
         Card srcAccount; // Tài khoản thực hiện giao dịch 
         long cash; 
         int fee;
+        long balance;
         bool status; // true: Thành công, false: Thất bại
         Date date;
     public:

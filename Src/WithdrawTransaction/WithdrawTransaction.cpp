@@ -18,13 +18,7 @@ Withdraw::Withdraw(const string &ID, Card srcAccount, const long &cash)
 
 }
 
-Withdraw::Withdraw(const Withdraw &W){
-    this -> ID = W.ID;
-    this -> srcAccount = W.srcAccount;
-    this -> cash = W.cash;
-    this -> fee = W.fee;
-    this -> status = W.status;
-    this -> date = W.date;
+Withdraw::Withdraw(const Withdraw &W): Transaction(W){
 }
 
 Withdraw::~Withdraw(){
@@ -36,19 +30,19 @@ void Withdraw::show(){
     cout << "| " << left << setw(13) << this -> getType();
     cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
     cout << "| " << left << setw(13) << "--------";
-    cout << "| " << left << setw(13) << this -> cash;
-    cout << "| " << left << setw(13) << this -> fee;
+    cout << "| " << left << setw(18) << moneyFormat(this -> cash);
+    cout << "| " << left << setw(13) << moneyFormat(this -> fee);
     cout << "| " << left << setw(28);
     if (this -> status)
-        cout << to_string(this -> srcAccount.getBalance()) + " (-" + to_string(this -> cash - this -> fee) + " )";
-    else cout << ((this -> srcAccount)).getBalance();
+        cout << moneyFormat(this -> balance) + " (-" + moneyFormat(this -> cash + this -> fee)+ ")";
+    else cout << moneyFormat(this -> balance);
     cout << "| ";
     if (this -> status) SetColor(0, 2);
     else SetColor(0, 4);
     cout << setw(13) << this -> getStrStatus();
     SetColor(0, 15);
     cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    cout << setfill('-') << setw(170) << '-' << setfill(' ') << endl;
 }
 
 // Số tiền dưới 10tr thì phí bằng 5000
@@ -70,6 +64,7 @@ bool Withdraw::makeTransaction(const string &pin){
                 this -> status = true;
                 this -> fee = calFee();
                 this -> date = Date::getCurrentDate();
+                this -> balance = this -> srcAccount.getBalance();
                 cout << "Successfully withdraw " << this -> cash << endl;
                 return true;
             }
@@ -87,11 +82,11 @@ string Withdraw::getType(){
 }
 
 const Withdraw& Withdraw::operator=(const Withdraw &W){
-    cout << "Withdraw::operator";
     this -> ID = W.ID;
     this -> srcAccount = W.srcAccount;
     this -> cash = W.cash;
     this -> fee = W.fee;
+    this -> balance = W.balance;
     this -> status = W.status;
     this -> date = W.date;
     return (*this);
@@ -110,8 +105,10 @@ ifstream& operator>>(ifstream &in, Withdraw &W){
     getline(in >> ws, W.ID);
     getline(in >> ws, srcAccountID);
     W.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
+    if (W.srcAccount.isNull()) W.srcAccount.setID(srcAccountID); // Card đã bị xóa
     in >> W.cash;
     in >> W.fee;
+    in >> W.balance;
     in >> W.status;
     getline(in >> ws, date);
     W.date = Date(date.c_str());
@@ -123,6 +120,7 @@ ofstream& operator<<(ofstream &out, const Withdraw &W){
     out << Withdraw(W).srcAccount.getID() << endl;
     out << W.cash << endl;
     out << W.fee << endl;
+    out << W.balance << endl;
     out << W.status << endl;
     out << Withdraw(W).date.toString() << endl;
     return out;

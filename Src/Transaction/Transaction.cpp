@@ -9,6 +9,7 @@ Transaction::Transaction(const string &ID, Card srcAccount, const long &cash, co
     this -> srcAccount = (Card::isValidID(Card(srcAccount).getID())) ? srcAccount : Card();
     this -> cash = (cash > 0) ? cash : 0;
     this -> fee = (fee > 0) ? fee : 0;
+    this -> balance = this -> srcAccount.getBalance();
     this -> status = status;
     this -> date = (Date(date).isValidDate()) ? date : Date();
 }
@@ -18,6 +19,7 @@ Transaction::Transaction(const string &ID, Card srcAccount, const long &cash){
     this -> srcAccount = srcAccount;
     this -> cash = (cash > 0) ? cash : 0;
     this -> date = Date::getCurrentDate();
+    this -> balance = this -> srcAccount.getBalance();
     this -> status = false;
     this -> fee = 0;
 }
@@ -27,6 +29,7 @@ Transaction::Transaction(const Transaction &T){
     this -> srcAccount = T.srcAccount;
     this -> cash = T.cash;
     this -> fee = T.fee;
+    this -> balance = T.balance;
     this -> status = T.status;
     this -> date = T.date;
 }

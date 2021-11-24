@@ -1,5 +1,6 @@
 #include "Card.h"
 #include "../Repo/Repo.h"
+#include "../Helper/Helper.h"
 #include <string>
 #include <iomanip>
 //Constructor
@@ -145,7 +146,7 @@ void Card::show(){
     cout << "| " << left << setw(18) << this -> ID;
     cout << "| " << left << setw(13) << this -> holder.getID();
     cout << "| " << left << setw(8) << this -> pin;
-    cout << "| " << left << setw(18) << to_string(this -> balance) + " VND" ;
+    cout << "| " << left << setw(18) << moneyFormat(this -> balance);
     cout << "| " << this -> createdAt << setw(9) << ' ' << "| ";
     cout << this -> updatedAt << setw(9) << ' ' << "| ";
     cout << this -> pinUpdatedAt << setw(8) << ' ' << "| ";

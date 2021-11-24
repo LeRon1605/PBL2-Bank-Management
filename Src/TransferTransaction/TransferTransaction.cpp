@@ -18,14 +18,8 @@ Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const lo
     this -> destAccount = (Card::isValidID((destAccount).getID())) ? destAccount : Card();
 }
 
-Transfer::Transfer(const Transfer &T){
-    this -> ID = T.ID;
-    this -> srcAccount = T.srcAccount;
+Transfer::Transfer(const Transfer &T): Transaction(T){
     this -> destAccount = T.destAccount;
-    this -> cash = T.cash;
-    this -> fee = T.fee;
-    this -> status = T.status;
-    this -> date = T.date;
 }
 
 Transfer::~Transfer(){
@@ -45,19 +39,19 @@ void Transfer::show(){
     cout << "| " << left << setw(13) << this -> getType();
     cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
     cout << "| " << left << setw(13) << this -> destAccount.getID();
-    cout << "| " << left << setw(13) << this -> cash;
-    cout << "| " << left << setw(13) << this -> fee;
+    cout << "| " << left << setw(18) << moneyFormat(this -> cash);
+    cout << "| " << left << setw(13) << moneyFormat(this -> fee);
     cout << "| " << left << setw(28);
     if (this -> status)
-        cout << to_string(this -> srcAccount.getBalance()) + " (-" + to_string(this -> cash + this -> fee) + " )";
-    else cout << ((this -> srcAccount)).getBalance();
+        cout << moneyFormat(this -> balance) + " (-" + moneyFormat(this -> cash + this -> fee) + ")";
+    else cout << moneyFormat(this -> balance);
     cout << "| ";
     if (this -> status) SetColor(0, 2);
     else SetColor(0, 4);
     cout << setw(13) << this -> getStrStatus();
     SetColor(0, 15);
     cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    cout << setfill('-') << setw(170) << '-' << setfill(' ') << endl;
 }
 
 // Số tiền dưới 10tr thì phí bằng 5000 + 1% Số tiền chuyển
@@ -82,6 +76,7 @@ bool Transfer::makeTransaction(const string &pin){
                 this -> status = true;
                 this -> fee = calFee();
                 this -> date = Date::getCurrentDate();
+                this -> balance = this -> srcAccount.getBalance();
                 cout << "Successfully Transfer " << this -> cash << " to " << ((this -> destAccount)).getID() << endl;
                 return true;
             }
@@ -111,8 +106,11 @@ ifstream& operator>>(ifstream &in, Transfer &T){
     T.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
     getline(in >> ws, destAccountID);
     T.destAccount = Repository<Card>::getByID(destAccountID, "Card.txt");
+    if (T.srcAccount.isNull()) T.srcAccount.setID(srcAccountID); // Card đã bị xóa
+    if (T.destAccount.isNull()) T.destAccount.setID(destAccountID); // Card đã bị xóa
     in >> T.cash;
     in >> T.fee;
+    in >> T.balance;
     in >> T.status;
     getline(in >> ws, date);
     T.date = Date(date.c_str());
@@ -125,6 +123,7 @@ ofstream& operator<<(ofstream &out, const Transfer &T){
     out << Transfer(T).destAccount.getID() << endl;
     out << T.cash << endl;
     out << T.fee << endl;
+    out << T.balance << endl;
     out << T.status << endl;
     out << Transfer(T).date.toString() << endl;
     return out;
