@@ -342,8 +342,8 @@ int main(){
 								if (ptr == nullptr) cout << "=> Giao dich khong ton tai" << endl;
 								else{
 									cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-									cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
-									cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(20) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
+									cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+									cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
 									cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
 									ptr -> show();
 								}
