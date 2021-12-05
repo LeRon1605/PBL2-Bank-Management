@@ -13,6 +13,7 @@ void print(const string&, const int&);
 void transactionPanel();
 void clientPanel();
 void cardPanel();
+void statusTable();
 string moneyFormat(long);
 
 template <class T>

@@ -44,11 +44,17 @@ void ClientManager::showByID(const string &ID){
     Node<Client> *ptr = this -> list.getHead();
     while (ptr != nullptr){
         if (ptr -> getData().getID() == ID) {
+            cout << setw(88) << "THONG TIN KHACH HANG" << endl;
+            clientPanel();
             ptr -> getData().show();
+            cout << endl << endl << setw(95) << "DANH SACH THE NGAN HANG CUA KHACH HANG" << endl;
+            CardManager CM;
+            CM.listAllClientCard(ptr -> getData().getID());
             return;
         }
         ptr = ptr -> getNext();
     }
+    cout << "=> Khach hang khong ton tai" << endl;
 }
 
 string ClientManager::generateID(){

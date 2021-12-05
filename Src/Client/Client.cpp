@@ -150,10 +150,10 @@ void Client::show(){
     cout << "| " << left << setw(8) << this -> gender;
     cout << "| " << left << setw(18) << this -> address;
     cout << "| " << left << setw(8) << this -> age;
-    cout << "| " << this -> birth << setw(3) << ' ' << "| ";
+    cout << "| " << this -> birth << setw(8) << ' ' << "| ";
     cout << this -> createdAt << setw(9) << ' ' << "| ";
     cout << this -> updatedAt << setw(8) << ' ' << "| ";
-    cout << endl << setfill('-') << setw(150) << '-' << setfill(' ');
+    cout << endl << setfill('-') << setw(155) << '-' << setfill(' ');
 }
 
 void Client::update(const string &name, const string &gender, const string &address, const Date &birth){

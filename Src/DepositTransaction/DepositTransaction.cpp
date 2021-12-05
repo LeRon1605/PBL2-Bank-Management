@@ -6,8 +6,8 @@ Deposit::Deposit(){
 
 }
 
-Deposit::Deposit(const string &ID, Card srcAccount, const long &cash, const float &fee, const bool &status, const Date &date)
-    : Transaction(ID, srcAccount, cash, fee, status, date)
+Deposit::Deposit(const string &ID, Card srcAccount, const long &cash, const float &fee, const bool &status, const string &statusCode, const Date &date)
+    : Transaction(ID, srcAccount, cash, fee, status, statusCode, date)
 {
 
 }
@@ -41,8 +41,9 @@ void Deposit::show(){
     else SetColor(0, 4);
     cout << setw(13) << this -> getStrStatus();
     SetColor(0, 15);
-    cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
-    cout << setfill('-') << setw(170) << '-' << setfill(' ') << endl;
+    cout << "|  " << left << setw(5) << this -> statusCode;
+    cout << "| " << this -> date << setw(3) << ' ' << "| " << endl;
+    cout << setfill('-') << setw(173) << '-' << setfill(' ') << endl;
 }
 
 // Số tiền dưới 10tr thì phí bằng 5000
@@ -57,10 +58,36 @@ int Deposit::calFee(){
 }
 
 bool Deposit::makeTransaction(const string &pin){
-    if (((this -> srcAccount)).getPin() == pin)
+    if (((this -> srcAccount)).getPin() == pin){
         if (this -> cash >= 50000){
+            this -> fee = calFee();
+            cout << setw(54) << "THONG TIN GD" << endl;
+            cout << setfill('-') << setw(96) << '-' << setfill(' ') << endl;
+            cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+            cout << left << setw(20) << "| Ammount (VND)" << left << setw(15) << "| Fee (VND)" << "|" << endl;
+            cout << setfill('-') << setw(96) << '-' << setfill(' ') << endl;
+            cout << "| " << left << setw(13) << this -> ID;
+            cout << "| " << left << setw(13) << this -> getType();
+            cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
+            cout << "| " << left << setw(13) << "--------";
+            cout << "| " << left << setw(18) << moneyFormat(this -> cash);
+            cout << "| " << left << setw(13) << moneyFormat(this -> fee) << "|" << endl;
+            cout << setfill('-') << setw(96) << '-' << setfill(' ') << endl;
+            cout << "=> Ban co muon tiep tuc(Y/N): ";
+            char choice;
+            cin >> choice;
+            while (choice != 'N' && choice != 'Y' && choice != 'n' && choice != 'y'){
+                cout << "=> Lua chon khong hop le, ban co muon tiep tuc thuc hien giao dich(Y/N): ";
+                cin >> choice;
+            }
+            if (choice == 'n' || choice == 'N') {
+                this -> statusCode = "000";
+                return false;
+            }
+
             ((this -> srcAccount)).deposit(this -> cash - this -> calFee());
             this -> status = true;
+            this -> statusCode = "400";
             this -> fee = this -> calFee();
             this -> date = Date::getCurrentDate();
             this -> balance = this -> srcAccount.getBalance();
@@ -68,8 +95,11 @@ bool Deposit::makeTransaction(const string &pin){
             return true;
         }    
         else 
+            this -> statusCode = "200";
             cout << "Require at least 50,000 VND to Deposit" << endl;
-    else 
+            return false;
+    }else 
+        this -> statusCode = "300";
         cout << "Pin is not correct" << endl;
     return false;
 }
@@ -84,6 +114,7 @@ const Deposit& Deposit::operator=(const Deposit &D){
     this -> cash = D.cash;
     this -> fee = D.fee;
     this -> status = D.status;
+    this -> statusCode = D.statusCode;
     this -> date = D.date;
     return (*this);
 }
@@ -105,6 +136,7 @@ ifstream& operator>>(ifstream &in, Deposit &D){
     in >> D.fee;
     in >> D.balance;
     in >> D.status;
+    in >> D.statusCode;
     getline(in >> ws, date);
     D.date = Date(date.c_str());
     return in;
@@ -118,6 +150,7 @@ ofstream& operator<<(ofstream &out, const Deposit &D){
     out << D.fee << endl;
     out << D.balance << endl;
     out << D.status << endl;
+    out << D.statusCode << endl;
     out << Deposit(D).date.toString() << endl;
     return out;
 }

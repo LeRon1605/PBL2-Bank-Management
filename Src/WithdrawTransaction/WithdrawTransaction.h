@@ -7,7 +7,7 @@ class Withdraw: public Transaction
     private:
     public:
         Withdraw();
-        Withdraw(const string&, Card, const long&, const float&, const bool&, const Date&);
+        Withdraw(const string&, Card, const long&, const float&, const bool&, const string&, const Date&);
         Withdraw(const string&, Card, const long&);
         Withdraw(const Withdraw&);
 

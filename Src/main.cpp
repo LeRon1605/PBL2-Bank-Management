@@ -91,13 +91,7 @@ int main(){
 								string ClientID;
 								cout << "Nhap ID khach hang can tim kiem: ";
 								cin >> ClientID;
-								Client temp = CManager -> findByID(ClientID);
-								if (temp.isNull()) cout << "Khach hang khong ton tai" << endl;
-								else {
-									clientPanel();
-									temp.show();
-									cout << endl;
-								}
+								CManager -> showByID(ClientID);
 								getch();
 							}
 							break;
@@ -163,10 +157,13 @@ int main(){
 									cin >> currentPin;
 									cout << "=> Nhap ma pin moi: ";
 									cin >> newPin;
+									if (currentPin == newPin) {
+										cout << "=> Ma PIN moi khong the giong PIN cu" << endl;
+										cout << "=> Doi ma pin khong thanh cong" << endl;
+									}
 									if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "=> Doi ma pin thanh cong" << endl;
 									else cout << "=> Doi ma pin khong thanh cong";
 								}
-								getch();
 							}
 							getch();
 							break;
@@ -310,19 +307,27 @@ int main(){
 							}
 							break;
 						case 4:
+							system("cls");
 							TManager -> showWithdraw();
+							cout << "=> Nhan phim bat ki de quay tro ve.";
 							getch();
 							break;
 						case 5:
+							system("cls");
 							TManager -> showDeposit();
+							cout << "=> Nhan phim bat ki de quay tro ve.";
 							getch();
 							break;
 						case 6:
+							system("cls");
 							TManager -> showTransfer();
+							cout << "=> Nhan phim bat ki de quay tro ve.";
 							getch();
 							break;
 						case 7:
+							system("cls");
 							TManager -> show();
+							cout << "=> Nhan phim bat ki de quay tro ve.";
 							getch();
 							break;
 						case 8:
@@ -344,7 +349,9 @@ int main(){
 								string clientID;
 								cout << "=> Nhap ID khach hang: ";
 								cin >> clientID;
+								system("cls");
 								TManager -> showAllClientTransaction(clientID);
+								cout << "=> Nhan phim bat ki de quay tro ve.";
 							}
 							getch();
 							break;
@@ -353,7 +360,12 @@ int main(){
 								string cardID;
 								cout << "=> Nhap ID the ngan hang: ";
 								cin >> cardID;
-								TManager -> showAllCardTransaction(cardID);
+								if (Repository<Card>::getByID(cardID, "Card.txt").isNull()) cout << "=> The khong ton tai" << endl;
+								else{
+									system("cls");
+									TManager -> showAllCardTransaction(cardID);
+									cout << "=> Nhan phim bat ki de quay tro ve.";
+								}
 							}
 							getch();
 							break;
@@ -362,8 +374,10 @@ int main(){
 								Date time;
 								cout << "=> Nhap ngay can thong ke(dd/mm/yyyy): ";
 								cin >> time;
+								system("cls");
 								TManager -> listByDate(time);
 							}
+							cout << "=> Nhan phim bat ki de quay tro ve.";
 							getch();
 							break;
 						case 12:
