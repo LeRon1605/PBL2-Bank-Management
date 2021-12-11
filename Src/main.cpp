@@ -160,9 +160,9 @@ int main(){
 									if (currentPin == newPin) {
 										cout << "=> Ma PIN moi khong the giong PIN cu" << endl;
 										cout << "=> Doi ma pin khong thanh cong" << endl;
-									}
-									if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "=> Doi ma pin thanh cong" << endl;
-									else cout << "=> Doi ma pin khong thanh cong";
+									}else
+										if(cardManager -> changePin(CardID, currentPin, newPin)) cout << "=> Doi ma pin thanh cong" << endl;
+										else cout << "=> Doi ma pin khong thanh cong";
 								}
 							}
 							getch();

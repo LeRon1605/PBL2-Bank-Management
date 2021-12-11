@@ -4,13 +4,11 @@ Transaction::Transaction(){
 
 }
 
-Transaction::Transaction(const string &ID, Card srcAccount, const long &cash, const float &fee, const bool &status, const string &statusCode, const Date &date){
+Transaction::Transaction(const string &ID, Card srcAccount, const long &cash, const float &fee, const string &statusCode, const Date &date){
     this -> ID = ID;
     this -> srcAccount = (Card::isValidID(Card(srcAccount).getID())) ? srcAccount : Card();
     this -> cash = (cash > 0) ? cash : 0;
     this -> fee = (fee > 0) ? fee : 0;
-    this -> balance = this -> srcAccount.getBalance();
-    this -> status = status;
     this -> statusCode = statusCode;
     this -> date = (Date(date).isValidDate()) ? date : Date();
 }
@@ -20,8 +18,6 @@ Transaction::Transaction(const string &ID, Card srcAccount, const long &cash){
     this -> srcAccount = srcAccount;
     this -> cash = (cash > 0) ? cash : 0;
     this -> date = Date::getCurrentDate();
-    this -> balance = this -> srcAccount.getBalance();
-    this -> status = false;
     this -> statusCode = "000";
     this -> fee = 0;
 }
@@ -31,8 +27,6 @@ Transaction::Transaction(const Transaction &T){
     this -> srcAccount = T.srcAccount;
     this -> cash = T.cash;
     this -> fee = T.fee;
-    this -> balance = T.balance;
-    this -> status = T.status;
     this -> statusCode = T.statusCode;
     this -> date = T.date;
 }
@@ -57,12 +51,16 @@ int Transaction::getFee(){
     return this -> fee;
 }
 
-int Transaction::getStatus(){
-    return this -> status;
+string Transaction::getStatus(){
+    return this -> statusCode;
 }
 
 string Transaction::getStrStatus(){
-    return (this -> status) ? "Success" : "Failure";
+    if (this -> statusCode == "000") return "Canceled by Client";
+    else if (this -> statusCode == "100") return "Insufficient balance";
+    else if (this -> statusCode == "200") return "Amount is lower than 50,000";
+    else if (this -> statusCode == "300") return "Incorrect PIN";
+    else return "Success";
 }
 
 Date Transaction::getDate(){
@@ -85,8 +83,8 @@ void Transaction::setFee(const int &fee){
     this -> fee = fee;
 }
 
-void Transaction::setStatus(const bool &status){
-    this -> status = status;
+void Transaction::setStatus(const string &statusCode){
+    this -> statusCode = statusCode;
 }
 
 void Transaction::setDate(const Date &date){

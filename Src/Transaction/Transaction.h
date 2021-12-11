@@ -7,13 +7,11 @@ class Transaction{
         Card srcAccount; // Tài khoản thực hiện giao dịch 
         long cash; 
         int fee;
-        long balance;
-        bool status; // true: Thành công, false: Thất bại
         Date date;
         string statusCode;
     public:
         Transaction();
-        Transaction(const string&, Card, const long&, const float&, const bool&, const string&, const Date&);
+        Transaction(const string&, Card, const long&, const float&, const string&, const Date&);
         Transaction(const string&, Card, const long&); // Create a new one transaction.
         Transaction(const Transaction&);
 
@@ -23,7 +21,7 @@ class Transaction{
         Card getSrcAccount();
         long getCash();
         int getFee();
-        int getStatus();
+        string getStatus();
         string getStrStatus();
         Date getDate();
 
@@ -31,7 +29,7 @@ class Transaction{
         void setSrcAccount(Card);
         void setCash(const long&);
         void setFee(const int&);
-        void setStatus(const bool&);
+        void setStatus(const string&);
         void setDate(const Date&);
 
         static bool isValidID(const string&);
