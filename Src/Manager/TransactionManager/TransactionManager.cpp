@@ -8,13 +8,12 @@
 #include "../../Helper/Helper.h"
 #include <fstream>
 #include <iomanip>
-int TransactionManager::totalTransactionCreated = 0;
 TransactionManager::TransactionManager(){
     ifstream in;
     in.open("../Data/Transaction.txt");
     int n;
     string transactionType;
-    in >> n >> TransactionManager::totalTransactionCreated;
+    in >> n;
     for (int i = 0; i < n; i++){
         in >> transactionType;
         if (transactionType == "Withdraw"){
@@ -43,7 +42,6 @@ TransactionManager::~TransactionManager(){
     ofstream out;
     out.open("../Data/Transaction.txt");
     out << this -> list.getLength() << endl;
-    out << TransactionManager::totalTransactionCreated << endl;
     Node<Transaction*> *ptr = this -> list.getHead();
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Withdraw"){
@@ -64,12 +62,11 @@ TransactionManager::~TransactionManager(){
 }
 
 string TransactionManager::generateID(){
-    return (to_string(30000000 + TransactionManager::totalTransactionCreated));
+    return (to_string(30000000 + this -> list.getLength()));
 }
 
 void TransactionManager::show(){
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     cout << "                                                                     DANH SACH GIAO DICH" << endl;
     transactionPanel();
     while (ptr != nullptr){
@@ -80,7 +77,6 @@ void TransactionManager::show(){
 
 void TransactionManager::showByID(const string &ID){
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     while (ptr != nullptr){
         if (ptr -> getData() -> getID() == ID) ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -114,7 +110,6 @@ int TransactionManager::indexOf(const string &ID){
 }
 
 bool TransactionManager::add(Transaction *T){
-    TransactionManager::totalTransactionCreated++;
     return this -> list.addTail(T);
 }
 
@@ -130,7 +125,6 @@ bool TransactionManager::removeByID(const string &ID){
 //
 void TransactionManager::listByDate(const Date &D){
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     cout << "                                                                     DANH SACH GIAO DICH TRONG " << D << endl;
     transactionPanel();
     while (ptr != nullptr){
@@ -194,7 +188,6 @@ bool TransactionManager::makeDeposit(const string &CardID, const long &cash, con
 
 void TransactionManager::showWithdraw(){
     Node<Transaction*> *ptr = this->list.getHead();
-    statusTable();
     cout << "                                                                     DANH SACH GIAO DICH RUT" << endl;
     transactionPanel();
     while (ptr != nullptr){
@@ -205,7 +198,6 @@ void TransactionManager::showWithdraw(){
 
 void TransactionManager::showTransfer(){
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     cout << "                                                                  DANH SACH GIAO DICH CHUYEN KHOAN" << endl;
     transactionPanel();
     while (ptr != nullptr){
@@ -216,7 +208,6 @@ void TransactionManager::showTransfer(){
 
 void TransactionManager::showDeposit(){
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     cout << "                                                                       DANH SACH GIAO DICH NAP" << endl;
     transactionPanel();
     while (ptr != nullptr){
@@ -234,7 +225,6 @@ void TransactionManager::showAllClientTransaction(const string &ClientID){
         return;
     }
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     cout << setw(70) << left << " " << "THONG TIN KHACH HANG" << endl;
     clientPanel();
     temp.show();
@@ -254,7 +244,6 @@ void TransactionManager::showAllCardTransaction(const string &CardID){
     int count = 0;
     CardManager CM;
     Node<Transaction*> *ptr = this -> list.getHead();
-    statusTable();
     CM.showByID(CardID);
     cout << endl;
     cout << "                                                                   DANH SACH GIAO DICH CUA THE \"" << CardID << "\"" << endl;

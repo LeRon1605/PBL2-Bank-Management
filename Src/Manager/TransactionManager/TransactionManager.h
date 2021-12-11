@@ -7,7 +7,6 @@ class TransactionManager: public Manager<Transaction*>
 {
     private:
         LinkedList<Transaction*> list;
-        static int totalTransactionCreated;
     public:
         TransactionManager();
         ~TransactionManager();

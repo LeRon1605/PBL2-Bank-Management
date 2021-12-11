@@ -8,7 +8,7 @@ class Transfer: public Transaction
         Card destAccount; // Tài khoản đích
     public:
         Transfer();
-        Transfer(const string&, Card, Card, const long&, const float&, const bool&, const string&, const Date&);
+        Transfer(const string&, Card, Card, const long&, const float&, const string&, const Date&);
         Transfer(const string&, Card, Card, const long&);
         Transfer(const Transfer&);
 

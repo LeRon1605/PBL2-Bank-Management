@@ -249,4 +249,4 @@ ifstream& operator>>(ifstream &in, Card &card){
     getline(in, data);
     card.pinUpdatedAt = Date(data.c_str());
     return in;
-}  
+}

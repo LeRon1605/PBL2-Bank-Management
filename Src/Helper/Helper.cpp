@@ -116,10 +116,10 @@ void SetColor(int backgound_color, int text_color)
 }
 
 void transactionPanel(){
-    cout << setfill('-') << setw(173) << '-' << setfill(' ') << endl;
+    cout << setfill('-') << setw(170) << '-' << setfill(' ') << endl;
     cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(20) << "| Ammount (VND)" << left << setw(15) << "| Fee (VND)" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(8) << "| SCode " << left << setw(24) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(173) << '-' << setfill(' ') << endl;
+    cout << left << setw(20) << "| Ammount (VND)" << left << setw(15) << "| Fee (VND)" << left << setw(20) << "| Total (VND)" << left << setw(30) << "| Status" << left << setw(24) << "| Date" << "| " << endl;
+    cout << setfill('-') << setw(170) << '-' << setfill(' ') << endl;
 }
 
 void clientPanel(){
