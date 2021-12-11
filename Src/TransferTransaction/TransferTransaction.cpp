@@ -6,8 +6,8 @@ Transfer::Transfer(){
 
 }
 
-Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const long &cash, const float &fee, const bool &status, const Date &date)
-    : Transaction(ID, srcAccount, cash, fee, status, date)
+Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const long &cash, const float &fee, const bool &status, const string &statusCode, const Date &date)
+    : Transaction(ID, srcAccount, cash, fee, status, statusCode, date)
 {
     this -> destAccount = destAccount;
 }
@@ -18,14 +18,8 @@ Transfer::Transfer(const string &ID, Card srcAccount, Card destAccount, const lo
     this -> destAccount = (Card::isValidID((destAccount).getID())) ? destAccount : Card();
 }
 
-Transfer::Transfer(const Transfer &T){
-    this -> ID = T.ID;
-    this -> srcAccount = T.srcAccount;
+Transfer::Transfer(const Transfer &T): Transaction(T){
     this -> destAccount = T.destAccount;
-    this -> cash = T.cash;
-    this -> fee = T.fee;
-    this -> status = T.status;
-    this -> date = T.date;
 }
 
 Transfer::~Transfer(){
@@ -45,19 +39,20 @@ void Transfer::show(){
     cout << "| " << left << setw(13) << this -> getType();
     cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
     cout << "| " << left << setw(13) << this -> destAccount.getID();
-    cout << "| " << left << setw(13) << this -> cash;
-    cout << "| " << left << setw(13) << this -> fee;
+    cout << "| " << left << setw(18) << moneyFormat(this -> cash);
+    cout << "| " << left << setw(13) << moneyFormat(this -> fee);
     cout << "| " << left << setw(28);
     if (this -> status)
-        cout << to_string(this -> srcAccount.getBalance()) + " (-" + to_string(this -> cash + this -> fee) + " )";
-    else cout << ((this -> srcAccount)).getBalance();
+        cout << moneyFormat(this -> balance) + " (-" + moneyFormat(this -> cash + this -> fee) + ")";
+    else cout << moneyFormat(this -> balance);
     cout << "| ";
     if (this -> status) SetColor(0, 2);
     else SetColor(0, 4);
     cout << setw(13) << this -> getStrStatus();
     SetColor(0, 15);
-    cout << "| " << this -> date << setw(8) << ' ' << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    cout << "|  " << left << setw(5) << this -> statusCode;
+    cout << "| " << this -> date << setw(3) << ' ' << "| " << endl;
+    cout << setfill('-') << setw(173) << '-' << setfill(' ') << endl;
 }
 
 // Số tiền dưới 10tr thì phí bằng 5000 + 1% Số tiền chuyển
@@ -74,22 +69,54 @@ int Transfer::calFee(){
 }
 
 bool Transfer::makeTransaction(const string &pin){
-    if (((this -> srcAccount)).getPin() == pin)
-        if (this -> cash >= 50000) 
+    if (((this -> srcAccount)).getPin() == pin){
+        if (this -> cash >= 50000){ 
             if (((this -> srcAccount)).getBalance() >= this -> cash + this -> calFee()){
+                this -> fee = calFee();
+                cout << setw(54) << "THONG TIN GD" << endl;
+                cout << setfill('-') << setw(96) << '-' << setfill(' ') << endl;
+                cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+                cout << left << setw(20) << "| Ammount (VND)" << left << setw(15) << "| Fee (VND)" << "|" << endl;
+                cout << setfill('-') << setw(96) << '-' << setfill(' ') << endl;
+                cout << "| " << left << setw(13) << this -> ID;
+                cout << "| " << left << setw(13) << this -> getType();
+                cout << "| " << left << setw(13) << this -> srcAccount.getID(); 
+                cout << "| " << left << setw(13) << this -> destAccount.getID();
+                cout << "| " << left << setw(18) << moneyFormat(this -> cash);
+                cout << "| " << left << setw(13) << moneyFormat(this -> fee) << "|" << endl;
+                cout << setfill('-') << setw(96) << '-' << setfill(' ') << endl;
+                cout << "=> Ban co muon tiep tuc(Y/N): ";
+                char choice;
+                cin >> choice;
+                while (choice != 'N' && choice != 'Y' && choice != 'n' && choice != 'y'){
+                    cout << "=> Lua chon khong hop le, ban co muon tiep tuc thuc hien giao dich(Y/N): ";
+                    cin >> choice;
+                }
+                if (choice == 'n' || choice == 'N') {
+                    this -> statusCode = "000";
+                    return false;
+                }
+                
                 ((this -> srcAccount)).withdraw(this -> cash + this -> calFee());
                 ((this -> destAccount)).deposit(this -> cash);
                 this -> status = true;
-                this -> fee = calFee();
+                this -> statusCode = "400";
                 this -> date = Date::getCurrentDate();
+                this -> balance = this -> srcAccount.getBalance();
                 cout << "Successfully Transfer " << this -> cash << " to " << ((this -> destAccount)).getID() << endl;
                 return true;
             }
             else
+                this -> statusCode = "100";
                 cout << "Your balance doesn't enough to Transfer" << endl;
-        else 
+                return false;
+        }else{
+            this -> statusCode = "200";
             cout << "Require at least 50,000 VND to transfer" << endl;
-    else 
+            return false;
+        }
+    }else 
+        this -> statusCode = "300";
         cout << "Pin is not correct" << endl;
     return false;
 }
@@ -98,7 +125,7 @@ string Transfer::getType(){
     return "Transfer";
 }
 bool Transfer::operator==(const Transfer &newTransfer){
-    if(this->ID == newTransfer.ID && this->srcAccount == newTransfer.srcAccount &&  this->destAccount == newTransfer.destAccount && this->cash == newTransfer.cash && this->fee == newTransfer.fee && this->status == newTransfer.status && this->date == newTransfer.date){
+    if(this -> ID == newTransfer.ID && this->srcAccount == newTransfer.srcAccount &&  this->destAccount == newTransfer.destAccount && this->cash == newTransfer.cash && this->fee == newTransfer.fee && this->status == newTransfer.status && this->date == newTransfer.date){
         return true;
     }
     return false;
@@ -111,9 +138,13 @@ ifstream& operator>>(ifstream &in, Transfer &T){
     T.srcAccount = Repository<Card>::getByID(srcAccountID, "Card.txt");
     getline(in >> ws, destAccountID);
     T.destAccount = Repository<Card>::getByID(destAccountID, "Card.txt");
+    if (T.srcAccount.isNull()) T.srcAccount.setID(srcAccountID); // Card đã bị xóa
+    if (T.destAccount.isNull()) T.destAccount.setID(destAccountID); // Card đã bị xóa
     in >> T.cash;
     in >> T.fee;
+    in >> T.balance;
     in >> T.status;
+    in >> T.statusCode;
     getline(in >> ws, date);
     T.date = Date(date.c_str());
     return in;
@@ -125,7 +156,9 @@ ofstream& operator<<(ofstream &out, const Transfer &T){
     out << Transfer(T).destAccount.getID() << endl;
     out << T.cash << endl;
     out << T.fee << endl;
+    out << T.balance << endl;
     out << T.status << endl;
+    out << T.statusCode << endl;
     out << Transfer(T).date.toString() << endl;
     return out;
 }

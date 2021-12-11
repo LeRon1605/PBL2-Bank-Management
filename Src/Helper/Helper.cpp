@@ -1,6 +1,7 @@
 #include "../Card/Card.h"
-#include<windows.h>
+#include <windows.h>
 #include <iomanip>
+#include <string>
 
 bool compareHolderID(Card C, const string &holderID){
     return (C.getHolder().getID() == holderID);
@@ -66,20 +67,38 @@ void transactionManagerMenu(){
     cout <<"|                         Quan Li Giao Dich                         |" << endl;
     cout <<"|-------------------------------------------------------------------|" << endl;
     cout <<"|                                                                   |" << endl;
-    cout <<"|   1.Thuc Hien Giao Dich Rut                                       |" << endl;
-    cout <<"|   2.Thuc Hien Giao Dich Nap                                       |" << endl;
-    cout <<"|   3.Thuc Hien Giao Dich Chuyen Khoan                              |" << endl;
-    cout <<"|   4.Hien Thi Tat Ca Giao Dich Rut                                 |" << endl;
-    cout <<"|   5.Hien Thi Tat Ca Giao Dich Nap                                 |" << endl;
-    cout <<"|   6.Hien Thi Tat Ca Giao Dich Chuyen Khoan                        |" << endl;
-    cout <<"|   7.Hien Thi Danh Sach Giao Dich                                  |" << endl;
-    cout <<"|   8.Tim Kiem Giao Dich                                            |" << endl;
-    cout <<"|   9.Hien Thi Tat Ca Giao Dich Cua Khach Hang                      |" << endl;
+    cout <<"|   1. Thuc Hien Giao Dich Rut                                      |" << endl;
+    cout <<"|   2. Thuc Hien Giao Dich Nap                                      |" << endl;
+    cout <<"|   3. Thuc Hien Giao Dich Chuyen Khoan                             |" << endl;
+    cout <<"|   4. Hien Thi Tat Ca Giao Dich Rut                                |" << endl;
+    cout <<"|   5. Hien Thi Tat Ca Giao Dich Nap                                |" << endl;
+    cout <<"|   6. Hien Thi Tat Ca Giao Dich Chuyen Khoan                       |" << endl;
+    cout <<"|   7. Hien Thi Danh Sach Giao Dich                                 |" << endl;
+    cout <<"|   8. Tim Kiem Giao Dich                                           |" << endl;
+    cout <<"|   9. Hien Thi Tat Ca Giao Dich Cua Khach Hang                     |" << endl;
     cout <<"|   10.Hien Thi Tat Ca Giao Dich Cua The Ngan Hang                  |" << endl;
     cout <<"|   11.Thong Ke Giao Dich Theo Ngay                                 |" << endl;
     cout <<"|   12.Exit                                                         |" << endl;
     cout <<"|                                                                   |" << endl;
     cout <<"---------------------------------------------------------------------" << endl;
+}
+
+void statusTable(){
+    cout << endl << "                          BANG TRANG THAI GIAO DICH" << endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+    cout << "| Status Code |                            Description                      |" << endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+    cout << "|     400     | Giao dich thanh cong                                        |" << endl;
+    cout << "----------------------------------------------------------------------------- " << endl;
+    cout << "|     300     | Ma PIN thuc hien giao dich khong chinh xac                  |" << endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+    cout << "|     200     | So tien giao dich duoi muc cho phep                         |" << endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+    cout << "|     100     | So tien trong tai khoan khong du de thuc hien giao dich     |" << endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+    cout << "|     000     | Giao dich bi huy boi nguoi dung                             |" << endl;
+    cout << "-----------------------------------------------------------------------------" << endl;
+    cout << endl << endl;
 }
 
 void print(const string &str, const int &length){
@@ -94,4 +113,45 @@ void SetColor(int backgound_color, int text_color)
 
     int color_code = backgound_color * 16 + text_color;
     SetConsoleTextAttribute(hStdout, color_code);
+}
+
+void transactionPanel(){
+    cout << setfill('-') << setw(173) << '-' << setfill(' ') << endl;
+    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
+    cout << left << setw(20) << "| Ammount (VND)" << left << setw(15) << "| Fee (VND)" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(8) << "| SCode " << left << setw(24) << "| Date" << "| " << endl;
+    cout << setfill('-') << setw(173) << '-' << setfill(' ') << endl;
+}
+
+void clientPanel(){
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+    cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
+    cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(20) << "| Birth";
+    cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
+    cout << setfill('-') << setw(155) << '-' <<  setfill(' ') << endl;
+}
+
+void cardPanel(){
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+    cout << left << setw(20) << "| ID" << left << setw(15) << "| ID Holder";
+    cout << left << setw(10) << "| Pin" << left << setw(20) << "| Balance (VND)";
+    cout << left << setw(30) << "| Created At" << left << setw(30) << "| Updated At" << left << setw(29) << "| Pin Updated At" << '|' << endl;
+    cout << setfill('-') << setw(155) << '-' << endl << setfill(' ');
+}
+
+string moneyFormat(long money){
+    string result;
+    if (money == 0) return "0,000";
+    while (money){
+        if (money / 1000) {
+            string temp = to_string(money % 1000);
+            while (temp.size() != 3 && temp.size() <= 3) temp = "0" + temp;
+            result = "," + temp + result;
+        }
+        else {
+            result = to_string(money % 1000) + result;
+        }
+        money /= 1000;
+    }
+    if (result.size() <= 3) result = "0," + result;
+    return result;
 }

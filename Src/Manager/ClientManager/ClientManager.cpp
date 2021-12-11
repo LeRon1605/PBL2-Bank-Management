@@ -1,4 +1,5 @@
 #include "ClientManager.h"
+#include "../CardManager/CardManager.h"
 #include "../../Repo/Repo.h"
 #include "../../Helper/Helper.h"
 #include "../../Card/Card.h"
@@ -31,11 +32,7 @@ ClientManager::~ClientManager(){
 
 void ClientManager::show(){
     Node<Client> *ptr = this->list.getHead();
-    cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
-    cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
-    cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
-    cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
-    cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
+    clientPanel();
     while (ptr != nullptr){
         ptr -> getData().show();
         cout << endl;
@@ -47,11 +44,17 @@ void ClientManager::showByID(const string &ID){
     Node<Client> *ptr = this -> list.getHead();
     while (ptr != nullptr){
         if (ptr -> getData().getID() == ID) {
+            cout << setw(88) << "THONG TIN KHACH HANG" << endl;
+            clientPanel();
             ptr -> getData().show();
+            cout << endl << endl << setw(95) << "DANH SACH THE NGAN HANG CUA KHACH HANG" << endl;
+            CardManager CM;
+            CM.listAllClientCard(ptr -> getData().getID());
             return;
         }
         ptr = ptr -> getNext();
     }
+    cout << "=> Khach hang khong ton tai" << endl;
 }
 
 string ClientManager::generateID(){
@@ -96,7 +99,9 @@ bool ClientManager::add(Client C){
 
 bool ClientManager::remove(const Client C){
     if (this -> list.contains(C)) {
-        Repository<Card>::findAndRemove(compareHolderID, Client(C).getID(), "Card.txt");
+        CardManager CM;
+        // Repository<Card>::findAndRemove(compareHolderID, Client(C).getID(), "Card.txt");
+        CM.removeAll(Client(C).getID());
     }
     return this -> list.remove(C);
 }
@@ -105,18 +110,17 @@ bool ClientManager::removeByID(const string &ID){
     int index = this -> indexOf(ID);
     if (index == -1) return false;
     else {
-        Repository<Card>::findAndRemove(compareHolderID, ID, "Card.txt");
+        // Repository<Card>::findAndRemove(compareHolderID, ID, "Card.txt");
+        CardManager CM;
+        cout << "THE NGAN HANG CUA KHACH HANG CO ID \"" << ID << "\" SE BI XOA" << endl;
+        CM.removeAll(ID);
         return this -> list.removeAt(index);
     }
 }
 
 void ClientManager::listByDate(const Date &D){
     Node<Client> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(150) << '-' << endl << setfill(' ');
-    cout << left << setw(15) << "| ID" << left << setw(20) << "| Name" << left << setw(10) << "| Gender";
-    cout << left << setw(20) << "| Address" << left << setw(10) << "| Age" << left << setw(15) << "| Birth";
-    cout << left << setw(30) << "| Created At" << left << setw(29) << "| Updated At" << "|" << endl;
-    cout << setfill('-') << setw(150) << '-' <<  setfill(' ') << endl;
+    clientPanel();
     while (ptr != nullptr){
         if (Date::compareDate(ptr -> getData().getCreatedAt(), D)) {
             ptr -> getData().show();

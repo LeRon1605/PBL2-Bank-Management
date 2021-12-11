@@ -7,11 +7,13 @@ class Transaction{
         Card srcAccount; // Tài khoản thực hiện giao dịch 
         long cash; 
         int fee;
+        long balance;
         bool status; // true: Thành công, false: Thất bại
         Date date;
+        string statusCode;
     public:
         Transaction();
-        Transaction(const string&, Card, const long&, const float&, const bool&, const Date&);
+        Transaction(const string&, Card, const long&, const float&, const bool&, const string&, const Date&);
         Transaction(const string&, Card, const long&); // Create a new one transaction.
         Transaction(const Transaction&);
 

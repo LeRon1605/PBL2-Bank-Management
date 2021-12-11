@@ -1,8 +1,11 @@
 #include "TransactionManager.h"
+#include "../CardManager/CardManager.h"
+#include "../ClientManager/ClientManager.h"
 #include "../../WithdrawTransaction/WithdrawTransaction.h"
 #include "../../TransferTransaction/TransferTransaction.h"
 #include "../../DepositTransaction/DepositTransaction.h"
 #include "../../Repo/Repo.h"
+#include "../../Helper/Helper.h"
 #include <fstream>
 #include <iomanip>
 int TransactionManager::totalTransactionCreated = 0;
@@ -61,15 +64,14 @@ TransactionManager::~TransactionManager(){
 }
 
 string TransactionManager::generateID(){
-    return (to_string(10000000 + TransactionManager::totalTransactionCreated));
+    return (to_string(30000000 + TransactionManager::totalTransactionCreated));
 }
 
 void TransactionManager::show(){
     Node<Transaction*> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    cout << "                                                                     DANH SACH GIAO DICH" << endl;
+    transactionPanel();
     while (ptr != nullptr){
         ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -78,6 +80,7 @@ void TransactionManager::show(){
 
 void TransactionManager::showByID(const string &ID){
     Node<Transaction*> *ptr = this -> list.getHead();
+    statusTable();
     while (ptr != nullptr){
         if (ptr -> getData() -> getID() == ID) ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -127,10 +130,9 @@ bool TransactionManager::removeByID(const string &ID){
 //
 void TransactionManager::listByDate(const Date &D){
     Node<Transaction*> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-    cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-    cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    cout << "                                                                     DANH SACH GIAO DICH TRONG " << D << endl;
+    transactionPanel();
     while (ptr != nullptr){
         if (Date::compareDate(ptr ->getData()->getDate(), D)) {
             ptr -> getData()->show();
@@ -146,7 +148,11 @@ bool TransactionManager::makeWithdraw(const string &CardID, const long &cash, co
     }
     Transaction *ptr = new Withdraw(this -> generateID(), Repository<Card>::getByID(CardID, "Card.txt"), cash);
     bool result = ptr -> makeTransaction(PIN);
-    Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
+    // Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
+    if (result){
+        CardManager CM;
+        CM.updateByID(ptr -> getSrcAccount(), CardID);
+    }
     this -> add(ptr);
     return result;
 }
@@ -158,9 +164,14 @@ bool TransactionManager::makeTransfer(const string &SrcAccount, const string &De
     }
     Transfer T = Transfer(this -> generateID(), Repository<Card>::getByID(SrcAccount, "Card.txt"), Repository<Card>::getByID(DestAccount, "Card.txt"), cash);
     bool result = T.makeTransaction(PIN);
-    Repository<Card>::findAndUpdate(T.getSrcAccount(), "Card.txt");
-    Repository<Card>::findAndUpdate(T.getDestAccount(), "Card.txt");
     Transaction *ptr = new Transfer(T);
+    if (result){
+        CardManager CM;
+        CM.updateByID(T.getSrcAccount(), SrcAccount);
+        CM.updateByID(T.getDestAccount(), DestAccount);
+    }
+    // Repository<Card>::findAndUpdate(T.getSrcAccount(), "Card.txt");
+    // Repository<Card>::findAndUpdate(T.getDestAccount(), "Card.txt");
     this -> add(ptr);
     return result;
 }
@@ -172,17 +183,20 @@ bool TransactionManager::makeDeposit(const string &CardID, const long &cash, con
     }
     Transaction *ptr = new Deposit(this -> generateID(), Repository<Card>::getByID(CardID, "Card.txt"), cash);
     bool result = ptr -> makeTransaction(PIN);
-    Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
+    // Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
+    if (result){
+        CardManager CM;
+        CM.updateByID(ptr -> getSrcAccount(), CardID);
+    }
     this -> add(ptr);
     return result;
 }
 
 void TransactionManager::showWithdraw(){
     Node<Transaction*> *ptr = this->list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    cout << "                                                                     DANH SACH GIAO DICH RUT" << endl;
+    transactionPanel();
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Withdraw") ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -191,10 +205,9 @@ void TransactionManager::showWithdraw(){
 
 void TransactionManager::showTransfer(){
     Node<Transaction*> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    cout << "                                                                  DANH SACH GIAO DICH CHUYEN KHOAN" << endl;
+    transactionPanel();
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Transfer") ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -203,10 +216,9 @@ void TransactionManager::showTransfer(){
 
 void TransactionManager::showDeposit(){
     Node<Transaction*> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(15) << "| SrcAccount" << left << setw(15) << "| DestAccount";
-	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(30) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    cout << "                                                                       DANH SACH GIAO DICH NAP" << endl;
+    transactionPanel();
     while (ptr != nullptr){
         if (ptr -> getData() -> getType() == "Deposit") ptr -> getData() -> show();
         ptr = ptr -> getNext();
@@ -214,25 +226,45 @@ void TransactionManager::showDeposit(){
 }
 
 void TransactionManager::showAllClientTransaction(const string &ClientID){
+    int count = 0;
+    ClientManager CM;
+    Client temp = CM.findByID(ClientID);
+    if (temp.isNull()){
+        cout << "=> Khach hang khong ton tai" << endl;
+        return;
+    }
     Node<Transaction*> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
-	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(20) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    cout << setw(70) << left << " " << "THONG TIN KHACH HANG" << endl;
+    clientPanel();
+    temp.show();
+    cout << "                                                                                DANH SACH GIAO DICH CUA KHACH HANG \"" << ClientID << "\"" << endl;
+    transactionPanel();
     while (ptr != nullptr){
-        if (ptr -> getData() -> getSrcAccount().getHolder().getID() == ClientID) ptr -> getData() -> show();
+        if (ptr -> getData() -> getSrcAccount().getHolder().getID() == ClientID) {
+            ptr -> getData() -> show();
+            count++;
+        }
         ptr = ptr -> getNext();
     }
+    cout << "=> Co tong cong: " << count << " giao dich" << endl;
 }
 
 void TransactionManager::showAllCardTransaction(const string &CardID){
+    int count = 0;
+    CardManager CM;
     Node<Transaction*> *ptr = this -> list.getHead();
-    cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
-	cout << left << setw(15) << "| ID" << left << setw(15) << "| Type" << left << setw(20) << "| SrcAccount" << left << setw(20) << "| DestAccount";
-	cout << left << setw(15) << "| Ammount" << left << setw(15) << "| Fee" << left << setw(20) << "| Balance (VND)" << left << setw(15) << "| Status" << left << setw(29) << "| Date" << "| " << endl;
-	cout << setfill('-') << setw(165) << '-' << setfill(' ') << endl;
+    statusTable();
+    CM.showByID(CardID);
+    cout << endl;
+    cout << "                                                                   DANH SACH GIAO DICH CUA THE \"" << CardID << "\"" << endl;
+    transactionPanel();
     while (ptr != nullptr){
-        if(ptr -> getData()-> getSrcAccount().getID() == CardID)  ptr -> getData() -> show();
+        if(ptr -> getData()-> getSrcAccount().getID() == CardID)  {
+            ptr -> getData() -> show();
+            count++;
+        }
         ptr = ptr -> getNext();
     }
+    cout << "=> Co tong cong: " << count << " giao dich" << endl;
 }
