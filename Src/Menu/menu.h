@@ -14,5 +14,3 @@ class Menu
         bool isValidChoice(const int&, const int&);
 };
 #endif
-
-

@@ -136,6 +136,8 @@ bool ClientManager::updateByID(Client C, const string &ID){
     this -> list[index].update(C);
     return true;
 
+<<<<<<< HEAD
+=======
 }
 
 void ClientManager::exportToCSV(const string &fileName){
@@ -149,4 +151,5 @@ void ClientManager::exportToCSV(const string &fileName){
         ptr = ptr -> getNext();
     }
     out.close();
+>>>>>>> 4cff61662150be6c6ad12eada8b525f00dcb8830
 }
