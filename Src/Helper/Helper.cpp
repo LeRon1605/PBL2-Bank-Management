@@ -41,7 +41,8 @@ void clientManagerMenu(){
     cout <<"|   4. Tim Kiem Thong Tin Khach Hang                                |" << endl;
     cout <<"|   5. Hien Thi Danh Sach Khach Hang                                |" << endl;
     cout <<"|   6. Thong Ke Khach Hang Moi Theo Ngay                            |" << endl;
-    cout <<"|   7. Exit                                                         |" << endl;
+    cout <<"|   7. Xuat danh sach khach hang ra file                            |" << endl;
+    cout <<"|   8. Exit                                                         |" << endl;
     cout <<"|                                                                   |" << endl;
     cout <<"---------------------------------------------------------------------" << endl;
 }
@@ -58,7 +59,8 @@ void cardManagerMenu(){
     cout <<"|   6. Hien Thi Danh Sach The Ngan Hang Cua Khach Hang              |" << endl;  
     cout <<"|   7. Xoa Tat Ca The Ngan Hang Cua Khach Hang                      |" << endl;  
     cout <<"|   8. Thong Ke The Ngan Hang Duoc Tao Theo Ngay                    |" << endl;
-    cout <<"|   9 .Exit                                                         |" << endl;
+    cout <<"|   9. Xuat danh sach the ngan hang ra file                         |" << endl;
+    cout <<"|   10.Exit                                                         |" << endl;
     cout <<"|                                                                   |" << endl;
     cout <<"---------------------------------------------------------------------" << endl;
 }
@@ -78,7 +80,8 @@ void transactionManagerMenu(){
     cout <<"|   9. Hien Thi Tat Ca Giao Dich Cua Khach Hang                     |" << endl;
     cout <<"|   10.Hien Thi Tat Ca Giao Dich Cua The Ngan Hang                  |" << endl;
     cout <<"|   11.Thong Ke Giao Dich Theo Ngay                                 |" << endl;
-    cout <<"|   12.Exit                                                         |" << endl;
+    cout <<"|   12.Xuat danh sach ra file                                       |" << endl;
+    cout <<"|   13.Exit                                                         |" << endl;
     cout <<"|                                                                   |" << endl;
     cout <<"---------------------------------------------------------------------" << endl;
 }

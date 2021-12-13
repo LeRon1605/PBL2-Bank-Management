@@ -45,6 +45,7 @@ class Card{
         void deposit(const long&);
         void update(const Card&);
         void updatePin(const string&, const string&);
+        void exportToCSV(ofstream&);
 
         const Card& operator=(const Card&);
         // friend ostream& operator<<(ostream&, const Card&);

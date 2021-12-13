@@ -23,6 +23,7 @@ class ClientManager: public Manager<Client>
         bool removeByID(const string&);
         void listByDate(const Date&);
         bool updateByID(const Client, const string&);
+        void exportToCSV(const string&);
 
         
 };

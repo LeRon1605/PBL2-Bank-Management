@@ -24,7 +24,7 @@ int main(){
 					system("cls");
 					application.printMenu(background);
 					application.printMenu(clientManagerMenu);
-					application.inputChoice(1, 7);
+					application.inputChoice(1, 8);
 					switch (application.getChoice()){
 						case 1:
 							{
@@ -108,13 +108,22 @@ int main(){
 								cin >> temp;
 								CManager -> listByDate(temp);
 								getch();
-								break;
 							}
 							break;
 						case 7:
+							{
+								string fileName;
+								cout << "Nhap ten file: ";
+								cin >> fileName;
+								CManager -> exportToCSV(fileName);
+								cout << "=> Xuat du lieu ra file thanh cong.";
+							}
+							getch();
+							break;
+						case 8:
 							delete CManager;
 					}
-				}while (application.getChoice() != 7);
+				}while (application.getChoice() != 8);
 				break;
 			case 2:
 				cardManager = new CardManager();
@@ -122,7 +131,7 @@ int main(){
 					system("cls");
 					application.printMenu(background);
 					application.printMenu(cardManagerMenu);
-					application.inputChoice(1, 9);
+					application.inputChoice(1, 10);
 					switch(application.getChoice()){
 						case 1:
 							{
@@ -226,10 +235,20 @@ int main(){
 								getch();
 							}
 							break;
-						case 9 :
+						case 9:
+							{
+								string fileName;
+								cout << "Nhap ten file: ";
+								cin >> fileName;
+								cardManager -> exportToCSV(fileName);
+								cout << "=> Xuat du lieu ra file thanh cong.";
+							}
+							getch();
+							break;
+						case 10 :
 						 	delete cardManager;
 					}
-				}while (application.getChoice() != 9);
+				}while (application.getChoice() != 10);
 				break;
 			case 3:
 				TManager = new TransactionManager();
@@ -237,7 +256,7 @@ int main(){
 					system("cls");
 					application.printMenu(background);
 					application.printMenu(transactionManagerMenu);
-					application.inputChoice(1, 12);
+					application.inputChoice(1, 13);
 					switch (application.getChoice()){
 						case 1:
 							{
@@ -381,9 +400,19 @@ int main(){
 							getch();
 							break;
 						case 12:
+							{
+								string fileName;
+								cout << "Nhap ten file: ";
+								cin >> fileName;
+								TManager -> exportToCSV(fileName);
+								cout << "=> Xuat du lieu ra file thanh cong.";
+							}
+							getch();
+							break;
+						case 13:
 							delete TManager;
 					}
-				}while (application.getChoice() != 12);
+				}while (application.getChoice() != 13);
 				break;
 			case 4:
 				cout << "Ket thuc chuong trinh" << endl;

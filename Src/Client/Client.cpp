@@ -174,6 +174,17 @@ void Client::update(const Client &C){
     this -> updatedAt = Date::getCurrentDate();
 }
 
+void Client::exportToCSV(ofstream &out){
+    out << this -> ID << ";";
+    out << this -> name << ";";
+    out << this -> gender << ";";
+    out << this -> address << ";";
+    out << this -> age << ";";
+    out << this -> birth.toString() << ";";
+    out << this -> createdAt.toString() << ";";
+    out << this -> updatedAt.toString() << ";";
+}
+
 const Client& Client::operator=(const Client &C){
     this -> ID = C.ID;
     this -> name = C.name;

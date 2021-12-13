@@ -21,6 +21,7 @@ class Transfer: public Transaction
         void show();
         int calFee();
         bool makeTransaction(const string&);
+        void exportToCSV(ofstream&);
         bool operator==(const Transfer&);
 
         friend ifstream& operator>>(ifstream&, Transfer&);

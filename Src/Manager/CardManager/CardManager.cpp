@@ -41,9 +41,9 @@ void CardManager::showByID(const string &ID){
     Node<Card> *ptr = this -> list.getHead();
     while (ptr != nullptr){
         if (ptr -> getData().getID() == ID) {
-            cout << setw(80) << "THONG TIN CHU THE" << endl;
+            cout << setw(80) << right << "THONG TIN CHU THE" << endl;
             this -> showInf(ptr -> getData().getHolder().getID());
-            cout << endl << setw(78) << "THONG TIN THE" << endl;
+            cout << endl << setw(78) << right << "THONG TIN THE" << endl;
             cardPanel();
             ptr -> getData().show();
             return;
@@ -178,4 +178,17 @@ void CardManager::listAllClientCard(const string &ClientID){
         }
         ptr = ptr -> getNext();
     }
+}
+
+void CardManager::exportToCSV(const string &fileName){
+    ofstream out;
+    out.open("..//Output//" + fileName + ".csv");
+    Node<Card> *ptr = this -> list.getHead();
+    out << "ID;Holder ID;PIN;Balance;Created At;Updated At;PIN updatedAt" << endl;
+    while (ptr != nullptr){
+        ptr -> getData().exportToCSV(out);
+        out << endl;
+        ptr = ptr -> getNext();
+    }
+    out.close();
 }

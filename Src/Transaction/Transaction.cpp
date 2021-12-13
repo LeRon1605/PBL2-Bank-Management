@@ -99,6 +99,17 @@ bool Transaction::isValidID(const string &str){
     return true;
 }
 
+void Transaction::exportToCSV(ofstream &out){
+    out << this -> ID << ";";
+    out << this -> getType() << ";";
+    out << this -> srcAccount.getID() << ";";
+    out << "---------" << ";";
+    out << this -> cash << ";";
+    out << this -> fee << ";";
+    out << this -> getStrStatus() << ";";
+    out << this -> date.toString() << ";";
+}
+
 // const Transaction& Transaction::operator=(const Transaction &T){
 //     cout << "Transaction this";
 //     this -> ID = T.ID;
