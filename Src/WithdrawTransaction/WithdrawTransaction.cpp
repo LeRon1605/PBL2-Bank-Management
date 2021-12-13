@@ -34,18 +34,13 @@ void Withdraw::show(){
     cout << "| " << left << setw(13) << moneyFormat(this -> fee);
     cout << "| ";
     SetColor(0, 4);
-    cout << left << setw(18);
-    if (this -> statusCode == "400")
-        cout << "-" + moneyFormat(this -> cash + this -> fee);
-    else 
-        cout << "-0,000";
+    cout << "(-) ";
     SetColor(0, 15);
-    // if (this -> status)
-    //     cout << moneyFormat(this -> balance) + " (-" + moneyFormat(this -> cash + this -> fee)+ ")";
-    // else cout << moneyFormat(this -> balance);
-    // cout << "| ";
-    // if (this -> status) SetColor(0, 2);
-    // else SetColor(0, 4);
+    cout << left << setw(14);
+    if (this -> statusCode == "400")
+        cout << moneyFormat(this -> cash + this -> fee);
+    else 
+        cout << "0,000";
     cout << "| ";
     if (this -> statusCode == "400") SetColor(0, 2);
     else SetColor(0, 4);

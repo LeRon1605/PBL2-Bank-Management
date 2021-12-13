@@ -249,4 +249,14 @@ ifstream& operator>>(ifstream &in, Card &card){
     getline(in, data);
     card.pinUpdatedAt = Date(data.c_str());
     return in;
+}   
+
+void Card::exportToCSV(ofstream &out){
+    out << this -> ID << ";";
+    out << this -> holder.getID() << ";";
+    out << this -> pin << ";";
+    out << this -> balance << ";";
+    out << this -> createdAt.toString() << ";";
+    out << this -> updatedAt.toString() << ";";
+    out << this -> pinUpdatedAt.toString() << ";";
 }

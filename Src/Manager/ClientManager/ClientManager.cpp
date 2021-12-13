@@ -136,4 +136,20 @@ bool ClientManager::updateByID(Client C, const string &ID){
     this -> list[index].update(C);
     return true;
 
+<<<<<<< HEAD
+=======
+}
+
+void ClientManager::exportToCSV(const string &fileName){
+    ofstream out;
+    out.open("..//Output//" + fileName + ".csv");
+    Node<Client> *ptr = this -> list.getHead();
+    out << "ID;Ten khach hang;Gioi tinh;Dia chi;Tuoi;Ngay sinh;Ngay tro thanh khach hang;Ngay cap nhat" << endl;
+    while (ptr != nullptr){
+        ptr -> getData().exportToCSV(out);
+        out << endl;
+        ptr = ptr -> getNext();
+    }
+    out.close();
+>>>>>>> 4cff61662150be6c6ad12eada8b525f00dcb8830
 }

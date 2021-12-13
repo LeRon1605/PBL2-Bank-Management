@@ -140,11 +140,11 @@ bool TransactionManager::makeWithdraw(const string &CardID, const long &cash, co
         cout << "The khong ton tai" << endl;
         return false;
     }
-    Transaction *ptr = new Withdraw(this -> generateID(), Repository<Card>::getByID(CardID, "Card.txt"), cash);
+    CardManager CM;
+    Transaction *ptr = new Withdraw(this -> generateID(), CM.findByID(CardID), cash);
     bool result = ptr -> makeTransaction(PIN);
     // Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
     if (result){
-        CardManager CM;
         CM.updateByID(ptr -> getSrcAccount(), CardID);
     }
     this -> add(ptr);
@@ -156,16 +156,15 @@ bool TransactionManager::makeTransfer(const string &SrcAccount, const string &De
         cout << "The khong ton tai" << endl;
         return false;
     }
-    Transfer T = Transfer(this -> generateID(), Repository<Card>::getByID(SrcAccount, "Card.txt"), Repository<Card>::getByID(DestAccount, "Card.txt"), cash);
+    CardManager CM;
+    // Transfer T = Transfer(this -> generateID(), Repository<Card>::getByID(SrcAccount, "Card.txt"), Repository<Card>::getByID(DestAccount, "Card.txt"), cash);
+    Transfer T = Transfer(this -> generateID(), CM.findByID(SrcAccount), CM.findByID(DestAccount), cash);
     bool result = T.makeTransaction(PIN);
     Transaction *ptr = new Transfer(T);
     if (result){
-        CardManager CM;
         CM.updateByID(T.getSrcAccount(), SrcAccount);
         CM.updateByID(T.getDestAccount(), DestAccount);
     }
-    // Repository<Card>::findAndUpdate(T.getSrcAccount(), "Card.txt");
-    // Repository<Card>::findAndUpdate(T.getDestAccount(), "Card.txt");
     this -> add(ptr);
     return result;
 }
@@ -175,11 +174,11 @@ bool TransactionManager::makeDeposit(const string &CardID, const long &cash, con
         cout << "The khong ton tai" << endl;
         return false;
     }
-    Transaction *ptr = new Deposit(this -> generateID(), Repository<Card>::getByID(CardID, "Card.txt"), cash);
+    CardManager CM;
+    // Transaction *ptr = new Deposit(this -> generateID(), Repository<Card>::getByID(CardID, "Card.txt"), cash);
+    Transaction *ptr = new Deposit(this -> generateID(), CM.findByID(CardID), cash);
     bool result = ptr -> makeTransaction(PIN);
-    // Repository<Card>::findAndUpdate(ptr -> getSrcAccount(), "Card.txt");
     if (result){
-        CardManager CM;
         CM.updateByID(ptr -> getSrcAccount(), CardID);
     }
     this -> add(ptr);
@@ -228,7 +227,7 @@ void TransactionManager::showAllClientTransaction(const string &ClientID){
     cout << setw(70) << left << " " << "THONG TIN KHACH HANG" << endl;
     clientPanel();
     temp.show();
-    cout << "                                                                                DANH SACH GIAO DICH CUA KHACH HANG \"" << ClientID << "\"" << endl;
+    cout << "                                                                                DANH SACH GIAO DICH CUA KHACH HANG \"" << ClientID << "\"" << endl << endl;
     transactionPanel();
     while (ptr != nullptr){
         if (ptr -> getData() -> getSrcAccount().getHolder().getID() == ClientID) {
@@ -246,7 +245,7 @@ void TransactionManager::showAllCardTransaction(const string &CardID){
     Node<Transaction*> *ptr = this -> list.getHead();
     CM.showByID(CardID);
     cout << endl;
-    cout << "                                                                   DANH SACH GIAO DICH CUA THE \"" << CardID << "\"" << endl;
+    cout << "                                                                   DANH SACH GIAO DICH CUA THE \"" << CardID << "\"" << endl << endl;
     transactionPanel();
     while (ptr != nullptr){
         if(ptr -> getData()-> getSrcAccount().getID() == CardID)  {
@@ -256,4 +255,17 @@ void TransactionManager::showAllCardTransaction(const string &CardID){
         ptr = ptr -> getNext();
     }
     cout << "=> Co tong cong: " << count << " giao dich" << endl;
+}
+
+void TransactionManager::exportToCSV(const string &fileName){
+    ofstream out;
+    out.open("..//Output//" + fileName + ".csv");
+    Node<Transaction*> *ptr = this -> list.getHead();
+    out << "ID;Type;Source Account;DestAccount;Amount;Fee;Status;Date" << endl;
+    while (ptr != nullptr){
+        ptr -> getData() -> exportToCSV(out);
+        out << endl;
+        ptr = ptr -> getNext();
+    }
+    out.close();
 }

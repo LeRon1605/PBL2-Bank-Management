@@ -46,6 +46,7 @@ class Client{
         void input();
         void update(const string&, const string&, const string&, const Date&); // Name, gender, address, birth
         void update(const Client&);
+        void exportToCSV(ofstream&);
 
         const Client& operator=(const Client&);
         bool operator==(const Client&);

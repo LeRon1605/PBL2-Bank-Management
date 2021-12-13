@@ -23,6 +23,7 @@ class CardManager: public Manager<Card>
         bool removeByID(const string&);
         void listByDate(const Date&);
         bool updateByID(const Card, const string&);
+        void exportToCSV(const string&);
 
         int countClientCard(const string&); // Đếm số lượng thẻ của client
         void removeAll(const string&); //  Xóa tất cả thẻ của khách hàng

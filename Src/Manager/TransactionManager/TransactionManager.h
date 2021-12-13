@@ -24,6 +24,7 @@ class TransactionManager: public Manager<Transaction*>
         bool makeWithdraw(const string&, const long&, const string&); // Thực hiện giao dịch rút
         bool makeTransfer(const string&, const string&, const long&, const string&); // Thực hiện giao dịch chuyển khoản
         bool makeDeposit(const string&, const long&, const string&); // Thực hiện giao dịch nạp
+        void exportToCSV(const string&);
 
         void showWithdraw(); // Hiển thị các giao dịch rút
         void showTransfer(); // Hiển thị tất cả các giao dịch chuyển khoản

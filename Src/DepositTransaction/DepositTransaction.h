@@ -17,7 +17,7 @@ class Deposit: public Transaction
         void show();
         int calFee();
         bool makeTransaction(const string&);
-        
+
         const Deposit& operator=(const Deposit&);
         bool operator==(const Deposit&);
 

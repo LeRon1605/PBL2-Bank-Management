@@ -33,11 +33,12 @@ void Deposit::show(){
     cout << "| " << left << setw(18) << moneyFormat(this -> cash);
     cout << "| " << left << setw(13) << moneyFormat(this -> fee) << "| ";
     SetColor(0, 2);
-    cout << left << setw(18);
-    if (this -> statusCode == "400")
-        cout << "+" + moneyFormat(this -> cash - this -> fee);
-    else  cout << "+0,000";
+    cout << "(+) ";
     SetColor(0, 15);
+    cout << left << setw(14);
+    if (this -> statusCode == "400")
+        cout << moneyFormat(this -> cash - this -> fee);
+    else  cout << "0,000";
     cout << "| ";
     if (this -> statusCode == "400") SetColor(0, 2);
     else SetColor(0, 4);
