@@ -260,7 +260,7 @@ void TransactionManager::showAllCardTransaction(const string &CardID){
 
 void TransactionManager::exportToCSV(const string &fileName){
     ofstream out;
-    out.open("..//Output//" + fileName + ".csv");
+    out.open("..//CSV//" + fileName + ".csv");
     Node<Transaction*> *ptr = this -> list.getHead();
     out << "ID;Type;Source Account;DestAccount;Amount;Fee;Status;Date" << endl;
     while (ptr != nullptr){

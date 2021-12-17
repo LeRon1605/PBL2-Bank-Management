@@ -193,7 +193,7 @@ void CardManager::listAllClientCard(const string &ClientID){
 
 void CardManager::exportToCSV(const string &fileName){
     ofstream out;
-    out.open("..//Output//" + fileName + ".csv");
+    out.open("..//CSV//" + fileName + ".csv");
     Node<Card> *ptr = this -> list.getHead();
     out << "ID;Holder ID;PIN;Balance;Created At;Updated At;PIN updatedAt" << endl;
     while (ptr != nullptr){

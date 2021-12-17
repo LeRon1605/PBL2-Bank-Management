@@ -260,7 +260,7 @@ void Card::exportToCSV(ofstream &out){
     out << this -> holder.getID() << ";";
     out << this -> pin << ";";
     out << this -> balance << ";";
-    out << this -> createdAt.toString() << ";";
-    out << this -> updatedAt.toString() << ";";
-    out << this -> pinUpdatedAt.toString() << ";";
+    out << this -> createdAt.toString(1) << ";";
+    out << this -> updatedAt.toString(1) << ";";
+    out << this -> pinUpdatedAt.toString(1) << ";";
 }

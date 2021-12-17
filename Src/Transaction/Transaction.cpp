@@ -107,7 +107,7 @@ void Transaction::exportToCSV(ofstream &out){
     out << this -> cash << ";";
     out << this -> fee << ";";
     out << this -> getStrStatus() << ";";
-    out << this -> date.toString() << ";";
+    out << this -> date.toString(1) << ";";
 }
 
 // const Transaction& Transaction::operator=(const Transaction &T){

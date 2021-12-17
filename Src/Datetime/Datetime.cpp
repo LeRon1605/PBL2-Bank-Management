@@ -136,7 +136,13 @@ bool Date::isValidHour(){
     return true;
 }
 
-string Date::toString(){
+string Date::toString(const int &isFormat){
+    if (isFormat){
+        string result = "--/--/---- --:--:--";
+        if (Date::isValidDate()) result = to_string(this -> day) + "/" + to_string(this -> month) + "/" + to_string(this -> year) + " ";
+        if (Date::isValidHour()) result += to_string(this -> hour) + ":" + to_string(this -> minute) + ":" + to_string(this -> second); 
+        return result;
+    }
     return to_string(this -> day) + "/" + to_string(this -> month) + "/" + to_string(this -> year) + " " + to_string(this -> hour) + ":" + to_string(this -> minute) + ":" + to_string(this -> second); 
 }
 

@@ -63,17 +63,17 @@ int main(){
 									do{
 										cout << "Nhap ten khach hang: ";
 										getline(cin >> ws, newName);
-										if (newName == "No") break;
+										if (newName == "No" || newName == "no") break;
 									}while (!Client::isValidName(newName));
 									do{
 										cout << "Nhap gioi tinh khach hang(Male/Female/Other): ";
 										cin >> newGender;
-										if (newGender == "No") break;
+										if (newGender == "No" || newGender == "no") break;
 									}while (!Client::isValidGender(newGender));
 									do{
 										cout << "Nhap dia chi khach hang: ";
 										getline(cin >> ws, newAddress);
-										if (newAddress == "No"){
+										if (newAddress == "No" || newAddress == "no"){
 											newAddress = "";
 											break;
 										}
@@ -81,7 +81,7 @@ int main(){
 									do{
 										cout << "Nhap ngay sinh khach hang(dd/mm/yyyy): ";
 										getline(cin >> ws, newBirth);
-										if (newBirth == "No") break;
+										if (newBirth == "No" || newBirth == "no") break;
 									}while (!Date(newBirth.c_str()).isValidDate());
 									if (CManager -> updateByID(Client(newName, newGender, newAddress, Date(newBirth.c_str())), ClientID)) cout << "=> Cap nhat thanh cong" << endl;
 								}

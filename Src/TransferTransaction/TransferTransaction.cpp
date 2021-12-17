@@ -167,5 +167,5 @@ void Transfer::exportToCSV(ofstream &out){
     out << this -> cash << ";";
     out << this -> fee << ";";
     out << this -> getStrStatus() << ";";
-    out << this -> date.toString() << ";";
+    out << this -> date.toString(1) << ";";
 }

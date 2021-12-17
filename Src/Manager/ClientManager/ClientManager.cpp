@@ -143,7 +143,7 @@ bool ClientManager::updateByID(Client C, const string &ID){
 
 void ClientManager::exportToCSV(const string &fileName){
     ofstream out;
-    out.open("..//Output//" + fileName + ".csv");
+    out.open("..//CSV//" + fileName + ".csv");
     Node<Client> *ptr = this -> list.getHead();
     out << "ID;Ten khach hang;Gioi tinh;Dia chi;Tuoi;Ngay sinh;Ngay tro thanh khach hang;Ngay cap nhat" << endl;
     while (ptr != nullptr){

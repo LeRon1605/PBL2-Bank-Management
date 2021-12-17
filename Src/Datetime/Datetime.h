@@ -22,7 +22,7 @@ class Date{
 		bool isValidDate();
 		bool isValidHour();
 		
-		string toString();
+		string toString(const int& = 0);
 		static Date getCurrentDate();
 		static bool compareDate(const Date&, const Date&);
 		static bool compareHour(const Date&, const Date&);

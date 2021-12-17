@@ -11,6 +11,7 @@ class LinkedList{
         int length;
     public:
         LinkedList();
+        LinkedList(const LinkedList&);
         ~LinkedList();
 
         Node<T>* getHead();
@@ -38,6 +39,7 @@ class LinkedList{
         void sort(bool (*compare)(const T, const T));
 
         T& operator[](const int&);
+        const LinkedList<T>& operator=(const LinkedList&);
 };
 
 template <class T>
@@ -55,6 +57,15 @@ LinkedList<T>::LinkedList(){
     this -> head = nullptr;
     this -> tail = nullptr;
     this -> length = 0;
+}
+
+template <class T>
+LinkedList<T>::LinkedList(const LinkedList<T> &list){
+    Node<T> *ptr = LinkedList(list).getHead();
+    while (ptr != nullptr){
+        this -> addTail(ptr -> getData());
+        ptr = ptr -> getNext();
+    }
 }
 
 template <class T>
@@ -340,5 +351,15 @@ T& LinkedList<T>::operator[](const int &index){
         ptr = ptr -> getNext();
     }
     return ptr -> getRefData();
+}
+
+template <class T>
+const LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &list){
+    Node<T> *ptr = LinkedList<T>(list).getHead();
+    while (ptr != nullptr){
+        this -> addTail(ptr -> getData());
+        ptr = ptr -> getNext();
+    }
+    return (*this);
 }
 #endif

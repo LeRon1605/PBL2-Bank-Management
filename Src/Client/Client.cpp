@@ -180,9 +180,9 @@ void Client::exportToCSV(ofstream &out){
     out << this -> gender << ";";
     out << this -> address << ";";
     out << this -> age << ";";
-    out << this -> birth.toString() << ";";
-    out << this -> createdAt.toString() << ";";
-    out << this -> updatedAt.toString() << ";";
+    out << this -> birth.toString(1) << ";";
+    out << this -> createdAt.toString(1) << ";";
+    out << this -> updatedAt.toString(1) << ";";
 }
 
 const Client& Client::operator=(const Client &C){
