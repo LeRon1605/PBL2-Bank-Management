@@ -11,6 +11,7 @@ class Card{
         Date createdAt;
         Date updatedAt;
         Date pinUpdatedAt;
+
     public:
         //  Constructor
         Card();

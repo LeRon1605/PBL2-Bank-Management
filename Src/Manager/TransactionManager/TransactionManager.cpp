@@ -227,7 +227,8 @@ void TransactionManager::showAllClientTransaction(const string &ClientID){
     cout << setw(70) << left << " " << "THONG TIN KHACH HANG" << endl;
     clientPanel();
     temp.show();
-    cout << "                                                                                DANH SACH GIAO DICH CUA KHACH HANG \"" << ClientID << "\"" << endl << endl;
+    cout << endl;
+    cout << "                                                              DANH SACH GIAO DICH CUA KHACH HANG \"" << ClientID << "\"" << endl;
     transactionPanel();
     while (ptr != nullptr){
         if (ptr -> getData() -> getSrcAccount().getHolder().getID() == ClientID) {
@@ -244,8 +245,8 @@ void TransactionManager::showAllCardTransaction(const string &CardID){
     CardManager CM;
     Node<Transaction*> *ptr = this -> list.getHead();
     CM.showByID(CardID);
-    cout << endl;
-    cout << "                                                                   DANH SACH GIAO DICH CUA THE \"" << CardID << "\"" << endl << endl;
+    cout << endl << endl;
+    cout << "                                                 DANH SACH GIAO DICH CUA THE \"" << CardID << "\"" << endl;
     transactionPanel();
     while (ptr != nullptr){
         if(ptr -> getData()-> getSrcAccount().getID() == CardID)  {

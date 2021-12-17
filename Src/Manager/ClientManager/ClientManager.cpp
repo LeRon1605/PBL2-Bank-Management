@@ -112,8 +112,11 @@ bool ClientManager::removeByID(const string &ID){
     else {
         // Repository<Card>::findAndRemove(compareHolderID, ID, "Card.txt");
         CardManager CM;
-        cout << "THE NGAN HANG CUA KHACH HANG CO ID \"" << ID << "\" SE BI XOA" << endl;
-        CM.removeAll(ID);
+        cout << "                                                            THONG TIN KHACH HANG" << endl;
+        cout << setfill('-') << setw(155) << '-' <<  setfill(' ') << endl;
+        list[index].show();
+        cout << "\n                                                 THE NGAN HANG CUA KHACH HANG CO ID \"" << ID << "\" SE BI XOA" << endl;
+        if (CM.removeAll(ID) == false) return false;
         return this -> list.removeAt(index);
     }
 }

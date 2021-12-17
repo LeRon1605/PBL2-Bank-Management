@@ -110,10 +110,20 @@ bool CardManager::updateByID(Card C, const string &ID){
     return true;
 }
 
-void CardManager::removeAll(const string &ClientID){
+bool CardManager::removeAll(const string &ClientID){
     Node<Card> *ptr = this -> list.getHead();
     int index = 0;
     this -> listAllClientCard(ClientID);
+    cout << "=> Ban co muon tiep tuc(Y/N): ";
+    char choice;
+    cin >> choice;
+    while (choice != 'N' && choice != 'Y' && choice != 'n' && choice != 'y'){
+        cout << "=> Lua chon khong hop le, ban co muon tiep tuc thuc hien giao dich(Y/N): ";
+        cin >> choice;
+    }
+    if (choice == 'n' || choice == 'N') {
+        return false;
+    }
     while (ptr != nullptr && this -> list.getLength() > 0){
         if (ptr -> getData().getHolder().getID() == ClientID) {
             ptr = ptr -> getNext();
@@ -124,6 +134,7 @@ void CardManager::removeAll(const string &ClientID){
         }
         index++;
     }
+    return true;
 }
 
 void CardManager::showInf(const string &ID){

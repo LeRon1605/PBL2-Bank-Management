@@ -40,8 +40,10 @@ int main(){
 								string ClientID;
 								cout << "Nhap ID khach hang muon xoa: ";
 								cin >> ClientID;
-								if (CManager -> removeByID(ClientID)) cout << "Xoa thanh cong khach hang co ID: " << ClientID << endl;
-								else cout << "Khach hang co ID: " << ClientID << " khong ton tai" << endl;
+								Client temp = CManager -> findByID(ClientID);
+								if (temp.isNull()) cout << "=> Khach hang khong ton tai" << endl;
+								if (CManager -> removeByID(ClientID)) cout << "=> Xoa thanh cong khach hang co ID: " << ClientID << endl;
+								else cout << "=> Xoa khach hang co ID: " << ClientID << " khong thanh cong" << endl;
 								getch();
 							}
 							break;
@@ -51,7 +53,7 @@ int main(){
 								cout << "Nhap ID khach hang muon cap nhat: ";
 								cin >> ClientID;
 								Client temp = CManager -> findByID(ClientID);
-								if (temp.isNull()) cout << "Khach hang khong ton tai" << endl;
+								if (temp.isNull()) cout << "=> Khach hang khong ton tai" << endl;
 								else 
 								{
 									clientPanel();
@@ -81,7 +83,7 @@ int main(){
 										getline(cin >> ws, newBirth);
 										if (newBirth == "No") break;
 									}while (!Date(newBirth.c_str()).isValidDate());
-									if (CManager -> updateByID(Client(newName, newGender, newAddress, Date(newBirth.c_str())), ClientID)) cout << "Cap nhat thanh cong" << endl;
+									if (CManager -> updateByID(Client(newName, newGender, newAddress, Date(newBirth.c_str())), ClientID)) cout << "=> Cap nhat thanh cong" << endl;
 								}
 								getch();
 							}
@@ -311,7 +313,7 @@ int main(){
 								}
 								cout << "=> Nhap ID tai khoan nhan tien: ";
 								cin >> destAccount;
-								if (Repository<Card>::getByID(srcAccount, "Card.txt").isNull()){
+								if (Repository<Card>::getByID(destAccount, "Card.txt").isNull()){
 									cout << "=> Tai khoan khong ton tai";
 									getch();
 									break;

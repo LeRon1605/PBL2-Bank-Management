@@ -218,6 +218,10 @@ void Card::input(){
     }
     cout << "Type Card's Balance: ";
     cin >> this -> balance;
+    while (this -> balance <= 0){
+        cout << "Invalid, type again: ";
+        cin >> this -> balance;
+    }
     this -> createdAt = Date::getCurrentDate();
     this -> updatedAt = Date();
     this -> pinUpdatedAt = Date();
