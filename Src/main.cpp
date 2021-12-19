@@ -273,6 +273,10 @@ int main(){
 								}
 								cout << "=> Nhap so tien muon rut: ";
 								cin >> cash;
+								while (cash <= 0){
+									cout << "So tien khong hop le, vui long nhap lai: ";
+									cin >> cash;
+								}
 								cout << "=> Nhap ma PIN cua tai khoan: ";
 								cin >> PIN;
 								if (TManager -> makeWithdraw(CardID, cash, PIN)) cout << "=> Rut tien thanh cong" << endl;
@@ -293,6 +297,10 @@ int main(){
 								}
 								cout << "=> Nhap so tien muon nap: ";
 								cin >> cash;
+								while (cash <= 0){
+									cout << "So tien khong hop le, vui long nhap lai: ";
+									cin >> cash;
+								}
 								cout << "=> Nhap ma PIN cua tai khoan: ";
 								cin >> PIN;
 								if (TManager -> makeDeposit(CardID, cash, PIN)) cout << "=> Nap tien thanh cong" << endl;
@@ -320,6 +328,10 @@ int main(){
 								}
 								cout << "=> Nhap so tien muon chuyen: ";
 								cin >> cash;
+								while (cash <= 0){
+									cout << "So tien khong hop le, vui long nhap lai: ";
+									cin >> cash;
+								}
 								cout << "=> Nhap ma PIN cua tai khoan: ";
 								cin >> PIN;
 								if (TManager -> makeTransfer(srcAccount, destAccount, cash, PIN)) cout << "=> Chuyen tien thanh cong" << endl;
